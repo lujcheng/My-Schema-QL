@@ -72,4 +72,40 @@ header {
   .line-div {
       height: 0.1em;
       background-color: #005b96;
-  }
+	}
+
+	table, th, td {
+		border: 1px solid #011f4b;
+	}
+
+	table {
+		margin: 3em;
+		font-family: 'Libre Franklin', sans-serif;
+	}
+
+	th, td {
+		padding: 1em;
+	}
+
+	.table-title {
+		background-color:#03396c;
+		color:#b3cde0;
+		font-size: 1.2em;
+		/* border-top-left-radius: 30px;
+		border-top-right-radius: 30px; */
+	}
+
+	tbody {
+		/* border-bottom-left-radius: 30px;
+		border-bottom-right-radius: 30px; */
+	}
+
+	.header-row {
+		background-color: #005b96;
+		color:#011f4b;
+	}
+
+	.data-row {
+		background-color: #6497b1;
+		color:#011f4b;
+	}
