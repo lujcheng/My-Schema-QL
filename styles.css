@@ -1,0 +1,75 @@
+html {
+	background-color: #b3cde0;
+	font-family: 'Libre Franklin', sans-serif;
+}
+
+header {
+    font-family: 'Libre Franklin', sans-serif;
+}
+
+#nav-title {
+
+}
+#main-nav-bar {
+    background-color: #b3cde0;
+    color: #011f4b;
+		font-size: 2em;
+		font-weight: bold;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    padding-top: 0.2em;
+  }
+
+  #sub-nav-bar {
+      background-color: #b3cde0;
+      padding: 0.8em;
+  }
+
+  .nav-elements {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sub-nav-elements {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+
+  .query-item {
+      padding-right: 0.3em;
+  }
+
+  .button {
+      background-color:#005b96;
+      color:#b3cde0;
+      font-family: 'Libre Franklin', sans-serif;
+			font-size: 0.6em;
+			font-weight: bold;
+      margin-left: 0.3em;
+  }
+
+  .add-button {
+      font-size: 1em;
+  }
+
+  .input-query {
+      height: 2.2em;
+			font-size: 1em;
+			margin-right: 0.3em;
+  }
+
+  .query-tags {
+			font-size: 1.5em;
+			color: #03396c;
+  }
+
+  body {
+      background-color: #b3cde0;
+  }
+
+  .line-div {
+      height: 0.1em;
+      background-color: #005b96;
+  }
