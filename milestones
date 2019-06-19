@@ -1,0 +1,46 @@
+Packages/dependencies
+React
+React-DOM
+Express
+Node
+Sass-compiler
+Babel
+Web pack
+
+
+
+
+
+HTML
+Single page App
+Form input create tables
+Form input toolbar?
+Select (corresponds to column) FROM (correspond to table)  WHERE (correspond to rows)
+
+
+
+
+
+Github 
+LOCAL ->create branch from master, commit to branch, push to remote branch(same name)
+
+GITHUB REMOTE -> create pull request from that branch, review conflicts, accept
+
+LOCAL -> checkout back to master branch, pull from remote origin master, check to see if it works, create new branch
+
+
+
+
+
+React
+
+
+
+
+
+
+Stretch
+Authentication
+Database to go back to old projects
+Websockets
+Heroku
