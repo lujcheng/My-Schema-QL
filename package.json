@@ -6,7 +6,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "bulma": "^0.7.5",
-    "bulma-carousel": "^4.0.4"
+    "bulma-carousel": "^4.0.4",
     "react-scripts": "3.0.1"
   },
   "scripts": {
