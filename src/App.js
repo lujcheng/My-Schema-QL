@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './styles.css'
 import Table from './table.jsx';
+import Query from './query.jsx'
 
 class App extends Component {
   constructor(props) {
@@ -35,8 +37,11 @@ class App extends Component {
   
   render() {
     return (
+      // <div>
+      //   <Table tables={this.state.tables}/>
+      // </div>
       <div>
-        <Table tables={this.state.tables}/>
+        <Query/>
       </div>
     );
   }
