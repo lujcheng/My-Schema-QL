@@ -4,36 +4,39 @@ class Table extends Component {
 
     renderTableHeader() {
       let header = Object.keys(this.props.tables.cars.data[0])
+      console.log("header ", header)
       return header.map((key, index) => {
          return <th key={index}>{key.toUpperCase()}</th>
       })
     }
 
     renderTableData() {
-      let values = this.props.tables.cars.data
-      return values.map((value) => {
-        return <td>{value}</td>
-      })
-    }
+      let data = this.props.tables.cars.data
+        return data.map((value) => {
+          let items = Object.values(value)
+            
+            return <tr className="data-row">{items.map((item) => {
+              return <td>{item}</td>
+          })
+        } </tr>
+        })
+      }
 
     render() {
       
       return (
         <div>
-          <h1 id='title'>React Dynamic Table</h1>
-          <table id='students'>
+          <table className="schema-table" border='1'>
             <thead>
               <tr>
-                <th>{Object.keys(this.props.tables)[0]}</th>
+                <th colspan="5" className="table-title">{Object.keys(this.props.tables)[0]}</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr className="header-row">
                 {this.renderTableHeader()}
               </tr>
-              <tr>
                 {this.renderTableData()}
-              </tr>
             </tbody>
           </table>
         </div>
