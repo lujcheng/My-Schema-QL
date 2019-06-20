@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Renkinjutsu/Final-Project#readme",
   "dependencies": {
-    "bulma": "^0.7.5"
+    "bulma": "^0.7.5",
+    "bulma-carousel": "^4.0.4"
   }
 }

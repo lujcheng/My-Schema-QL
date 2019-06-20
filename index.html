@@ -8,18 +8,17 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
 		<link rel="stylesheet" href="styles.css" type="text/css" />
 		<link href="https://fonts.googleapis.com/css?family=Libre+Franklin:100,100i,400,400i,700,700i&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Fugaz+One&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
 	
 	<header>
-		<nav id="main-nav-bar">
+
+		<nav>
 			<div class="nav-elements">
-				<h1 id="nav-title">MySchemaQL</h1>
-				<form action="" method="POST">
-					<button type="submit" class="button"><i class="fas fa-table"></i> Create Table</button>
-				</form>
+				<h1 id="nav-title">Schema</h1>
 			</div>
-			<hr class="line-div"/>
 		</nav>
 		
 		<nav id="sub-nav-bar">
@@ -35,10 +34,37 @@
 					</select>
 				<button type="submit" class="button add-button">+</button>
 			</form>
+			<form action="" method="POST">
+				<button type="submit" class="button create-table-button"><i class="fas fa-table"></i>Create Table</button>
+			</form>
 		</nav>
 	</header>
 
   <body>
+			<section class="hero is-medium has-carousel">
+					<div id="carousel-demo" class="hero-carousel">
+						<div class="item-1 carousel-item">
+							<h1>Tutorial for Schema - page 1</h1>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam placerat aliquam elit a interdum. Phasellus sit amet risus id ipsum scelerisque iaculis et sed enim. Morbi placerat diam at nunc rhoncus, sit amet finibus mauris pharetra. Nulla accumsan eleifend interdum. Donec sagittis, leo at vestibulum porttitor, lacus neque rhoncus massa, eget posuere nisi erat id orci. Nulla facilisi. Quisque dapibus a diam a dapibus. Morbi venenatis non elit a vehicula. Mauris euismod est non nisl pharetra, ac hendrerit elit interdum. Nulla pharetra sodales odio mattis euismod. Maecenas id purus eu tellus suscipit dapibus. Morbi vel augue vulputate, eleifend leo nec, vulputate nisi. Quisque porta, arcu pulvinar gravida porttitor, risus ante dapibus mauris, eget bibendum ligula nunc ut leo.</p>
+						</div>
+						<div class="item-2 carousel-item">
+								<h1>Tutorial for Schema - page 2</h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam placerat aliquam elit a interdum. Phasellus sit amet risus id ipsum scelerisque iaculis et sed enim. Morbi placerat diam at nunc rhoncus, sit amet finibus mauris pharetra. Nulla accumsan eleifend interdum. Donec sagittis, leo at vestibulum porttitor, lacus neque rhoncus massa, eget posuere nisi erat id orci. Nulla facilisi. Quisque dapibus a diam a dapibus. Morbi venenatis non elit a vehicula. Mauris euismod est non nisl pharetra, ac hendrerit elit interdum. Nulla pharetra sodales odio mattis euismod. Maecenas id purus eu tellus suscipit dapibus. Morbi vel augue vulputate, eleifend leo nec, vulputate nisi. Quisque porta, arcu pulvinar gravida porttitor, risus ante dapibus mauris, eget bibendum ligula nunc ut leo.</p>
+						</div>
+						<div class="item-3 carousel-item">
+								<h1>Tutorial for Schema - page 3</h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam placerat aliquam elit a interdum. Phasellus sit amet risus id ipsum scelerisque iaculis et sed enim. Morbi placerat diam at nunc rhoncus, sit amet finibus mauris pharetra. Nulla accumsan eleifend interdum. Donec sagittis, leo at vestibulum porttitor, lacus neque rhoncus massa, eget posuere nisi erat id orci. Nulla facilisi. Quisque dapibus a diam a dapibus. Morbi venenatis non elit a vehicula. Mauris euismod est non nisl pharetra, ac hendrerit elit interdum. Nulla pharetra sodales odio mattis euismod. Maecenas id purus eu tellus suscipit dapibus. Morbi vel augue vulputate, eleifend leo nec, vulputate nisi. Quisque porta, arcu pulvinar gravida porttitor, risus ante dapibus mauris, eget bibendum ligula nunc ut leo.</p>
+						</div>
+					</div>
+					<div class="hero-head"></div>
+					<div class="hero-body"></div>
+					<div class="hero-foot"></div>
+				</section>
+				<!-- End Hero Carousel -->
+			</section>
+
+
+
 		<section class="hero is-fullheight">
 			<div class="hero-body">
 				<div class="container">
@@ -116,8 +142,9 @@
 					</table>
 				</div>
 			</div>
-			<div class="container">
-				<div class="hero-body">
+		
+			<div class="hero-body">
+				<div class="container">
 					<table class="create-table">
 						<form action="" method="POST">
 							<tr>
@@ -140,6 +167,16 @@
 				</div>
 			</div>
 		</section>
+
+		<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
+		<script>
+		bulmaCarousel.attach('#carousel-demo', {
+			slidesToScroll: 1,
+			slidesToShow: 1
+		});
+		</script>
+
+
   </body>
 
 </html>
