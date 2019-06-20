@@ -1,0 +1,148 @@
+html {
+	font-family: 'Libre Franklin', sans-serif;
+}
+
+header {
+		font-family: 'Libre Franklin', sans-serif;
+}
+
+body {
+	background-image: linear-gradient(#0b87da, #eaeff2)
+}
+
+
+#nav-title {
+	color: #011739;
+	font-family: 'Fugaz One', cursive;
+	text-shadow: 3px 3px 4px #005b96;
+	font-size: 6em;
+	padding-left: 0.8em;
+	padding-right: 0.8em;
+	padding-top: 0.5em;
+	text-align: center;
+}
+
+#carousel-demo {
+	background-color: #005b96;
+	font-size: 2em;
+	color: #b3cde0;
+}
+
+.carousel-item > p{
+	font-size: 0.6em;
+	color: #011739;
+}
+
+.carousel-item > h1 {
+	text-align: center;
+	color: #011739;
+}
+
+#sub-nav-bar {
+		padding: 2em;
+		display: flex;
+		justify-content: space-between;
+}
+
+.sub-nav-elements {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+}
+
+.query-item {
+		padding-right: 0.3em;
+}
+
+.fa-table {
+	margin-right: 0.5em;
+	font-size: 1em;
+
+}
+
+.button {
+		background-color:#03396c;
+		color:#b3cde0;
+		border-color: #005b96;
+		font-family: 'Libre Franklin', sans-serif;
+		font-weight: bold;
+		box-shadow: 2px 2px 3px #005b96;
+		border-radius: 25px;
+}
+
+.create-table-button {
+	text-shadow: 3px 3px 4px #005b96;
+	font-size: 1.1em;
+	margin: 1.2em;
+	line-height: 1.1em;
+}
+	
+	table {
+		box-shadow: 2px 2px 3px #005b96;
+	}
+
+  .add-button {
+			font-size: 1em;
+			border-radius: 10px;
+  }
+
+  .input-query {
+      height: 2.2em;
+			font-size: 1em;
+			margin-right: 0.3em;
+  }
+
+  .query-tags {
+			font-size: 1.5em;
+			color: #03396c;
+  }
+
+	.dropdown-box {
+		height: 3.1em;
+	}
+
+	table.schema-table tbody > tr > td, thead {
+		border: 1px solid #011f4b;
+	}
+
+	table.create-table, tr, td {
+		border: 1px solid #011f4b;
+	}
+
+	table {
+		margin: 3em;
+		font-family: 'Libre Franklin', sans-serif;
+	}
+
+	th, td {
+		padding: 0.5em;
+	}
+
+	.table-title {
+		background-color:#03396c;
+		color:#b3cde0;
+		font-size: 1.2em;
+	}
+
+	.data-row :hover {
+		border-color: #011f4b;
+		border-width: 0.4em;
+	}
+
+	.header-row {
+		background-color: #005b96;
+		color:#011f4b;
+		font-weight: bold;
+	}
+
+	.data-row {
+		background-color:#b3cde0;
+		color:#011f4b;
+	}
+
+	.new-table-form {
+		border-style: solid;
+		border-color: #011f4b;
+		display: flex;
+		justify-content: flex-end;
+	}
