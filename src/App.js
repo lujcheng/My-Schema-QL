@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import './styles.css';
-import Table from './table.jsx';
-import Query from './query.jsx'
-import { from } from 'rxjs';
-import { cpus } from 'os';
+import MyCanvas from './Canvas.jsx';
+import Query from './query.jsx';
+import NewTable from './new-table.jsx'
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +27,7 @@ class App extends Component {
           xY: null 
         },
         guitars: {
-          columns: [
+          data: [
             { ID: "1", make: 'Fender', model: 'Tele', year: '2010'},
             { ID: "2", make: 'Gibson', model: 'SG', year: '2015'},
             { ID: "3", make: 'Guild', model: 'Starfire', year: '2001'},
@@ -44,6 +43,7 @@ class App extends Component {
   }
 
   select = (input, table, column) => {
+
     if(this.state.tables[table]) {
       let newData = this.state.tables[table].data
       let values = newData.map((row => (row[column])))
@@ -64,10 +64,13 @@ class App extends Component {
     return (
       <div>
         <div>
+          <NewTable />
+        </div>
+        <div>
           <Query onChange={this.onChange} />
         </div>
         <div>
-          <Table tables={this.state.tables}/>
+          <MyCanvas tables={this.state.tables}/>
         </div>
       </div>
     );
