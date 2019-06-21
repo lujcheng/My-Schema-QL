@@ -6,8 +6,7 @@ class Table extends Component {
     let header = Object.keys(this.props.tables.cars.data[0])
     console.log("header ", header)
     return header.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()
-      }</th>
+      return <th key={index}>{key.toUpperCase()}</th>
     })
   }
 
@@ -21,15 +20,13 @@ class Table extends Component {
       }</tr>
     })
   }
-
-  render() {
-    
-    return (
-      <div>
+    render() {
+      
+      return (
         <table className="schema-table" border='1'>
-          <thead>
+          <thead className="table-title">
             <tr>
-              <th colSpan="5" className="table-title">{Object.keys(this.props.tables)[0]}</th>
+              <th colSpan="3" className="has-text-centered table-title">{Object.keys(this.props.tables)[0]}</th>
             </tr>
           </thead>
           <tbody>
@@ -39,8 +36,7 @@ class Table extends Component {
               {this.renderTableData()}
           </tbody>
         </table>
-      </div>
-    )
+      )
    }
 }
 
