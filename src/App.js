@@ -3,6 +3,7 @@ import './App.css';
 import './styles.css';
 import Table from './table.jsx';
 import Query from './query.jsx'
+import NewTable from './new-table.jsx'
 
 class App extends Component {
   constructor(props) {
@@ -59,6 +60,9 @@ class App extends Component {
     console.log(this.state.query)
     return (
       <div>
+        <div>
+          <NewTable />
+        </div>
         <div>
           <Query onChange={this.onChange} />
         </div>
