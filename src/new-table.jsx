@@ -13,7 +13,10 @@ class NewTable extends Component {
 		this.setState(prevState => ({
 			visible: !prevState.visible
 		}))
-		console.log("state:", this.state.visible)
+	}
+
+	createTable = (e) => {
+		e.preventDefault();
 	}
 
 	render() {
@@ -26,18 +29,18 @@ class NewTable extends Component {
 						<tbody>
 							<tr>
 								<td className="header-row"><p>Table name:</p></td>
-								<td className="data-row"><input type="text" placeholder="Table name" className="query-item input-query"/></td>
+								<td className="data-row"><input type="text" name="tableName" placeholder="Table name" className="query-item input-query"/></td>
 							</tr>
 							<tr>
 								<td className="header-row"><p>Columns (categories):</p></td>
-								<td className="data-row"><input type="number" placeholder="#" className="query-item input-query"/></td>
+								<td className="data-row"><input type="number" name="cols" placeholder="#" className="query-item input-query"/></td>
 							</tr>
 							<tr>
 								<td className="header-row"><p>Rows (seed data):</p></td>
-								<td className="data-row"><input type="number" placeholder="#" className="query-item input-query"/></td>
+								<td className="data-row"><input type="number" name="rows" placeholder="#" className="query-item input-query"/></td>
 							</tr>
 							<tr>
-								<td colSpan="2"><button type="submit" className="button add-button">Create</button></td>
+								<td colSpan="2"><button type="submit" className="button add-button" onClick={this.createTable}>Create</button></td>
 							</tr>
 						</tbody>
 					</table>
