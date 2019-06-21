@@ -58,13 +58,18 @@ class App extends Component {
     this.setState({ query: {...this.state.query, [args]: event.target.value}})
     console.log(this.state.query)
   }
+
+  renderNewTable = (tableObj) => {
+    console.log("new table: ", tableObj)
+  }
+
   
   render() {
     console.log(this.select(this.state.query.values, this.state.query.from, this.state.query.select))
     return (
       <div>
         <div>
-          <NewTable />
+          <NewTable renderNewTable={this.renderNewTable} />
         </div>
         <div>
           <Query onChange={this.onChange} />
