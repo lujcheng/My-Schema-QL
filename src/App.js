@@ -3,6 +3,7 @@ import './App.css';
 import './styles.css';
 import Table from './table.jsx';
 import Query from './query.jsx'
+import { from } from 'rxjs';
 
 class App extends Component {
   constructor(props) {
@@ -10,13 +11,15 @@ class App extends Component {
     this.state = { 
       user: "1",
       query: {
-        tables: null,
+        select: null,
         columns: null,
         values: null
       },
       tables: {
         cars: {
           data: [
+
+            // add id to table
             { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
             { ID: "2", make: 'Ford', model: 'Fiesta', year: '2015'},
             { ID: "3", make: 'Chevy', model: 'Blazer', year: '2000'},
@@ -47,10 +50,11 @@ class App extends Component {
     let query = columns.filter((values, index, column) => column.indexOf(values) === input)
     console.log(this.state.query.tables)
   }
-
-  onChange = (event) => {
+  
+  onChange = (event, args) => {
+    console.log(event.target.name, args)
     event.target.name === 'select' ?
-    this.setState({ query: {...this.state.query, columns: event.target.value}}) :
+    this.setState({ query: {...this.state.query, [args]: event.target.value}}) :
     this.setState({ query: {...this.state.query, tables: event.target.value}})
     console.log(this.state.query)
   }
