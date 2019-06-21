@@ -36,11 +36,13 @@ class App extends Component {
   
   render() {
     return (
-      // <div>
-      //   <Table tables={this.state.tables}/>
-      // </div>
       <div>
-        <Query/>
+        <div>
+          <Query/>
+        </div>
+        <div>
+          <Table tables={this.state.tables}/>
+        </div>
       </div>
     );
   }
