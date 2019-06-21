@@ -11,7 +11,7 @@ class App extends Component {
     this.state = { 
       user: "1",
       query: {
-        tables: null,
+        select: null,
         columns: null,
         values: null
       },
@@ -43,18 +43,24 @@ class App extends Component {
   }
 
   select = (input, table, column) => {
-    let rows = this.state.tables[table].data
-    let columns = rows.map(row => row[column])
-    let query = columns.filter((values, index, column) => column.indexOf(values) === input)
-  }
 
-  onChange = (event) => {
-    event.target.name === 'select' ?
-    this.setState({ query: {...this.state.query, columns: event.target.value}}) :
-    this.setState({ query: {...this.state.query, tables: event.target.value}})
+    if(this.state.tables[table]) {
+      let newData = this.state.tables[table].data
+      let values = newData.map((row => (row[column])))
+      console.log(values)
+    }
+    // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
+    // console.log(this.state.query.tables)
+  }
+  
+  onChange = (event, args) => {
+    console.log(event.target.name, args)
+    this.setState({ query: {...this.state.query, [args]: event.target.value}})
+    console.log(this.state.query)
   }
   
   render() {
+    console.log(this.select(this.state.query.values, this.state.query.from, this.state.query.select))
     return (
       <div>
         <div>
