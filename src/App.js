@@ -4,6 +4,7 @@ import './styles.css';
 import Table from './table.jsx';
 import Query from './query.jsx'
 import { from } from 'rxjs';
+import { cpus } from 'os';
 
 class App extends Component {
   constructor(props) {
@@ -18,8 +19,6 @@ class App extends Component {
       tables: {
         cars: {
           data: [
-
-            // add id to table
             { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
             { ID: "2", make: 'Ford', model: 'Fiesta', year: '2015'},
             { ID: "3", make: 'Chevy', model: 'Blazer', year: '2000'},
@@ -45,22 +44,23 @@ class App extends Component {
   }
 
   select = (input, table, column) => {
-    let rows = this.state.tables[table].data
-    let columns = rows.map(row => row[column])
-    let query = columns.filter((values, index, column) => column.indexOf(values) === input)
-    console.log(this.state.query.tables)
+    if(this.state.tables[table]) {
+      let newData = this.state.tables[table].data
+      let values = newData.map((row => (row[column])))
+      console.log(values)
+    }
+    // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
+    // console.log(this.state.query.tables)
   }
   
   onChange = (event, args) => {
     console.log(event.target.name, args)
-    event.target.name === 'select' ?
-    this.setState({ query: {...this.state.query, [args]: event.target.value}}) :
-    this.setState({ query: {...this.state.query, tables: event.target.value}})
+    this.setState({ query: {...this.state.query, [args]: event.target.value}})
     console.log(this.state.query)
   }
   
   render() {
-    console.log(this.state.query)
+    console.log(this.select(this.state.query.values, this.state.query.from, this.state.query.select))
     return (
       <div>
         <div>
