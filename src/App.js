@@ -3,7 +3,7 @@ import './App.css';
 import './styles.css';
 import MyCanvas from './Canvas.jsx';
 import Query from './query.jsx';
- 
+import NewTable from './new-table.jsx'
 
 class App extends Component {
   constructor(props) {
@@ -57,6 +57,9 @@ class App extends Component {
   render() {
     return (
       <div>
+        <div>
+          <NewTable />
+        </div>
         <div>
           <Query onChange={this.onChange} />
         </div>
