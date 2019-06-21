@@ -3,6 +3,7 @@ import './App.css';
 import './styles.css';
 import Table from './table.jsx';
 import Query from './query.jsx'
+import NewTable from './new-table.jsx'
 
 class App extends Component {
   constructor(props) {
@@ -64,6 +65,9 @@ class App extends Component {
         </div>
         <div>
           <Table tables={this.state.tables}/>
+        </div>
+        <div>
+          <NewTable />
         </div>
       </div>
     );
