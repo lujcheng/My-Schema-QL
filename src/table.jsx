@@ -4,7 +4,6 @@ class Table extends Component {
 
     renderTableHeader() {
       let header = Object.keys(this.props.tables.cars.data[0])
-      console.log("header ", header)
       return header.map((key, index) => {
          return <th key={index}>{key.toUpperCase()}</th>
       })
