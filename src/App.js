@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import './styles.css';
-import Table from './table.jsx';
-import Query from './query.jsx'
+import MyCanvas from './Canvas.jsx';
+import Query from './query.jsx';
 import NewTable from './new-table.jsx'
 
 class App extends Component {
@@ -27,7 +27,7 @@ class App extends Component {
           xY: null 
         },
         guitars: {
-          columns: [
+          data: [
             { ID: "1", make: 'Fender', model: 'Tele', year: '2010'},
             { ID: "2", make: 'Gibson', model: 'SG', year: '2015'},
             { ID: "3", make: 'Guild', model: 'Starfire', year: '2001'},
@@ -46,18 +46,15 @@ class App extends Component {
     let rows = this.state.tables[table].data
     let columns = rows.map(row => row[column])
     let query = columns.filter((values, index, column) => column.indexOf(values) === input)
-    console.log(this.state.query.tables)
   }
 
   onChange = (event) => {
     event.target.name === 'select' ?
     this.setState({ query: {...this.state.query, columns: event.target.value}}) :
     this.setState({ query: {...this.state.query, tables: event.target.value}})
-    console.log(this.state.query)
   }
   
   render() {
-    console.log(this.state.query)
     return (
       <div>
         <div>
@@ -67,7 +64,7 @@ class App extends Component {
           <Query onChange={this.onChange} />
         </div>
         <div>
-          <Table tables={this.state.tables}/>
+          <MyCanvas tables={this.state.tables}/>
         </div>
       </div>
     );
