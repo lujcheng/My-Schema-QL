@@ -17,14 +17,16 @@ class Query extends Component {
     // }
 
     render() {
-      
+      this.change = (event) => {
+				console.log(this.props.onChange)
+			}
       return (
 				<nav id="sub-nav-bar">
 					<form action="" method="POST" className="sub-nav-elements">
 						<p className="query-item query-tags">SELECT</p>
-						<input type="text" placeholder="*" className="query-item input-query"/>
+						<input name="select" type="text" placeholder="*" className="query-item input-query" onChange={this.props.onChange} />
 						<p className="query-item query-tags">FROM</p>
-						<input type="text" placeholder="Table name" className="query-item input-query"/>
+						<input name="from" type="text" placeholder="Table name" className="query-item input-query" onChange={this.props.onChange} />
 						<select className="dropdown-box">
 								<option value="join">JOIN</option>
 								<option value="on">ON</option>
