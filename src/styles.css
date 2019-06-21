@@ -118,11 +118,13 @@ body {
 		padding: 0.5em;
 	}
 
-	.table-title {
+	th.table-title {
 		background-color:#03396c;
 		color:#b3cde0;
 		font-size: 1.2em;
+		text-align: center;
 	}
+	
 
 	.data-row :hover {
 		border-color: #011f4b;
