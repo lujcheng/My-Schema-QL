@@ -18,9 +18,6 @@ class Query extends Component {
 							</select>
 						<button type="submit" className="button add-button">+</button>
 					</form>
-					<form action="" method="POST">
-						<button type="submit" className="button create-table-button"><i className="fas fa-table"></i>Create Table</button>
-					</form>
 				</nav>
       )
    }

@@ -61,13 +61,13 @@ class App extends Component {
     return (
       <div>
         <div>
+          <NewTable />
+        </div>
+        <div>
           <Query onChange={this.onChange} />
         </div>
         <div>
           <Table tables={this.state.tables}/>
-        </div>
-        <div>
-          <NewTable />
         </div>
       </div>
     );
