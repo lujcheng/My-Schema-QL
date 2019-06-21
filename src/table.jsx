@@ -3,11 +3,9 @@ import React, { Component } from 'react'
 class Table extends Component {
 
   renderTableHeader() {
-    debugger;
-    // console.log("this.props ", this.props)
     let header = Object.keys(this.props.table.data[0])
     return header.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()}</th>
+      return <th className="handle" key={index}>{key.toUpperCase()}</th>
     })
   }
 
@@ -30,9 +28,9 @@ class Table extends Component {
       
       return (
         <table className="schema-table" border='1'>
-          <thead className="table-title">
+          <thead className="table-title handle">
             <tr>
-              <th colSpan="4" className="has-text-centered table-title">
+              <th colSpan="4" className="has-text-centered table-title handle">
                 {this.props.tableName}
               </th>
             </tr>

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import './styles.css';
 import MyCanvas from './Canvas.jsx';
-import Query from './query.jsx'
+import Query from './query.jsx';
+ 
 
 class App extends Component {
   constructor(props) {
