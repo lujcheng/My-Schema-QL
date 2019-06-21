@@ -3,21 +3,27 @@ import React, { Component } from 'react'
 class Table extends Component {
 
   renderTableHeader() {
-    let header = Object.keys(this.props.tables.cars.data[0])
-    console.log("header ", header)
+    debugger;
+    // console.log("this.props ", this.props)
+    let header = Object.keys(this.props.table.data[0])
     return header.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>
     })
   }
 
   renderTableData() {
-    let data = this.props.tables.cars.data
+    let data = this.props.table.data
     return data.map((value, index) => {
-    let items = Object.values(value)
-      return <tr key={index} className="data-row">{items.map((item, index) => {
-        return <td key={index} >{item}</td>
-        })
-      }</tr>
+      let items = Object.values(value)
+      return (
+        <tr key={index} className="data-row">
+          {
+            items.map((item, index) => {
+              return <td key={index} >{item}</td>
+            })
+          }
+        </tr>
+      )
     })
   }
     render() {
@@ -26,7 +32,9 @@ class Table extends Component {
         <table className="schema-table" border='1'>
           <thead className="table-title">
             <tr>
-              <th colSpan="4" className="has-text-centered table-title">{Object.keys(this.props.tables)[0]}</th>
+              <th colSpan="4" className="has-text-centered table-title">
+                {this.props.tableName}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -40,4 +48,4 @@ class Table extends Component {
    }
 }
 
- export default Table
+export default Table
