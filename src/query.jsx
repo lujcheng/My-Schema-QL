@@ -2,24 +2,8 @@ import React, { Component } from 'react'
 
 class Query extends Component {
 
-    // renderTableHeader() {
-    //   let header = Object.keys(this.props.tables.cars.data[0])
-    //   return header.map((key, index) => {
-    //      return <th key={index}>{key.toUpperCase()}</th>
-    //   })
-    // }
-
-    // renderTableData() {
-    //   let values = this.props.tables.cars.data
-    //   return values.map((value) => {
-    //     return <td>{value}</td>
-    //   })
-    // }
-
     render() {
-      this.change = (event) => {
-				console.log(this.props.onChange)
-			}
+   
       return (
 				<nav id="sub-nav-bar">
 					<form action="" method="POST" className="sub-nav-elements">

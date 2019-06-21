@@ -17,20 +17,20 @@ class App extends Component {
       tables: {
         cars: {
           data: [
-            { make: 'VW', model: 'Jetta', year: '2010'},
-            { make: 'Ford', model: 'Fiesta', year: '2015'},
-            { make: 'Chevy', model: 'Blazer', year: '2000'},
-            { make: 'Honda', model: 'Accord', year: '1978'},
+            { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
+            { ID: "2", make: 'Ford', model: 'Fiesta', year: '2015'},
+            { ID: "3", make: 'Chevy', model: 'Blazer', year: '2000'},
+            { ID: "4", make: 'Honda', model: 'Accord', year: '1978'},
           ],
           foreignKey: null,
           xY: null 
         },
         guitars: {
           columns: [
-            { make: 'Fender', model: 'Tele', year: '2010'},
-            { make: 'Gibson', model: 'SG', year: '2015'},
-            { make: 'Guild', model: 'Starfire', year: '2001'},
-            { make: 'Gretsch', model: 'Jet', year: '2005'}
+            { ID: "1", make: 'Fender', model: 'Tele', year: '2010'},
+            { ID: "2", make: 'Gibson', model: 'SG', year: '2015'},
+            { ID: "3", make: 'Guild', model: 'Starfire', year: '2001'},
+            { ID: "4", make: 'Gretsch', model: 'Jet', year: '2005'}
           ],
           foreignKey: null,
           xY: null
@@ -60,36 +60,13 @@ class App extends Component {
     return (
       <div>
         <div>
-          <Table tables={this.state.tables}/>
+          <Query onChange={this.onChange} />
         </div>
         <div>
-          <Query onChange={this.onChange} />
+          <Table tables={this.state.tables}/>
         </div>
       </div>
     );
   }
 }
 export default App;
-
-
-// uniqueCarMakes = cars.map(car => car.make) //['a', 'b', 'a', 'c', 'a']
-//   .filter((makes, index, self) => self.indexOf(makes) === index) // ['a', 'b', 'c']
-
-
-
-// Object.keys(columns) // => ['make', 'mode', 'year]
-
-
-
-// rows.map(row => {})
-
-// // 
-// Make              Model         Year
-// -------------
-// [
-//   { make: columns['make']0,  columns['model']0
-// 1
-// 2
-// 3
-// 4
-// 5
