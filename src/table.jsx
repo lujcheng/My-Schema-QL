@@ -26,7 +26,7 @@ class Table extends Component {
         <table className="schema-table" border='1'>
           <thead className="table-title">
             <tr>
-              <th colSpan="3" className="has-text-centered table-title">{Object.keys(this.props.tables)[0]}</th>
+              <th colSpan="4" className="has-text-centered table-title">{Object.keys(this.props.tables)[0]}</th>
             </tr>
           </thead>
           <tbody>

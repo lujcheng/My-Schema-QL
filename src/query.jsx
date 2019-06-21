@@ -9,9 +9,9 @@ class Query extends Component {
 				<form action="" method="POST" className="sub-nav-elements">
 					<p className="query-item query-tags">SELECT</p>
 					<input type="text" placeholder="*" className="query-item input-query"/>
-					<p classNameName="query-item query-tags">FROM</p>
+					<p className="query-item query-tags">FROM</p>
 					<input type="text" placeholder="Table name" className="query-item input-query"/>
-					<select classNameName="dropdown-box">
+					<select className="dropdown-box">
 							<option value="join">JOIN</option>
 							<option value="on">ON</option>
 							<option value="where">WHERE</option>
