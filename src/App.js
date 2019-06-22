@@ -68,7 +68,34 @@ class App extends Component {
     this.onChange = this.onChange.bind(this)
     this.select = this.select.bind(this)
   }
+/*
+  const join = (tables) => {
+    stateTbl = state.tables
+    let joinColumns = stateTbl[tables[0]].columns
+    let joinValues = stateTbl[tables[0]].values
+    let forKey
+    let primeKey
+    for(let tbl=1; tbl < tables.length; tbl++) {
+      forKey = stateTbl[tables[tbl-1]].columns.indexOf(stateTbl[tables[tbl-1]].foreignKey)
+      primeKey = stateTbl[tables[tbl]].columns.indexOf(stateTbl[tables[tbl]].primaryKey)
+      console.log(forKey,primeKey)
+      joinColumns = joinColumns.concat(state.tables[tables[tbl]].columns)
+      for (let i=0; i < joinValues.length; i++) {
+        for (let e=0; e< state.tables[tables[tbl]].values.length; e++) {
+        if(joinValues[i][forKey] === state.tables[tables[tbl]].values[e][primeKey] )
+        joinValues[i] = joinValues[i].concat(state.tables[tables[tbl]].values[e])
+        }
+      }
+    }
+    console.log(joinValues)
+    // for each table
+    // find table values
+    // find columns
+    // find values
+    // join column and values to central table
+  }
 
+   */
   select = (query) => {
     let columns = null
     let tables = null
