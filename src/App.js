@@ -43,7 +43,7 @@ class App extends Component {
         },
 
           */
-         
+
           data: [
             { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
             { ID: "2", make: 'Ford', model: 'Fiesta', year: '2015'},
@@ -69,16 +69,27 @@ class App extends Component {
     this.select = this.select.bind(this)
   }
 
-  select = (input, table, column) => {
-
-    if(this.state.tables[table]) {
-      let newData = this.state.tables[table].data
-      let values = newData.map((row => (row[column])))
-      console.log(values)
+  select = (query) => {
+    let columns = null
+    let tables = null
+    const search = {}
+    if (query.select != undefined) {
+      columns = query.select.split(/[ ,]+/)
+      search.columns = columns
     }
+    if (query.from != undefined) {
+      tables = query.from.split(/[ ,]+/)
+      search.tables = tables
+    }
+    console.log(search)
+    let columnIndexes = search.columns.map(column => {
+      return this.state.tables[search.tables].columns.indexOf(column)
+    })
+    return columnIndexes
+  }
     // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
     // console.log(this.state.query.tables)
-  }
+  
   
   onChange = (event, args) => {
     console.log(event.target.name, args)
