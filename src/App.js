@@ -69,6 +69,27 @@ class App extends Component {
     this.select = this.select.bind(this)
   }
 /*
+  ***** JOIN BASED ON TWO TABLES AND 2 KEYS **********
+  const join = (tables, keys) => {
+  stateTbl = state.tables
+  let joinColumns = []
+  let joinValues = []
+  let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
+  let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
+  joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
+    for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
+      for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
+        console.log(stateTbl[tables[0]].values[i][forKey])
+      if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] )
+      joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
+      }
+    }
+  console.log(joinValues)
+}
+
+---------------------------------------------------
+
+********** JOIN BASED ONE TWO TABLE NAMES, FOREIGN KEY SET IN STATE
   const join = (tables) => {
     stateTbl = state.tables
     let joinColumns = stateTbl[tables[0]].columns
