@@ -25,10 +25,11 @@ class App extends Component {
           ],
           foreignKey: null,
           xY: null,
-          selected: null
+          selected: {
+            columnIndexes: null
+          }
         },
           
-        },
         guitars: {
           columns: ['ID', 'make', 'model', 'year'],
           values: [
@@ -39,7 +40,9 @@ class App extends Component {
           ],
           foreignKey: null,
           xY: null,
-          selected: null
+          selected: {
+            columnIndexes: null
+          }
         },
 
         /*
@@ -66,6 +69,7 @@ class App extends Component {
       }
       */
     }
+  }
     this.onChange = this.onChange.bind(this)
     this.select = this.select.bind(this)
   }
@@ -132,20 +136,31 @@ class App extends Component {
       search.table = table
     }
     // console.log(search)
-    let columnIndexes
-    console.log("searchhhhhh", search)
-    console.log("searching working", "columns" in search && "table" in search)
+    let columnIndexes = null
     if ("columns" in search && "table" in search) {
-      console.log("its running")
       columnIndexes = search.columns.map(column => {
-        console.log("found it", search.table in this.state.tables && this.state.tables[search.table].columns.indexOf(column))
         if (search.table in this.state.tables && this.state.tables[search.table].columns.indexOf(column) >= 0) {
           return this.state.tables[search.table].columns.indexOf(column)
+        } else {
+          return null
         }
       })
     }
-    console.log("column indexes", columnIndexes)
-    // this.setState({[query.from]: {...this.state.tables[query.from], selected: columnIndexes}})
+    console.log("query.from?!?!?", columnIndexes)
+    if (columnIndexes) {
+      this.setState(prevState => ({
+        ...prevState, tables: {
+          ...prevState.tables, [query.from]: { 
+            ...prevState.tables[query.from], selected: {
+              ...prevState.tables[query.from].selected, columnIndexes: columnIndexes
+            }
+          }
+        }
+      }))
+      console.log(this.state.tables)
+    }
+    
+    
   }
     // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
     // console.log(this.state.query.tables)
@@ -153,7 +168,7 @@ class App extends Component {
   
   onChange = (event, args) => {
     this.setState({ query: {...this.state.query, [args]: event.target.value}}, this.select)
-    // console.log(this.state.tables.cars)
+    console.log("selected?", this.state.tables.cars)
   }
 
   

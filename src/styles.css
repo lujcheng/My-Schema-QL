@@ -148,3 +148,9 @@ th.table-title {
 	display: flex;
 	justify-content: flex-end;
 }
+
+/* highlight selection */
+.data-row .colSelected, .header-row .colSelected {
+	border-color: #011f4b;
+	border-width: 0.4em;
+}
