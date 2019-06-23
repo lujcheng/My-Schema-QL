@@ -17,6 +17,33 @@ class App extends Component {
       },
       tables: {
         cars: {
+          /*
+          columns: ['ID', 'make', 'model', 'year'],
+          values: [
+            ['1', 'VW', 'Jetta', '2010']
+            ["2", 'Ford', 'Fiesta', '2015'],
+            ["3", 'Chevy', 'Blazer', '2000'],
+            ["4", 'Honda', 'Accord', '1978'],
+          ],
+          foreignKey: null,
+          xY: null 
+        },
+          ]
+        },
+        guitars: {
+          columns: ['ID', 'make', 'model', 'year'],
+          values: [
+            ["1", 'Fender', 'Tele', '2010'],
+            ["2", 'Gibson', 'SG', '2015'],
+            ["3", 'Guild', 'Starfire', '2001'],
+            [ "4", 'Gretsch', 'Jet', '2005']
+          ],
+          foreignKey: null,
+          xY: null
+        },
+
+          */
+         
           data: [
             { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
             { ID: "2", make: 'Ford', model: 'Fiesta', year: '2015'},
