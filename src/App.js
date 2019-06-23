@@ -11,8 +11,6 @@ class App extends Component {
     this.state = { 
       user: "1",
       query: {
-        select: null,
-        columns: null,
         values: null
       },
       tables: {
@@ -121,11 +119,11 @@ class App extends Component {
     let columns = null
     let tables = null
     const search = {}
-    if (query.select != undefined) {
+    if (query.select) {
       columns = query.select.split(/[ ,]+/)
       search.columns = columns
     }
-    if (query.from != undefined) {
+    if (query.from) {
       tables = query.from.split(/[ ,]+/)
       search.tables = tables
     }
@@ -146,7 +144,7 @@ class App extends Component {
   }
   
   render() {
-    console.log(this.select(this.state.query.values, this.state.query.from, this.state.query.select))
+  
     return (
       <div>
         <div>
