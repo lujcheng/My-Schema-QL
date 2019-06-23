@@ -11,8 +11,6 @@ class App extends Component {
     this.state = { 
       user: "1",
       query: {
-        select: null,
-        columns: null,
         values: null
       },
       tables: {
@@ -43,7 +41,7 @@ class App extends Component {
         },
 
           */
-         
+
           data: [
             { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
             { ID: "2", make: 'Ford', model: 'Fiesta', year: '2015'},
@@ -68,17 +66,76 @@ class App extends Component {
     this.onChange = this.onChange.bind(this)
     this.select = this.select.bind(this)
   }
-
-  select = (input, table, column) => {
-
-    if(this.state.tables[table]) {
-      let newData = this.state.tables[table].data
-      let values = newData.map((row => (row[column])))
-      console.log(values)
+/*
+  ***** JOIN BASED ON TWO TABLES AND 2 KEYS **********
+  const join = (tables, keys) => {
+  stateTbl = state.tables
+  let joinColumns = []
+  let joinValues = []
+  let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
+  let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
+  joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
+    for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
+      for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
+        console.log(stateTbl[tables[0]].values[i][forKey])
+      if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] )
+      joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
+      }
     }
+  console.log(joinValues)
+}
+
+---------------------------------------------------
+
+********** JOIN BASED ONE TWO TABLE NAMES, FOREIGN KEY SET IN STATE
+  const join = (tables) => {
+    stateTbl = state.tables
+    let joinColumns = stateTbl[tables[0]].columns
+    let joinValues = stateTbl[tables[0]].values
+    let forKey
+    let primeKey
+    for(let tbl=1; tbl < tables.length; tbl++) {
+      forKey = stateTbl[tables[tbl-1]].columns.indexOf(stateTbl[tables[tbl-1]].foreignKey)
+      primeKey = stateTbl[tables[tbl]].columns.indexOf(stateTbl[tables[tbl]].primaryKey)
+      console.log(forKey,primeKey)
+      joinColumns = joinColumns.concat(state.tables[tables[tbl]].columns)
+      for (let i=0; i < joinValues.length; i++) {
+        for (let e=0; e< state.tables[tables[tbl]].values.length; e++) {
+        if(joinValues[i][forKey] === state.tables[tables[tbl]].values[e][primeKey] )
+        joinValues[i] = joinValues[i].concat(state.tables[tables[tbl]].values[e])
+        }
+      }
+    }
+    console.log(joinValues)
+    // for each table
+    // find table values
+    // find columns
+    // find values
+    // join column and values to central table
+  }
+
+   */
+  select = (query) => {
+    let columns = null
+    let tables = null
+    const search = {}
+    if (typeof query.select === 'string') {
+      columns = query.select.split(/[ ,]+/)
+      search.columns = columns
+    }
+    if (typeof query.from === 'string') {
+      tables = query.from.split(/[ ,]+/)
+      search.tables = tables
+    }
+    console.log(search)
+    let columnIndexes = search.columns.map(column => {
+      return this.state.tables[search.tables].columns.indexOf(column)
+    })
+    return columnIndexes
+  }
     // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
     // console.log(this.state.query.tables)
-  }
+  
   
   onChange = (event, args) => {
     console.log(event.target.name, args)
@@ -87,7 +144,7 @@ class App extends Component {
   }
   
   render() {
-    console.log(this.select(this.state.query.values, this.state.query.from, this.state.query.select))
+  
     return (
       <div>
         <div>
