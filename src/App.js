@@ -119,11 +119,11 @@ class App extends Component {
     let columns = null
     let tables = null
     const search = {}
-    if (query.select) {
+    if (typeof query.select === 'string') {
       columns = query.select.split(/[ ,]+/)
       search.columns = columns
     }
-    if (query.from) {
+    if (typeof query.from === 'string') {
       tables = query.from.split(/[ ,]+/)
       search.tables = tables
     }
