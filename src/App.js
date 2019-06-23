@@ -15,18 +15,18 @@ class App extends Component {
       },
       tables: {
         cars: {
-          /*
+          
           columns: ['ID', 'make', 'model', 'year'],
           values: [
-            ['1', 'VW', 'Jetta', '2010']
+            ['1', 'VW', 'Jetta', '2010'],
             ["2", 'Ford', 'Fiesta', '2015'],
             ["3", 'Chevy', 'Blazer', '2000'],
-            ["4", 'Honda', 'Accord', '1978'],
+            ["4", 'Honda', 'Accord', '1978']
           ],
           foreignKey: null,
           xY: null 
         },
-          ]
+          
         },
         guitars: {
           columns: ['ID', 'make', 'model', 'year'],
@@ -40,7 +40,7 @@ class App extends Component {
           xY: null
         },
 
-          */
+        /*
 
           data: [
             { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
@@ -62,6 +62,7 @@ class App extends Component {
           xY: null
         },
       }
+      */
     }
     this.onChange = this.onChange.bind(this)
     this.select = this.select.bind(this)

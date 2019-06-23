@@ -5,7 +5,7 @@ import Draggable from 'react-draggable';
 class Canvas extends Component {
   render() {
     const tables = this.props.tables
-    const renderTables = Object.keys(this.props.tables)
+    const renderTables = Object.keys(tables)
       .map((tableKey, index) => {
         const table = tables[tableKey]
         return (
