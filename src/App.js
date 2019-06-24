@@ -186,8 +186,18 @@ class App extends Component {
   
   
   onChange = (event, args) => {
-    this.setState({ query: {...this.state.query, [args]: event.target.value}}, this.select)
-    this.checkMatch()
+    const state = () => {
+      return new Promise ((resolve, reject) => {
+        this.setState({ query: {...this.state.query, [args]: event.target.value}}, resolve)
+      })
+    }
+      state()
+      .then(() => {
+        this.select()
+      })
+      .then(() => {
+        this.checkMatch()
+      })
   }
 
   renderNewTable = (tableObj) => {
