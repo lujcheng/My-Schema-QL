@@ -3,21 +3,29 @@ import React, { Component } from 'react'
 class Table extends Component {
 
   renderTableHeader() {
-    let header = Object.keys(this.props.table.data[0])
-    return header.map((key, index) => {
-      return <th className="handle" key={index}>{key.toUpperCase()}</th>
+    let columnHeaders = this.props.table.columns
+    return columnHeaders.map((key, index) => {
+      if (this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(index)) {
+        return <th className="handle colSelected" key={index}>{key.toUpperCase()}</th>
+      } else {
+        return <th className="handle" key={index}>{key.toUpperCase()}</th>
+      }
     })
   }
 
   renderTableData() {
-    let data = this.props.table.data
+    let data = this.props.table.values
     return data.map((value, index) => {
       let items = Object.values(value)
       return (
         <tr key={index} className="data-row">
           {
             items.map((item, index) => {
-              return <td key={index} >{item}</td>
+              if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(index)) {
+                return <td key={index} className="colSelected" >{item}</td>
+              } else {
+                return <td key={index} >{item}</td>
+              }
             })
           }
         </tr>
@@ -39,7 +47,7 @@ class Table extends Component {
             <tr className="header-row">
               {this.renderTableHeader()}
             </tr>
-              {this.renderTableData()}
+            {this.renderTableData()}
           </tbody>
         </table>
       )
