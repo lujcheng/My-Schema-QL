@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 class Table extends Component {
 
   renderTableHeader() {
-    console.log("hopefully not null", this.props.table)
     let columnHeaders = this.props.table.columns
     return columnHeaders.map((key, index) => {
       if (this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(index)) {

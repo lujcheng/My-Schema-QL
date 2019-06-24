@@ -9,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props) 
     this.state = { 
+      match: false,
       user: "1",
       query: {
         values: null
@@ -72,6 +73,7 @@ class App extends Component {
   }
     this.onChange = this.onChange.bind(this)
     this.select = this.select.bind(this)
+    this.checkMatch = this.checkMatch.bind(this)
   }
 /*
   ***** JOIN BASED ON TWO TABLES AND 2 KEYS **********
@@ -122,7 +124,24 @@ class App extends Component {
   }
 
    */
+  checkMatch = () => {
+    if (this.state.match === false) {
+      Object.keys(this.state.tables).forEach((table) => {
+        this.setState(prevState => ({
+          ...prevState, tables: {
+            ...prevState.tables, [table]: { 
+              ...prevState.tables[table], selected: {
+                ...prevState.tables[table].selected, columnIndexes: null
+              }
+            }
+          }
+        }))
+      })
+    } 
+  }
+
   select = () => {
+    this.checkMatch()
     let query = this.state.query
     let columns = null
     let table = null
@@ -137,17 +156,21 @@ class App extends Component {
     }
     // console.log(search)
     let columnIndexes = null
-    if ("columns" in search && "table" in search) {
+    if ("columns" in search && "table" in search && Object.keys(this.state.tables).includes(search.table[0])) {
       columnIndexes = search.columns.map(column => {
-        if (search.table in this.state.tables && this.state.tables[search.table].columns.indexOf(column) >= 0) {
+        if (this.state.tables[search.table].columns.indexOf(column) >= 0) {
+          console.log("workinggggggggggggg")
+          this.setState({match: true})
           return this.state.tables[search.table].columns.indexOf(column)
         } else {
           return null
         }
       })
+    } else {
+      this.setState({match: false})
     }
     console.log("query.from?!?!?", columnIndexes)
-    if (columnIndexes) {
+    if (columnIndexes && Object.keys(this.state.tables).includes(search.table[0])) {
       this.setState(prevState => ({
         ...prevState, tables: {
           ...prevState.tables, [query.from]: { 
@@ -157,10 +180,7 @@ class App extends Component {
           }
         }
       }))
-      console.log(this.state.tables)
-    }
-    
-    
+    } 
   }
     // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
     // console.log(this.state.query.tables)
@@ -168,7 +188,7 @@ class App extends Component {
   
   onChange = (event, args) => {
     this.setState({ query: {...this.state.query, [args]: event.target.value}}, this.select)
-    console.log("selected?", this.state.tables.cars)
+    this.checkMatch()
   }
 
   
