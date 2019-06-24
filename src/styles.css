@@ -95,6 +95,11 @@ body {
 
 /* tables */
 
+.new-table-item {
+	background-color: transparent;
+	border-style: none;
+}
+
 table {
 	box-shadow: 2px 2px 3px #005b96;
 }
@@ -126,10 +131,10 @@ th.table-title {
 }
 
 
-.data-row :hover {
+/* .data-row :hover {
 	border-color: #011f4b;
 	border-width: 0.4em;
-}
+} */
 
 .header-row {
 	background-color: #005b96;

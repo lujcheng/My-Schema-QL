@@ -190,7 +190,12 @@ class App extends Component {
     this.checkMatch()
   }
 
-
+  renderNewTable = (tableObj) => {
+    console.log("new table: ", tableObj)
+    let tableName = tableObj.tableName;
+    let cols = tableObj.cols;
+    let rows = tableObj.rows;
+  }
 
   
   render() {
@@ -198,7 +203,7 @@ class App extends Component {
     return (
       <div>
         <div>
-          <NewTable />
+          <NewTable renderNewTable={this.renderNewTable} />
         </div>
         <div>
           <Query onChange={this.onChange} />
