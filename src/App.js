@@ -116,34 +116,37 @@ class App extends Component {
 
 
   join = (tables, keys) => {
-    let stateTbl = this.state.tables
-    let joinColumns = []
-    let joinValues = []
-    let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
-    let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
-    joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
-    for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
-      for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-        console.log(stateTbl[tables[0]].values[i][forKey])
-        if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] )
-        joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
-      }
-    }
-    this.setState({
-      tables: {
-        ...this.state.tables,
-        [`${tables[0]}_${tables[1]}`]: {
-          columns: joinColumns, 
-          values: joinValues, 
-          foreignKey: null, 
-          xY: null, 
-          selected: {
-            columnIndexes: null
+    if (Object.keys(this.state.tables).includes(tables[0]) && Object.keys(this.state.tables).includes(tables[1])) {
+      let stateTbl = this.state.tables
+      let joinColumns = []
+      let joinValues = []
+      let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
+      let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
+      joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
+      for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
+        for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
+          console.log(stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
+          if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
+            joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
           }
         }
       }
-    })
-    return `${tables[0]}_${tables[1]}`
+      this.setState({
+        tables: {
+          ...this.state.tables,
+          [`${tables[0]}_${tables[1]}`]: {
+            columns: joinColumns, 
+            values: joinValues, 
+            foreignKey: null, 
+            xY: {x: 0, y: 0}, 
+            selected: {
+              columnIndexes: null
+            }
+          }
+        }
+      })
+      return `${tables[0]}_${tables[1]}`
+    }
     // return ({
     //   [`${tables[0]}_${tables[1]}`]: {
     //     columns: joinColumns, 
@@ -200,7 +203,7 @@ class App extends Component {
   }
 
   select = () => {
-    debugger
+  
     let query = this.state.query
     let columns = null
     let table = null
@@ -253,6 +256,11 @@ class App extends Component {
     }
       state()
       .then(() => {
+        if ("join" in this.state.query) {
+          this.join([this.state.query.from, this.state.query.join], ["ID", "ID"] )
+        }
+      })
+      .then(() => {
         this.select()
       })
       .then(() => {
@@ -267,7 +275,6 @@ class App extends Component {
     let rows = tableObj.rows;
   }
 
-  this.join(["cars", "guitars"],[0,0])
   render() {
     return (
       <div>

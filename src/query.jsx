@@ -12,6 +12,8 @@ class Query extends Component {
 						<input name="select" type="text" placeholder="*" className="query-item input-query" onChange={(e) => this.props.onChange(e, "select")} />
 						<p className="query-item query-tags">FROM</p>
 						<input name="from" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "from")} />
+						<p className="query-item query-tags">join</p>
+						<input name="join" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "join")} />
 						<select className="dropdown-box">
 								<option value="join">JOIN</option>
 								<option value="on">ON</option>
