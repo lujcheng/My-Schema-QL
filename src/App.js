@@ -262,14 +262,61 @@ class App extends Component {
         this.checkMatch()
       })
   }
+  
+  renderTableChange = (tableName, val, col, row) => {
+    let tabName = tableName;
+    let value = val;
+    let colNum = col;
+    let rowNum = row;
+    let tempTables = this.state.tables;
+    tempTables[tabName].values[colNum][rowNum] = value;
+    this.setState({
+      tables: tempTables
+    })
+  }
 
   renderNewTable = (tableObj) => {
-    console.log("new table: ", tableObj)
     let tableName = tableObj.tableName;
     let cols = tableObj.cols;
     let rows = tableObj.rows;
-  }
+    
+    let colArray = () => {
+      let colArray = [];
+      for (let i = 0; i < cols; i ++) {
+        colArray.push(" ")
+      }
+      return colArray;
+    }
 
+    let dataArray = () => {
+      let dataArray = [];
+      let rowArray = [];
+      for (let j = 0; j < rows; j ++) {
+        for (let i = 0; i < 1; i ++) {
+          dataArray.push(" ")
+        }
+        rowArray.push(dataArray)
+      }
+      return rowArray;
+    }
+
+    this.setState({
+      tables: {
+        ...this.state.tables,
+        [tableName]: {
+          columns: colArray(), 
+          values: dataArray(), 
+          foreignKey: null, 
+          xY: null, 
+          selected: {
+            columnIndexes: null
+          }
+        }
+      }
+    })
+
+
+  }
   render() {
     return (
       <div>
@@ -280,7 +327,7 @@ class App extends Component {
           <Query onChange={this.onChange} />
         </div>
         <div>
-          <MyCanvas tables={this.state.tables}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange}/>
         </div>
       </div>
     );

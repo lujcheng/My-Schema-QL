@@ -3,6 +3,10 @@ import Table from "./table.jsx"
 import Draggable from 'react-draggable';
 
 class Canvas extends Component {
+  renderTableChange = (tableName, val, col, row) => {
+    this.props.renderTableChange(tableName, val, col, row)
+  }
+
   render() {
     const tables = this.props.tables
     const renderTables = Object.keys(tables)
@@ -20,7 +24,7 @@ class Canvas extends Component {
             onDrag={this.handleDrag}
             onStop={this.handleStop}>
             <div>
-              <Table key={index} tableName={tableKey} table={table}/>
+              <Table key={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange}/>
             </div>
         </Draggable>)
         })
