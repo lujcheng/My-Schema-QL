@@ -61,6 +61,9 @@ class App extends Component {
 
   renderNewTable = (tableObj) => {
     console.log("new table: ", tableObj)
+    let tableName = tableObj.tableName;
+    let cols = tableObj.cols;
+    let rows = tableObj.rows;
   }
 
   
