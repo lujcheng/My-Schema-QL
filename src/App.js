@@ -189,9 +189,20 @@ class App extends Component {
     this.setState({ query: {...this.state.query, [args]: event.target.value}}, this.select)
     this.checkMatch()
   }
+  
+  renderTableChange = (tableName, val, col, row) => {
+    let tabName = tableName;
+    let value = val;
+    let colNum = col;
+    let rowNum = row;
+    let tempTables = this.state.tables;
+    tempTables[tabName].values[colNum][rowNum] = value;
+    this.setState({
+      tables: tempTables
+    })
+  }
 
   renderNewTable = (tableObj) => {
-    console.log("new table: ", tableObj)
     let tableName = tableObj.tableName;
     let cols = tableObj.cols;
     let rows = tableObj.rows;
@@ -213,7 +224,6 @@ class App extends Component {
         }
         rowArray.push(dataArray)
       }
-      console.log("rowArray", rowArray)
       return rowArray;
     }
 
@@ -231,6 +241,8 @@ class App extends Component {
         }
       }
     })
+
+
   }
 
 
@@ -246,7 +258,7 @@ class App extends Component {
           <Query onChange={this.onChange} />
         </div>
         <div>
-          <MyCanvas tables={this.state.tables}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange}/>
         </div>
       </div>
     );
