@@ -3,14 +3,14 @@ import React, { Component } from 'react'
 class Table extends Component {
 
   renderTableHeader() {
-    let header = Object.keys(this.props.table.data[0])
-    return header.map((key, index) => {
+    let columnHeaders = this.props.table.columns
+    return columnHeaders.map((key, index) => {
       return <th className="handle" key={index}>{key.toUpperCase()}</th>
     })
   }
 
   renderTableData() {
-    let data = this.props.table.data
+    let data = this.props.table.values
     return data.map((value, index) => {
       let items = Object.values(value)
       return (
@@ -39,7 +39,7 @@ class Table extends Component {
             <tr className="header-row">
               {this.renderTableHeader()}
             </tr>
-              {this.renderTableData()}
+            {this.renderTableData()}
           </tbody>
         </table>
       )
