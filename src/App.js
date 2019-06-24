@@ -141,7 +141,6 @@ class App extends Component {
   }
 
   select = () => {
-    this.checkMatch()
     let query = this.state.query
     let columns = null
     let table = null
@@ -190,6 +189,8 @@ class App extends Component {
     this.setState({ query: {...this.state.query, [args]: event.target.value}}, this.select)
     this.checkMatch()
   }
+
+
 
   
   render() {
