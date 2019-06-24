@@ -195,7 +195,44 @@ class App extends Component {
     let tableName = tableObj.tableName;
     let cols = tableObj.cols;
     let rows = tableObj.rows;
+    
+    let colArray = () => {
+      let colArray = [];
+      for (let i = 0; i < cols; i ++) {
+        colArray.push(" ")
+      }
+      return colArray;
+    }
+
+    let dataArray = () => {
+      let dataArray = [];
+      let rowArray = [];
+      for (let j = 0; j < rows; j ++) {
+        for (let i = 0; i < 1; i ++) {
+          dataArray.push(" ")
+        }
+        rowArray.push(dataArray)
+      }
+      console.log("rowArray", rowArray)
+      return rowArray;
+    }
+
+    this.setState({
+      tables: {
+        ...this.state.tables,
+        [tableName]: {
+          columns: colArray(), 
+          values: dataArray(), 
+          foreignKey: null, 
+          xY: null, 
+          selected: {
+            columnIndexes: null
+          }
+        }
+      }
+    })
   }
+
 
   
   render() {

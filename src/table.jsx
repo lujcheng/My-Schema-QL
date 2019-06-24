@@ -38,7 +38,7 @@ class Table extends Component {
         <table className="schema-table" border='1'>
           <thead className="table-title handle">
             <tr>
-              <th colSpan="4" className="has-text-centered table-title handle">
+              <th colSpan={this.props.table.columns.length} className="has-text-centered table-title handle">
                 {this.props.tableName}
               </th>
             </tr>
