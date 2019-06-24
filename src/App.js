@@ -131,21 +131,11 @@ class App extends Component {
           }
         }
       }
-      this.setState({
-        tables: {
-          ...this.state.tables,
-          [`${tables[0]}_${tables[1]}`]: {
-            columns: joinColumns, 
-            values: joinValues, 
-            foreignKey: null, 
-            xY: {x: 0, y: 0}, 
-            selected: {
-              columnIndexes: null
-            }
-          }
-        }
-      })
-      return `${tables[0]}_${tables[1]}`
+
+      this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
+      this.setState({join: `${tables[0]}_${tables[1]}` })
+    } else {
+      this.setState({join: false })
     }
     // return ({
     //   [`${tables[0]}_${tables[1]}`]: {
@@ -213,12 +203,17 @@ class App extends Component {
       search.columns = columns
     }
     if ('from' in query && typeof query.from === 'string') {
-      table = query.from.split(/[ ,]+/)
-      search.table = table
+      if (this.state.join) {
+        search.table = [this.state.join]
+      } else {
+        table = query.from.split(/[ ,]+/)
+        search.table = table
+      }
     }
     // console.log(search)
     let columnIndexes = null
     if ("columns" in search && "table" in search && Object.keys(this.state.tables).includes(search.table[0])) {
+
       columnIndexes = search.columns.map(column => {
         if (this.state.tables[search.table[0]].columns.indexOf(column) >= 0) {
           console.log("workinggggggggggggg")
