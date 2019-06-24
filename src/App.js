@@ -46,6 +46,21 @@ class App extends Component {
           }
         },
 
+        dogs: {
+          columns: ['ID', 'name', 'breed', 'age'],
+          values: [
+            ["1", 'Enfys', 'Husky', '12'],
+            ["2", 'Enfys', 'Pitbull', '15'],
+            ["3", 'Charlie', 'poodle', '21'],
+            [ "4", 'Maple', 'Golden Doodle', '56']
+          ],
+          foreignKey: null,
+          xY: null,
+          selected: {
+            columnIndexes: null
+          }
+        }
+
         /*
 
           data: [
@@ -74,26 +89,63 @@ class App extends Component {
     this.onChange = this.onChange.bind(this)
     this.select = this.select.bind(this)
     this.checkMatch = this.checkMatch.bind(this)
+    this.join = this.join.bind(this)
+    this.createTable = this.createTable.bind(this)
   }
-/*
-  ***** JOIN BASED ON TWO TABLES AND 2 KEYS **********
-  const join = (tables, keys) => {
-  stateTbl = state.tables
-  let joinColumns = []
-  let joinValues = []
-  let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
-  let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
-  joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
-    for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
-      for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-        console.log(stateTbl[tables[0]].values[i][forKey])
-      if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] )
-      joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
-      }
-    }
-  console.log(joinValues)
-}
 
+
+  createTable = (tableName, colArray, dataArray) => {
+    this.setState({
+      tables: {
+        ...this.state.tables,
+        [tableName]: {
+          columns: colArray, 
+          values: dataArray, 
+          foreignKey: null, 
+          xY: null, 
+          selected: {
+            columnIndexes: null
+          }
+        }
+      }
+    })
+  }
+
+
+
+
+
+  join = (tables, keys) => {
+    if (Object.keys(this.state.tables).includes(tables[0]) && Object.keys(this.state.tables).includes(tables[1])) {
+      let stateTbl = this.state.tables
+      let joinColumns = []
+      let joinValues = []
+      let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
+      let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
+      joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
+      for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
+        for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
+          console.log(stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
+          if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
+            joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
+          }
+        }
+      }
+
+      this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
+      this.setState({join: `${tables[0]}_${tables[1]}` })
+    } else {
+      this.setState({join: false })
+    }
+    // return ({
+    //   [`${tables[0]}_${tables[1]}`]: {
+    //     columns: joinColumns, 
+    //     values: joinValues
+    //   }
+    // })
+  }
+  
+  /*
 ---------------------------------------------------
 
 ********** JOIN BASED ONE TWO TABLE NAMES, FOREIGN KEY SET IN STATE
@@ -141,6 +193,7 @@ class App extends Component {
   }
 
   select = () => {
+  
     let query = this.state.query
     let columns = null
     let table = null
@@ -150,17 +203,22 @@ class App extends Component {
       search.columns = columns
     }
     if ('from' in query && typeof query.from === 'string') {
-      table = query.from.split(/[ ,]+/)
-      search.table = table
+      if (this.state.join) {
+        search.table = [this.state.join]
+      } else {
+        table = query.from.split(/[ ,]+/)
+        search.table = table
+      }
     }
     // console.log(search)
     let columnIndexes = null
     if ("columns" in search && "table" in search && Object.keys(this.state.tables).includes(search.table[0])) {
+
       columnIndexes = search.columns.map(column => {
-        if (this.state.tables[search.table].columns.indexOf(column) >= 0) {
+        if (this.state.tables[search.table[0]].columns.indexOf(column) >= 0) {
           console.log("workinggggggggggggg")
           this.setState({match: true})
-          return this.state.tables[search.table].columns.indexOf(column)
+          return this.state.tables[search.table[0]].columns.indexOf(column)
         } else {
           return null
         }
@@ -172,9 +230,9 @@ class App extends Component {
     if (columnIndexes && Object.keys(this.state.tables).includes(search.table[0])) {
       this.setState(prevState => ({
         ...prevState, tables: {
-          ...prevState.tables, [query.from]: { 
-            ...prevState.tables[query.from], selected: {
-              ...prevState.tables[query.from].selected, columnIndexes: columnIndexes
+          ...prevState.tables, [search.table[0]]: { 
+            ...prevState.tables[search.table[0]], selected: {
+              ...prevState.tables[search.table[0]].selected, columnIndexes: columnIndexes
             }
           }
         }
@@ -186,8 +244,23 @@ class App extends Component {
   
   
   onChange = (event, args) => {
-    this.setState({ query: {...this.state.query, [args]: event.target.value}}, this.select)
-    this.checkMatch()
+    const state = () => {
+      return new Promise ((resolve, reject) => {
+        this.setState({ query: {...this.state.query, [args]: event.target.value}}, resolve)
+      })
+    }
+      state()
+      .then(() => {
+        if ("join" in this.state.query) {
+          this.join([this.state.query.from, this.state.query.join], ["ID", "ID"] )
+        }
+      })
+      .then(() => {
+        this.select()
+      })
+      .then(() => {
+        this.checkMatch()
+      })
   }
 
   renderNewTable = (tableObj) => {
@@ -197,9 +270,7 @@ class App extends Component {
     let rows = tableObj.rows;
   }
 
-  
   render() {
-  
     return (
       <div>
         <div>
