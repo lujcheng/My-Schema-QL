@@ -8,7 +8,9 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-draggable": "^3.3.0",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "react-validation": "^3.0.7",
+    "validator": "^11.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
