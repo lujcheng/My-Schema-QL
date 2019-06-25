@@ -7,6 +7,14 @@ class Canvas extends Component {
     this.props.renderTableChange(tableName, val, col, row)
   }
 
+  changeTableHeader = (tableName, val, col) => {
+    this.props.changeTableHeader(tableName, val, col)
+  }
+
+  changeTableTitle = (tableName, val, tableID) => {
+    this.props.changeTableTitle(tableName, val, tableID)
+  }
+
   render() {
     const tables = this.props.tables
     const renderTables = Object.keys(tables)
@@ -24,7 +32,7 @@ class Canvas extends Component {
             onDrag={this.handleDrag}
             onStop={this.handleStop}>
             <div>
-              <Table key={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange}/>
+              <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle}/>
             </div>
         </Draggable>)
         })
