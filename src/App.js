@@ -324,7 +324,9 @@ class App extends Component {
           <NewTable renderNewTable={this.renderNewTable} />
         </div>
         <div>
-          <Query onChange={this.onChange} />
+          <nav id="sub-nav-bar">
+            <Query onChange={this.onChange} />
+          </nav>
         </div>
         <div>
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange}/>

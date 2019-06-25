@@ -30,6 +30,11 @@ body {
 	justify-content: left;
 }
 
+.error-message {
+	color: red;
+	display: flex;
+}
+
 .query-item {
 	padding-right: 0.3em;
 }
