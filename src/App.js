@@ -95,6 +95,20 @@ class App extends Component {
     this.where = this.where.bind(this)
   }
 
+  findTables = () => {
+    const query = this.state.query
+    let currentTable
+    if ('from' in query && typeof query.from === 'string') {
+      if (this.state.join) {
+        // only made when join is found
+        currentTable = [this.state.join]
+      } else {
+        let fromTables = query.from.split(/[ ,]+/)
+        currentTable = fromTables[0]
+      }
+    }
+    
+  }
 
   createTable = (tableName, colArray, dataArray) => {
     this.setState({
