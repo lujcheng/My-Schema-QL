@@ -192,7 +192,23 @@ class App extends Component {
     } 
   }
 
-  where= () => {
+  where = (table, query) => {
+    // based on selected columns
+    // query = "id > 3"
+    let query = query.split(/[ ,]+/)
+    // expected output = ["id", ">", "3"]
+
+    const operate = {
+      '<': (a, b) => {return a < b},
+      '>': (a, b) => {return a > b},
+      '=': (a, b) => {return a == b}
+    }
+    const search = {
+      table: table
+      indexes: this.state.tables[table].columns.indexOf(query[0]),
+      values: 
+    }
+    // search values on specified column and value constraint
 
   }
 
