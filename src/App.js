@@ -92,6 +92,7 @@ class App extends Component {
     this.join = this.join.bind(this)
     this.createTable = this.createTable.bind(this)
     this.changeTableTitle = this.changeTableTitle.bind(this)
+    this.where = this.where.bind(this)
   }
 
 
@@ -193,37 +194,65 @@ class App extends Component {
     } 
   }
 
+  where = (tableName, input) => {
+    // based on selected columns
+    // query = "id > 3"
+    let query = input.split(/[ ,]+/)
+    // expected output = ["id", ">", "3"]
+
+    const operate = {
+      '<': (a, b) => {return a < b},
+      '>': (a, b) => {return a > b},
+      '=': (a, b) => {return a == b}
+    }
+    // determine the column index
+    let colIndex = this.state.tables[tableName].columns.indexOf(query[0])
+    // loop through row values at column index
+    return this.state.tables[tableName].values.map((row, index) => {
+      if (operate[query[1]] (row[colIndex], query[2])) {
+        return index
+      }
+    }).filter(el => el != null)
+    // expected output = [..row index, row index]
+  }
+
   select = () => {
   
     let query = this.state.query
     let columns = null
     let table = null
     const search = {}
+    // check for values in query, set new data structure
     if ('select' in query && typeof query.select === 'string') {
       columns = query.select.split(/[ ,]+/)
       search.columns = columns
     }
+    // check for column
     if ('from' in query && typeof query.from === 'string') {
       if (this.state.join) {
+        // only made when join is found
         search.table = [this.state.join]
       } else {
         table = query.from.split(/[ ,]+/)
         search.table = table
       }
     }
-    // console.log(search)
     let columnIndexes = null
+    // look for indexes based on
     if ("columns" in search && "table" in search && Object.keys(this.state.tables).includes(search.table[0])) {
-
-      columnIndexes = search.columns.map(column => {
-        if (this.state.tables[search.table[0]].columns.indexOf(column) >= 0) {
-          console.log("workinggggggggggggg")
-          this.setState({match: true})
-          return this.state.tables[search.table[0]].columns.indexOf(column)
+      if (search.columns[0] === '*') {
+        this.setState({match: true})
+        columnIndexes = Object.keys(this.state.tables[search.table[0]].columns).toString()
+      } else {
+        columnIndexes = search.columns.map(column => {
+          if (this.state.tables[search.table[0]].columns.indexOf(column) >= 0) {
+            this.setState({match: true})
+            return this.state.tables[search.table[0]].columns.indexOf(column)
         } else {
           return null
         }
       })
+    }
     } else {
       this.setState({match: false})
     }
