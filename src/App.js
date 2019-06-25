@@ -91,6 +91,7 @@ class App extends Component {
     this.checkMatch = this.checkMatch.bind(this)
     this.join = this.join.bind(this)
     this.createTable = this.createTable.bind(this)
+    this.changeTableTitle = this.changeTableTitle.bind(this)
   }
 
 
@@ -264,45 +265,75 @@ class App extends Component {
   }
   
   renderTableChange = (tableName, val, col, row) => {
-    let tabName = tableName;
-    let value = val;
-    let colNum = col;
-    let rowNum = row;
-    let tempTables = this.state.tables;
-    tempTables[tabName].values[colNum][rowNum] = value;
+    const tabName = tableName;
+    const value = val;
+    const colNum = col;
+    const rowNum = row;
+    const tempTables = this.state.tables;
+    // console.log("TEMPTABLES", tempTables)
+    // console.log("TEMPTABLES[TABNAME]", tempTables[tabName])
+    // console.log("TEMPTABLES[TABNAME].values", tempTables[tabName].values)
+    let tempRow = [...tempTables[tabName].values[rowNum]];
+    tempRow[colNum] = value
+    tempTables[tabName].values[rowNum] = tempRow
+    // console.log("TEMPTABLES[TABNAME].values[rowNum]", tempTables[tabName].values[rowNum])
+    // console.log("TEMPTABLES[TABNAME].values[rowNum][colNum]", tempTables[tabName].values[rowNum][colNum])
     this.setState({
       tables: tempTables
     })
+    // console.log("COLNUM:", colNum)
+    // console.log("ROWNUM:", rowNum)
+  }
+
+  // tables: {...this.state.tables, tabName: {...this.state.tables[tabName], values: [[]]}}
+
+  changeTableHeader = (tableName, val, col) => {
+    const tabName = tableName;
+    const value = val;
+    const colNum = col;
+    const tempTables = this.state.tables;
+    tempTables[tabName].columns[colNum] = value;
+    this.setState({
+      tables: tempTables
+    })
+    console.log("TABLES FROM HEADER:", this.state.tables)
+  }
+
+  changeTableTitle = (tableName, val, tableID) => {
+    const tabName = tableName;
+    const value = val;
+    const tabID = tableID;
+    const tables = this.state.tables;
+    tables[val] = tables[tabName];
+    delete tables[tabName];
+    this.setState({tables: tables})
+    console.log("TABLES", this.state.tables)
   }
 
   renderNewTable = (tableObj) => {
-    console.log(tableObj)
-    let tableName = tableObj.tableName;
-    let cols = tableObj.cols;
-    let rows = tableObj.rows;
+    const tableName = tableObj.tableName;
+    const cols = tableObj.cols;
+    const rows = tableObj.rows;
     
-    let colArray = () => {
+    const colArray = () => {
       let colArray = [];
       for (let i = 0; i < cols; i ++) {
-        colArray.push(" ")
+        colArray.push("")
       }
 
       return colArray;
     }
 
-    let dataArray = () => {
+    const dataArray = () => {
       let dataArray = [];
       let rowArray = [];
 
       for (let i = 0; i < cols; i ++) {
-        dataArray.push(" ")
+        dataArray.push("")
       }
-
       for (let j = 0; j < rows; j ++) {
         rowArray.push(dataArray)
       }
-
-      console.log(rowArray)
       return rowArray;
     }
 
@@ -333,7 +364,7 @@ class App extends Component {
           <Query onChange={this.onChange} />
         </div>
         <div>
-          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle}/>
         </div>
       </div>
     );
