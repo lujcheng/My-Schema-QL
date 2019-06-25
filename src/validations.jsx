@@ -1,14 +1,9 @@
 import validator from 'validator';
 import React from 'react'
 
-export const required = (value) => {
-  if (!value.toString().trim().length) {
-    return <span className="error-message">require</span>;
+export const spaces = (value) => {
+  if (value.indexOf(" ") >= 0) {
+    return <span className="error-message">can only select one table</span>;
   }
 };
 
-export const email = (value) => {
-  if (!validator.isEmail(value)) {
-    return <span className="error-message">`${value} is not a valid email.`</span>
-  }
-};
