@@ -34,8 +34,8 @@ class Table extends Component {
         <tr key={row} className="data-row">
           {
             items.map((item, col) => {
-              if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(col)) {
-                return <td key={col} className="colSelected" ><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={this.onEnter.bind(this, "item")}/></td>
+              if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
+                return <td key={col} className="colSelected" ><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
               } else {
                 return <td key={col} ><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
               }

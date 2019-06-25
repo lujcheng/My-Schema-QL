@@ -276,6 +276,7 @@ class App extends Component {
   }
 
   renderNewTable = (tableObj) => {
+    console.log(tableObj)
     let tableName = tableObj.tableName;
     let cols = tableObj.cols;
     let rows = tableObj.rows;
@@ -285,18 +286,23 @@ class App extends Component {
       for (let i = 0; i < cols; i ++) {
         colArray.push(" ")
       }
+
       return colArray;
     }
 
     let dataArray = () => {
       let dataArray = [];
       let rowArray = [];
+
+      for (let i = 0; i < cols; i ++) {
+        dataArray.push(" ")
+      }
+
       for (let j = 0; j < rows; j ++) {
-        for (let i = 0; i < 1; i ++) {
-          dataArray.push(" ")
-        }
         rowArray.push(dataArray)
       }
+
+      console.log(rowArray)
       return rowArray;
     }
 
