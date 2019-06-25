@@ -60,30 +60,6 @@ class App extends Component {
             columnIndexes: null
           }
         }
-
-        /*
-
-          data: [
-            { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
-            { ID: "2", make: 'Ford', model: 'Fiesta', year: '2015'},
-            { ID: "3", make: 'Chevy', model: 'Blazer', year: '2000'},
-            { ID: "4", make: 'Honda', model: 'Accord', year: '1978'},
-          ],
-          foreignKey: null,
-          xY: null 
-        },
-        guitars: {
-          data: [
-            { ID: "1", make: 'Fender', model: 'Tele', year: '2010'},
-            { ID: "2", make: 'Gibson', model: 'SG', year: '2015'},
-            { ID: "3", make: 'Guild', model: 'Starfire', year: '2001'},
-            { ID: "4", make: 'Gretsch', model: 'Jet', year: '2005'}
-          ],
-          foreignKey: null,
-          xY: null
-        },
-      }
-      */
     }
   }
     this.onChange = this.onChange.bind(this)
