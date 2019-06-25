@@ -192,12 +192,17 @@ class App extends Component {
     } 
   }
 
+  where= () => {
+
+  }
+
   select = () => {
   
     let query = this.state.query
     let columns = null
     let table = null
     const search = {}
+    // check for values in query, set new data structure
     if ('select' in query && typeof query.select === 'string') {
       columns = query.select.split(/[ ,]+/)
       search.columns = columns
@@ -210,19 +215,21 @@ class App extends Component {
         search.table = table
       }
     }
-    // console.log(search)
     let columnIndexes = null
     if ("columns" in search && "table" in search && Object.keys(this.state.tables).includes(search.table[0])) {
-
-      columnIndexes = search.columns.map(column => {
-        if (this.state.tables[search.table[0]].columns.indexOf(column) >= 0) {
-          console.log("workinggggggggggggg")
-          this.setState({match: true})
-          return this.state.tables[search.table[0]].columns.indexOf(column)
+      if (search.columns[0] === '*') {
+        this.setState({match: true})
+        columnIndexes = Object.keys(this.state.tables[search.table[0]].columns).toString()
+      } else {
+        columnIndexes = search.columns.map(column => {
+          if (this.state.tables[search.table[0]].columns.indexOf(column) >= 0) {
+            this.setState({match: true})
+            return this.state.tables[search.table[0]].columns.indexOf(column)
         } else {
           return null
         }
       })
+    }
     } else {
       this.setState({match: false})
     }
