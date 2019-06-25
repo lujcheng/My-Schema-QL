@@ -91,6 +91,7 @@ class App extends Component {
     this.checkMatch = this.checkMatch.bind(this)
     this.join = this.join.bind(this)
     this.createTable = this.createTable.bind(this)
+    this.where = this.where.bind(this)
   }
 
 
@@ -192,8 +193,26 @@ class App extends Component {
     } 
   }
 
-  where= () => {
+  where = (tableName, input) => {
+    // based on selected columns
+    // query = "id > 3"
+    let query = input.split(/[ ,]+/)
+    // expected output = ["id", ">", "3"]
 
+    const operate = {
+      '<': (a, b) => {return a < b},
+      '>': (a, b) => {return a > b},
+      '=': (a, b) => {return a == b}
+    }
+    // determine the column index
+    let colIndex = this.state.tables[tableName].columns.indexOf(query[0])
+    // loop through row values at column index
+    return this.state.tables[tableName].values.map((row, index) => {
+      if (operate[query[1]] (row[colIndex], query[2])) {
+        return index
+      }
+    }).filter(el => el != null)
+    // expected output = [..row index, row index]
   }
 
   select = () => {
@@ -207,8 +226,10 @@ class App extends Component {
       columns = query.select.split(/[ ,]+/)
       search.columns = columns
     }
+    // check for column
     if ('from' in query && typeof query.from === 'string') {
       if (this.state.join) {
+        // only made when join is found
         search.table = [this.state.join]
       } else {
         table = query.from.split(/[ ,]+/)
@@ -216,6 +237,7 @@ class App extends Component {
       }
     }
     let columnIndexes = null
+    // look for indexes based on
     if ("columns" in search && "table" in search && Object.keys(this.state.tables).includes(search.table[0])) {
       if (search.columns[0] === '*') {
         this.setState({match: true})
