@@ -164,3 +164,7 @@ th.table-title {
 	border-color: #011f4b;
 	border-width: 0.4em;
 }
+
+input {
+	text-align: center;
+}

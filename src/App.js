@@ -310,6 +310,7 @@ class App extends Component {
     this.setState({
       tables: tempTables
     })
+    console.log("TABLES", this.state.tables)
     // console.log("COLNUM:", colNum)
     // console.log("ROWNUM:", rowNum)
   }
