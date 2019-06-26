@@ -15,7 +15,9 @@ class App extends Component {
       user: "1",
       query: {
         values: null,
-        where: "ID > 1"
+        where: "ID > 1",
+        join: "guitars",
+        on: "ID=ID"
       },
       tables: {
         cars: {
@@ -75,6 +77,7 @@ class App extends Component {
     this.checkTableMatches = this.checkTableMatches.bind(this)
     this.findRows = this.findRows.bind(this)
     this.setSelected = this.setSelected.bind(this)
+    this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
 
   checkTableMatches = () => {
@@ -109,6 +112,22 @@ class App extends Component {
     return currentTables
   }
 
+  handleCurrentTable = () => {
+    if (this.state.currentTable.length > 1 && typeof this.state.query.on === 'string') {
+      let currentTables = this.state.currentTable
+      let innerTable = this.state.currentTable[0]
+      let innerOnStatement = this.state.query.on
+      innerOnStatement = innerOnStatement.split(/[=]+/).filter((e) => {if(e != "=") {return e}})
+      for (let i=1; i < currentTables.length; i++) {
+        this.join([innerTable, currentTables[i]], innerOnStatement)
+        innerTable = this.join([innerTable, currentTables[i]], innerOnStatement)
+      }
+      console.log("inner table", innerTable)
+    } else {
+      console.log("table", this.state.currentTable[0])
+    }
+  }
+
   findRows = (table) => {
     if (table != null) {
       let query = this.state.query
@@ -120,7 +139,7 @@ class App extends Component {
         })
       }
       let rowIndexes = rows.map((rows, index) => index)
-      this.setSelected(table, {rows: rowIndexes})
+      this.setSelected(table, {rowIndexes: rowIndexes})
       return rowIndexes
     }
   }
@@ -168,6 +187,7 @@ class App extends Component {
       }
       this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
       this.setState({join: `${tables[0]}_${tables[1]}` })
+      return `${tables[0]}_${tables[1]}`
     } else {
       this.setState({join: false })
     }
@@ -318,13 +338,19 @@ class App extends Component {
     }
       state()
       .then(() => {
-        // 
-        if ("join" in this.state.query) {
-          this.join([this.state.query.from, this.state.query.join], ["ID", "ID"] )
-        }
+        
+        // if ("join" in this.state.query) {
+        //   this.join([this.state.query.from, this.state.query.join], ["ID", "ID"] )
+        // }
+        // old
+        this.checkTableMatches()
       })
       .then(() => {
-        this.select()
+        // this.select() 
+        // old
+        if (this.state.join && this.state.currentTable.length > 1) {
+          this.handleCurrentTable()
+        }
       })
       .then(() => {
         this.checkMatch()
