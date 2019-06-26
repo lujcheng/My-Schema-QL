@@ -8,11 +8,17 @@ import NewTable from './new-table.jsx'
 class App extends Component {
   constructor(props) {
     super(props) 
-    this.state = { 
+    this.state = {
+      join: false,
       match: false,
+      currentTable: null,
       user: "1",
       query: {
-        values: null
+        select: null,
+        from: null,
+        join: null,
+        where: "ID > 2",
+        on: "ID=ID",
       },
       tables: {
         cars: {
@@ -27,7 +33,8 @@ class App extends Component {
           foreignKey: null,
           xY: null,
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         },
           
@@ -42,7 +49,8 @@ class App extends Component {
           foreignKey: null,
           xY: null,
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         },
 
@@ -57,33 +65,10 @@ class App extends Component {
           foreignKey: null,
           xY: null,
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         }
-
-        /*
-
-          data: [
-            { ID: "1", make: 'VW', model: 'Jetta', year: '2010'},
-            { ID: "2", make: 'Ford', model: 'Fiesta', year: '2015'},
-            { ID: "3", make: 'Chevy', model: 'Blazer', year: '2000'},
-            { ID: "4", make: 'Honda', model: 'Accord', year: '1978'},
-          ],
-          foreignKey: null,
-          xY: null 
-        },
-        guitars: {
-          data: [
-            { ID: "1", make: 'Fender', model: 'Tele', year: '2010'},
-            { ID: "2", make: 'Gibson', model: 'SG', year: '2015'},
-            { ID: "3", make: 'Guild', model: 'Starfire', year: '2001'},
-            { ID: "4", make: 'Gretsch', model: 'Jet', year: '2005'}
-          ],
-          foreignKey: null,
-          xY: null
-        },
-      }
-      */
     }
   }
     this.onChange = this.onChange.bind(this)
@@ -93,8 +78,84 @@ class App extends Component {
     this.createTable = this.createTable.bind(this)
     this.changeTableTitle = this.changeTableTitle.bind(this)
     this.where = this.where.bind(this)
+    this.checkTableMatches = this.checkTableMatches.bind(this)
+    this.findRows = this.findRows.bind(this)
+    this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
 
+  checkTableMatches = () => {
+    const query = this.state.query
+    let currentTables = []
+    let theTable
+    // look at from
+    if ('from' in query && typeof query.from === 'string') {
+      let fromTables = query.from.split(/[ ,]+/)
+      fromTables.forEach((table) => {
+        if (Object.keys(this.state.tables).includes(table)) {
+          currentTables.push(table)
+        }
+      })
+    }
+    // look at join
+    if ('join' in query && typeof query.join === 'string') {
+      let joinTables = query.join.split(/[ ,]+/)
+      joinTables.forEach((table) => {
+      if(Object.keys(this.state.tables).includes(table)) {
+          currentTables.push(table)
+        } 
+      })
+      if (currentTables.length > 1) {
+        this.setState({join: true})
+      } else {
+        this.setState({join: false})
+      }
+    }
+    console.log(currentTables)
+    this.setState({currentTable: currentTables})
+    // should set the list of tables joined in currentTables
+    return currentTables
+  }
+
+  handleCurrentTable = () => {
+    if (this.state.currentTable.length > 1 && typeof this.state.query.on === 'string') {
+      let currentTables = this.state.currentTable
+      let innerTable = this.state.currentTable[0]
+      let innerOnStatement = this.state.query.on
+      innerOnStatement = innerOnStatement.split(/[=]+/).filter((e) => {if(e != "=") {return e}})
+      for (let i=1; i < currentTables.length; i++) {
+        this.join([innerTable, currentTables[i]], innerOnStatement)
+        innerTable = this.join([innerTable, currentTables[i]], innerOnStatement)
+      }
+      console.log("inner table", innerTable)
+    } else {
+      console.log("table", this.state.currentTable[0])
+    }
+  }
+
+  findRows = (table) => {
+    if (table != null) {
+      let query = this.state.query
+      let rows = this.state.tables[table].values
+      if ("where" in query && typeof query.where === 'string') {
+        let selectedIndexes = this.where(table, query.where)
+        rows = rows.filter((row, index) => {
+            return selectedIndexes.includes(index)
+        })
+      }
+      let rowIndexes = rows.map((rows, index) => index)
+      this.setState(prevState => ({
+        ...prevState, tables: {
+          ...prevState.tables, [table]: { 
+            ...prevState.tables[table], selected: {
+              ...prevState.tables[table].selected, rowIndexes: rowIndexes
+            }
+          }
+        }
+      }))
+      // should set row indexes selected
+      return rowIndexes
+    }
+  }
 
   createTable = (tableName, colArray, dataArray) => {
     this.setState({
@@ -113,10 +174,6 @@ class App extends Component {
     })
   }
 
-
-
-
-
   join = (tables, keys) => {
     if (Object.keys(this.state.tables).includes(tables[0]) && Object.keys(this.state.tables).includes(tables[1])) {
       let stateTbl = this.state.tables
@@ -133,18 +190,13 @@ class App extends Component {
           }
         }
       }
-
       this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
-      this.setState({join: `${tables[0]}_${tables[1]}` })
+      this.setState({joinTable: `${tables[0]}_${tables[1]}` })
+      this.setState({join: true})
+      return `${tables[0]}_${tables[1]}`
     } else {
       this.setState({join: false })
     }
-    // return ({
-    //   [`${tables[0]}_${tables[1]}`]: {
-    //     columns: joinColumns, 
-    //     values: joinValues
-    //   }
-    // })
   }
   
   /*
@@ -178,6 +230,7 @@ class App extends Component {
   }
 
    */
+
   checkMatch = () => {
     if (this.state.match === false) {
       Object.keys(this.state.tables).forEach((table) => {
@@ -216,38 +269,28 @@ class App extends Component {
     // expected output = [..row index, row index]
   }
 
-  select = () => {
+  select = (currentTable) => {
   
     let query = this.state.query
     let columns = null
-    let table = null
+    let table = currentTable
     const search = {}
     // check for values in query, set new data structure
     if ('select' in query && typeof query.select === 'string') {
       columns = query.select.split(/[ ,]+/)
-      search.columns = columns
     }
     // check for column
-    if ('from' in query && typeof query.from === 'string') {
-      if (this.state.join) {
-        // only made when join is found
-        search.table = [this.state.join]
-      } else {
-        table = query.from.split(/[ ,]+/)
-        search.table = table
-      }
-    }
     let columnIndexes = null
     // look for indexes based on
-    if ("columns" in search && "table" in search && Object.keys(this.state.tables).includes(search.table[0])) {
-      if (search.columns[0] === '*') {
+    if (columns && Object.keys(this.state.tables).includes(table)) {
+      if (columns[0] === '*') {
         this.setState({match: true})
-        columnIndexes = Object.keys(this.state.tables[search.table[0]].columns).toString()
+        columnIndexes = Object.keys(this.state.tables[table].columns).toString()
       } else {
-        columnIndexes = search.columns.map(column => {
-          if (this.state.tables[search.table[0]].columns.indexOf(column) >= 0) {
+        columnIndexes = columns.map(column => {
+          if (this.state.tables[table].columns.indexOf(column) >= 0) {
             this.setState({match: true})
-            return this.state.tables[search.table[0]].columns.indexOf(column)
+            return this.state.tables[table].columns.indexOf(column)
         } else {
           return null
         }
@@ -257,12 +300,12 @@ class App extends Component {
       this.setState({match: false})
     }
     console.log("query.from?!?!?", columnIndexes)
-    if (columnIndexes && Object.keys(this.state.tables).includes(search.table[0])) {
+    if (columnIndexes && Object.keys(this.state.tables).includes(table)) {
       this.setState(prevState => ({
         ...prevState, tables: {
-          ...prevState.tables, [search.table[0]]: { 
-            ...prevState.tables[search.table[0]], selected: {
-              ...prevState.tables[search.table[0]].selected, columnIndexes: columnIndexes
+          ...prevState.tables, [table]: { 
+            ...prevState.tables[table], selected: {
+              ...prevState.tables[table].selected, columnIndexes: columnIndexes
             }
           }
         }
@@ -281,12 +324,21 @@ class App extends Component {
     }
       state()
       .then(() => {
-        if ("join" in this.state.query) {
-          this.join([this.state.query.from, this.state.query.join], ["ID", "ID"] )
+        this.checkTableMatches()
+      })
+      .then(() => {
+        if (this.state.join && this.state.currentTable.length > 1) {
+          this.handleCurrentTable()
         }
       })
       .then(() => {
-        this.select()
+        if (this.state.join === true && Object.keys(this.state.tables).includes(this.state.joinTable)) {
+          this.findRows(this.state.joinTable)
+          this.select(this.state.joinTable)
+        } else {
+          this.findRows(this.state.currentTable[0])
+          this.select(this.state.currentTable[0])
+        }
       })
       .then(() => {
         this.checkMatch()
@@ -339,6 +391,7 @@ class App extends Component {
   }
 
   renderNewTable = (tableObj) => {
+    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
