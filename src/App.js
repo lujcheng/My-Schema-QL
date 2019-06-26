@@ -14,9 +14,11 @@ class App extends Component {
       currentTable: null,
       user: "1",
       query: {
-        values: null,
-        where: "ID > 1",
-        on: "ID=ID"
+        select: null,
+        from: null,
+        join: null,
+        where: "ID > 2",
+        on: "ID=ID",
       },
       tables: {
         cars: {
@@ -31,7 +33,8 @@ class App extends Component {
           foreignKey: null,
           xY: null,
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         },
           
@@ -46,7 +49,8 @@ class App extends Component {
           foreignKey: null,
           xY: null,
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         },
 
@@ -61,7 +65,8 @@ class App extends Component {
           foreignKey: null,
           xY: null,
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         }
     }
@@ -75,7 +80,6 @@ class App extends Component {
     this.where = this.where.bind(this)
     this.checkTableMatches = this.checkTableMatches.bind(this)
     this.findRows = this.findRows.bind(this)
-    this.setSelected = this.setSelected.bind(this)
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
 
@@ -153,41 +157,6 @@ class App extends Component {
     }
   }
 
-  // findColumns = (currentTable) => {
-  //   let query = this.state.query.select
-  //   let table = currentTable
-  //   let columnIndexes = null
-  //   if ("columns" in search && "table" in search && Object.keys(this.state.tables).includes(table)) {
-  //     if (this.state.query.select === '*') {
-  //       this.setState({match: true})
-  //       columnIndexes = Object.keys(this.state.tables[table].columns).toString()
-  //     } else {
-  //       columnIndexes = search.columns.map(column => {
-  //         if (this.state.tables[table].columns.indexOf(column) >= 0) {
-  //           this.setState({match: true})
-  //           return this.state.tables[table].columns.indexOf(column)
-  //         } else {
-  //           return null
-  //         }
-  //       })
-  //     }
-  //   } else {
-  //     this.setState({match: false})
-  //   }
-  //   console.log("query.from?!?!?", columnIndexes)
-  //   if (columnIndexes && Object.keys(this.state.tables).includes(table)) {
-  //     this.setState(prevState => ({
-  //       ...prevState, tables: {
-  //         ...prevState.tables, [table]: { 
-  //           ...prevState.tables[table], selected: {
-  //             ...prevState.tables[table].selected, columnIndexes: columnIndexes
-  //           }
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }
-
   createTable = (tableName, colArray, dataArray) => {
     this.setState({
       tables: {
@@ -204,10 +173,6 @@ class App extends Component {
       }
     })
   }
-
-
-
-
 
   join = (tables, keys) => {
     if (Object.keys(this.state.tables).includes(tables[0]) && Object.keys(this.state.tables).includes(tables[1])) {
@@ -265,17 +230,7 @@ class App extends Component {
   }
 
    */
-  setSelected = (table, keyValue) => {
-    this.setState(prevState => ({
-      ...prevState, tables: {
-        ...prevState.tables, [table]: { 
-          ...prevState.tables[table], selected: {
-            ...prevState.tables[table].selected, keyValue
-          }
-        }
-      }
-    }))
-  }
+
   checkMatch = () => {
     if (this.state.match === false) {
       Object.keys(this.state.tables).forEach((table) => {
@@ -369,16 +324,9 @@ class App extends Component {
     }
       state()
       .then(() => {
-        
-        // if ("join" in this.state.query) {
-        //   this.join([this.state.query.from, this.state.query.join], ["ID", "ID"] )
-        // }
-        // old
         this.checkTableMatches()
       })
       .then(() => {
-        // this.select() 
-        // old
         if (this.state.join && this.state.currentTable.length > 1) {
           this.handleCurrentTable()
         }
