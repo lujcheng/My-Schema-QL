@@ -4,8 +4,8 @@ import Draggable from 'react-draggable';
 
 class Canvas extends Component {
   
-  deleteRow = (col) => {
-    this.props.deleteRow(col)
+  deleteRow = (col, tableName) => {
+    this.props.deleteRow(col, tableName)
   }
 
   renderTableChange = (tableName, val, col, row) => {

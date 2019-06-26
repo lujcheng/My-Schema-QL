@@ -309,8 +309,10 @@ class App extends Component {
   }
 
 
-  deleteRow = (col) => {
+  deleteRow = (col, tableName) => {
+    const tabName = tableName;
     console.log("COLUMN NUMBER", col)
+    const tempTable 
   }
 
   changeTableHeader = (tableName, val, col) => {

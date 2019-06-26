@@ -10,7 +10,7 @@ class Table extends Component {
   
   onDelete = (event, col) => {
     event.preventDefault();
-    this.props.deleteRow(col)
+    this.props.deleteRow(col, this.props.tableName)
   }
 
   handleMouseIn = (e) => {
