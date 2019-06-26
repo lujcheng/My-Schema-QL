@@ -8,11 +8,14 @@ import NewTable from './new-table.jsx'
 class App extends Component {
   constructor(props) {
     super(props) 
-    this.state = { 
+    this.state = {
+      join: false,
       match: false,
+      currentTable: null,
       user: "1",
       query: {
-        values: null
+        values: null,
+        where: "ID > 1"
       },
       tables: {
         cars: {
@@ -69,21 +72,61 @@ class App extends Component {
     this.createTable = this.createTable.bind(this)
     this.changeTableTitle = this.changeTableTitle.bind(this)
     this.where = this.where.bind(this)
+    this.checkTableMatches = this.checkTableMatches.bind(this)
+    this.findRows = this.findRows.bind(this)
+    this.setSelected = this.setSelected.bind(this)
   }
 
-  findTables = () => {
+  checkTableMatches = () => {
     const query = this.state.query
-    let currentTable
+    let currentTables = []
+    let theTable
+    // look at from
     if ('from' in query && typeof query.from === 'string') {
-      if (this.state.join) {
-        // only made when join is found
-        currentTable = [this.state.join]
+      let fromTables = query.from.split(/[ ,]+/)
+      fromTables.forEach((table) => {
+        if (Object.keys(this.state.tables).includes(table)) {
+          currentTables.push(table)
+        }
+      })
+    }
+    // look at join
+    if ('join' in query && typeof query.join === 'string') {
+      let joinTables = query.join.split(/[ ,]+/)
+      joinTables.forEach((table) => {
+      if(Object.keys(this.state.tables).includes(table)) {
+          currentTables.push(table)
+        } 
+      })
+      if (currentTables.length > 1) {
+        this.setState({join: true})
       } else {
-        let fromTables = query.from.split(/[ ,]+/)
-        currentTable = fromTables[0]
+        this.setState({join: false})
       }
     }
-    
+    console.log(currentTables)
+    this.setState({currentTable: currentTables})
+    return currentTables
+  }
+
+  findRows = (table) => {
+    if (table != null) {
+      let query = this.state.query
+      let rows = this.state.tables[table].values
+      if ("where" in query && typeof query.where === 'string') {
+        let selectedIndexes = this.where(table, query.where)
+        rows = rows.filter((row, index) => {
+            return selectedIndexes.includes(index)
+        })
+      }
+      let rowIndexes = rows.map((rows, index) => index)
+      this.setSelected(table, {rows: rowIndexes})
+      return rowIndexes
+    }
+  }
+
+  findColumns = (table ) => {
+
   }
 
   createTable = (tableName, colArray, dataArray) => {
@@ -123,18 +166,11 @@ class App extends Component {
           }
         }
       }
-
       this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
       this.setState({join: `${tables[0]}_${tables[1]}` })
     } else {
       this.setState({join: false })
     }
-    // return ({
-    //   [`${tables[0]}_${tables[1]}`]: {
-    //     columns: joinColumns, 
-    //     values: joinValues
-    //   }
-    // })
   }
   
   /*
@@ -168,6 +204,17 @@ class App extends Component {
   }
 
    */
+  setSelected = (table, keyValue) => {
+    this.setState(prevState => ({
+      ...prevState, tables: {
+        ...prevState.tables, [table]: { 
+          ...prevState.tables[table], selected: {
+            ...prevState.tables[table].selected, keyValue
+          }
+        }
+      }
+    }))
+  }
   checkMatch = () => {
     if (this.state.match === false) {
       Object.keys(this.state.tables).forEach((table) => {
@@ -271,6 +318,7 @@ class App extends Component {
     }
       state()
       .then(() => {
+        // 
         if ("join" in this.state.query) {
           this.join([this.state.query.from, this.state.query.join], ["ID", "ID"] )
         }
@@ -330,6 +378,7 @@ class App extends Component {
   }
 
   renderNewTable = (tableObj) => {
+    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
