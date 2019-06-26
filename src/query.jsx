@@ -18,9 +18,16 @@ class Query extends Component {
 		evt.preventDefault()
 		const tempArr = this.state.inputFieldArr;
 		const queryType = evt.target.keywords.value
-		tempArr.push(
-				<div><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, "join")}/></div>
-		)
+		if (queryType === "join") {
+			tempArr.push(
+				<div><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)}/>
+				<InputField queryType={"on"} onChange={(e) => this.props.onChange(e, "on")}/></div>
+			)
+		} else {
+			tempArr.push(
+				<div><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)}/></div>
+			)
+		}
 		this.setState({inputFieldArr: tempArr})
 	}
   
