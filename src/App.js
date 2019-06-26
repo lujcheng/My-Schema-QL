@@ -16,7 +16,6 @@ class App extends Component {
       query: {
         values: null,
         where: "ID > 1",
-        join: "guitars",
         on: "ID=ID"
       },
       tables: {
@@ -109,6 +108,7 @@ class App extends Component {
     }
     console.log(currentTables)
     this.setState({currentTable: currentTables})
+    // should set the list of tables joined in currentTables
     return currentTables
   }
 
@@ -140,6 +140,7 @@ class App extends Component {
       }
       let rowIndexes = rows.map((rows, index) => index)
       this.setSelected(table, {rowIndexes: rowIndexes})
+      // should set row indexes selected
       return rowIndexes
     }
   }
@@ -186,7 +187,8 @@ class App extends Component {
         }
       }
       this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
-      this.setState({join: `${tables[0]}_${tables[1]}` })
+      this.setState({joinTable: `${tables[0]}_${tables[1]}` })
+      this.setState({join: true})
       return `${tables[0]}_${tables[1]}`
     } else {
       this.setState({join: false })
@@ -351,6 +353,16 @@ class App extends Component {
         if (this.state.join && this.state.currentTable.length > 1) {
           this.handleCurrentTable()
         }
+      })
+      .then(() => {
+        if (this.state.join === true && Object.keys(this.state.tables).includes(this.state.joinTable)) {
+          this.findRows(this.state.joinTable)
+        } else {
+          this.findRows(this.state.currentTable[0])
+        }
+      })
+      .then(() => {
+        this.select()
       })
       .then(() => {
         this.checkMatch()
