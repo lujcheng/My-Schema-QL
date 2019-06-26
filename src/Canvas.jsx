@@ -3,6 +3,11 @@ import Table from "./table.jsx"
 import Draggable from 'react-draggable';
 
 class Canvas extends Component {
+  
+  deleteRow = (col, tableName) => {
+    this.props.deleteRow(col, tableName)
+  }
+
   renderTableChange = (tableName, val, col, row) => {
     this.props.renderTableChange(tableName, val, col, row)
   }
@@ -32,7 +37,7 @@ class Canvas extends Component {
             onDrag={this.handleDrag}
             onStop={this.handleStop}>
             <div>
-              <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle}/>
+              <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
             </div>
         </Draggable>)
         })
