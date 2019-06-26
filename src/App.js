@@ -340,7 +340,6 @@ class App extends Component {
   }
 
   renderNewTable = (tableObj) => {
-    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
