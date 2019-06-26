@@ -262,7 +262,7 @@ class App extends Component {
   where = (tableName, input) => {
     // based on selected columns
     // query = "id > 3"
-    let query = input.split(/[ ,]+/)
+    let query = input.split(/[ ,]+/).filter(el => el != "")
     // expected output = ["id", ">", "3"]
 
     const operate = {
@@ -271,6 +271,7 @@ class App extends Component {
       '=': (a, b) => {return a == b}
     }
     // determine the column index
+    console.log("query.lenght", query)
     if (query.length >= 3) {
       let colIndex = this.state.tables[tableName].columns.indexOf(query[0])
       // loop through row values at column index
@@ -350,11 +351,11 @@ class App extends Component {
       })
       .then(() => {
         if (this.state.join === true && Object.keys(this.state.tables).includes(this.state.joinTable)) {
-          this.findRows(this.state.joinTable)
           this.select(this.state.joinTable)
+          this.findRows(this.state.joinTable)
         } else {
-          this.findRows(this.state.currentTable[0])
           this.select(this.state.currentTable[0])
+          this.findRows(this.state.currentTable[0])
         }
       })
       .then(() => {
