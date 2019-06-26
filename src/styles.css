@@ -44,14 +44,23 @@ body {
 	margin-right: 0.5em;
 }
 
+.fa-edit {
+	font-size: 1.5em;
+}
+
+.fa-trash-alt {
+	font-size: 1.5em;
+	margin: 0.2em;
+}
+
 .button {
 	background-color:#03396c;
-	border-color: #005b96;
-	border-radius: 25px;
-	box-shadow: 2px 2px 3px #005b96;
+	border: none;
 	color:#b3cde0;
 	font-family: 'Libre Franklin', sans-serif;
 	font-weight: bold;
+	margin-right: 0.5em;
+	padding: 0.7em;
 }
 
 .create-table-button {
@@ -105,9 +114,9 @@ body {
 	border-style: none;
 }
 
-table {
+/* table {
 	box-shadow: 2px 2px 3px #005b96;
-}
+} */
 
 
 
@@ -163,4 +172,12 @@ th.table-title {
 .data-row .colSelected, .header-row .colSelected {
 	border-color: #011f4b;
 	border-width: 0.4em;
+}
+
+input {
+	text-align: center;
+}
+
+.edit-row-col {
+	padding-right: 1em;
 }
