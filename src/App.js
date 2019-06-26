@@ -299,23 +299,19 @@ class App extends Component {
     const colNum = col;
     const rowNum = row;
     const tempTables = this.state.tables;
-    // console.log("TEMPTABLES", tempTables)
-    // console.log("TEMPTABLES[TABNAME]", tempTables[tabName])
-    // console.log("TEMPTABLES[TABNAME].values", tempTables[tabName].values)
     let tempRow = [...tempTables[tabName].values[rowNum]];
     tempRow[colNum] = value
     tempTables[tabName].values[rowNum] = tempRow
-    // console.log("TEMPTABLES[TABNAME].values[rowNum]", tempTables[tabName].values[rowNum])
-    // console.log("TEMPTABLES[TABNAME].values[rowNum][colNum]", tempTables[tabName].values[rowNum][colNum])
     this.setState({
       tables: tempTables
     })
     console.log("TABLES", this.state.tables)
-    // console.log("COLNUM:", colNum)
-    // console.log("ROWNUM:", rowNum)
   }
 
-  // tables: {...this.state.tables, tabName: {...this.state.tables[tabName], values: [[]]}}
+
+  deleteRow = (col) => {
+    console.log("COLUMN NUMBER", col)
+  }
 
   changeTableHeader = (tableName, val, col) => {
     const tabName = tableName;
@@ -396,7 +392,7 @@ class App extends Component {
           </nav>
         </div>
         <div>
-          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
         </div>
       </div>
     );
