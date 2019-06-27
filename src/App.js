@@ -82,7 +82,6 @@ class App extends Component {
     this.findRows = this.findRows.bind(this)
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
-
   checkTableMatches = () => {
     const query = this.state.query
     let currentTables = []
@@ -345,26 +344,39 @@ class App extends Component {
       })
   }
   
-  renderTableChange = (tableName, val, col, row) => {
+  renderTableChange = (tableName, val, row, col) => {
     const tabName = tableName;
     const value = val;
     const colNum = col;
     const rowNum = row;
     const tempTables = this.state.tables;
-    let tempRow = [...tempTables[tabName].values[rowNum]];
+    let tempRow = tempTables[tabName].values[rowNum];
     tempRow[colNum] = value
     tempTables[tabName].values[rowNum] = tempRow
     this.setState({
       tables: tempTables
     })
-    console.log("TABLES", this.state.tables)
+  
   }
 
 
   deleteRow = (col, tableName) => {
+    console.log("COL", col)
     const tabName = tableName;
-    console.log("COLUMN NUMBER", col)
-    const tempTable 
+    console.log(this.state.tables[tabName].values)
+    const rowDelete = this.state.tables[tabName].values.filter((value, index) => {
+      console.log("VALUE", value)
+      if (index !== col) {
+        console.log("IN HERE")
+        return value
+      }
+    })
+    console.log("ROW DELETE", rowDelete)
+    const tempTables = this.state.tables
+    tempTables[tabName].values = rowDelete
+    this.setState({
+      tables: tempTables
+    })
   }
 
   changeTableHeader = (tableName, val, col) => {
@@ -376,7 +388,6 @@ class App extends Component {
     this.setState({
       tables: tempTables
     })
-    console.log("TABLES FROM HEADER:", this.state.tables)
   }
 
   changeTableTitle = (tableName, val, tableID) => {
@@ -387,11 +398,9 @@ class App extends Component {
     tables[val] = tables[tabName];
     delete tables[tabName];
     this.setState({tables: tables})
-    console.log("TABLES", this.state.tables)
   }
 
   renderNewTable = (tableObj) => {
-    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
@@ -406,18 +415,25 @@ class App extends Component {
     }
 
     const dataArray = () => {
-      let dataArray = [];
       let rowArray = [];
-
-      for (let i = 0; i < cols; i ++) {
-        dataArray.push("")
-      }
+      // let counter = 1;
       for (let j = 0; j < rows; j ++) {
+        let dataArray = []
+        for (let i = 0; i < cols; i ++) {
+          dataArray.push(null)
+        }
         rowArray.push(dataArray)
       }
+
+      // for (let k = 0; k < rows; k ++) {
+      //   console.log("COUNTER", counter)
+      //   rowArray[k][0] = counter;
+      //   console.log("VALUE", rowArray[k])
+      //   counter ++;
+      // }
+
       return rowArray;
     }
-
     this.setState({
       tables: {
         ...this.state.tables,
@@ -432,7 +448,7 @@ class App extends Component {
         }
       }
     })
-
+    console.log("NEW TABLE:", this.state.tables)
 
   }
   render() {

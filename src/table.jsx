@@ -82,11 +82,10 @@ class Table extends Component {
 
   renderTableData() {
     let data = this.props.table.values
-    return data.map((value, col) => {
-      let items = Object.values(value)
+    return data.map((items, col) => {
       if (this.props.table.selected.rowIndexes != null && this.props.table.selected.rowIndexes.includes(col)) {
       return (
-        <tr key={col} className="data-row rowSelected" onMouseEnter={this.handleMouseIn} onMouseLeave={this.handleMouseOut}>
+        <tr key={Math.floor(Math.random() * 20)} className="data-row rowSelected">
 
           {
             items.map((item, row) => {
@@ -96,12 +95,12 @@ class Table extends Component {
                 return <td key={row}><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
               }
             })
-          }<td><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i class="far fa-trash-alt"></i></button></td>
+          }<td><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
         </tr>
       )
         } else {
           return ( 
-              <tr key={col} className="data-row" onMouseEnter={this.handleMouseIn} onMouseLeave={this.handleMouseOut}>
+              <tr key={Math.floor(Math.random() * 20)} className="data-row">
               {
                 items.map((item, row) => {
                   if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
@@ -110,7 +109,7 @@ class Table extends Component {
                     return <td key={row} ><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
                   }
                 })
-              }
+              }<td><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
             </tr>
           )
 
