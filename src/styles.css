@@ -185,3 +185,7 @@ input {
 .edit-row-col {
 	padding-right: 1em;
 }
+
+.delete-button {
+	display: none;
+}
