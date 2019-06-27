@@ -23,6 +23,13 @@ class Canvas extends Component {
   render() {
     const tables = this.props.tables
     const renderTables = Object.keys(tables)
+    .sort((a, b) => {
+      if (tables[a].createdAt < tables[b].createdAt) {
+        return 1
+      } else {
+        return -1
+      }
+    })
       .map((tableKey, index) => {
         const table = tables[tableKey]
         return (
@@ -37,7 +44,7 @@ class Canvas extends Component {
             onDrag={this.handleDrag}
             onStop={this.handleStop}>
             <div>
-              <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+              <Table key={Math.floor(Math.random() * 1000)} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
             </div>
         </Draggable>)
         })

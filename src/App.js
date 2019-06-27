@@ -31,6 +31,7 @@ class App extends Component {
             ["3", 'Chevy', 'Blazer', '2000'],
             ["4", 'Honda', 'Accord', '1978']
           ],
+          createdAt: new Date('January 1, 2019 00:01:00'),
           foreignKey: null,
           xY: null,
           selected: {
@@ -47,6 +48,7 @@ class App extends Component {
             ["3", 'Guild', 'Starfire', '2001'],
             [ "4", 'Gretsch', 'Jet', '2005']
           ],
+          createdAt: new Date('January 1, 2019 00:02:00'),
           foreignKey: null,
           xY: null,
           selected: {
@@ -63,6 +65,7 @@ class App extends Component {
             ["3", 'Charlie', 'poodle', '21'],
             [ "4", 'Maple', 'Golden Doodle', '56']
           ],
+          createdAt: new Date('January 1, 2019 00:03:00'),
           foreignKey: null,
           xY: null,
           selected: {
@@ -155,6 +158,7 @@ class App extends Component {
     }
   }
 
+  // Ask Lucas about this
   createTable = (tableName, colArray, dataArray) => {
     this.setState({
       tables: {
@@ -162,10 +166,12 @@ class App extends Component {
         [tableName]: {
           columns: colArray, 
           values: dataArray, 
+          createdAt: new Date(),
           foreignKey: null, 
           xY: null, 
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         }
       }
@@ -409,14 +415,17 @@ class App extends Component {
   }
 
   changeTableTitle = (tableName, val, tableID) => {
-    const tabName = tableName;
-    const value = val;
+    const oldTableName = tableName;
+    const newTableName = val;
     const tabID = tableID;
     const tables = this.state.tables;
-    tables[val] = tables[tabName];
-    delete tables[tabName];
-    this.setState({tables: tables})
+    tables[newTableName] = tables[oldTableName];
+    this.setState({
+      tables: tables
+    })
+    delete tables[oldTableName];
   }
+
 
   renderNewTable = (tableObj) => {
     const tableName = tableObj.tableName;
@@ -434,7 +443,6 @@ class App extends Component {
 
     const dataArray = () => {
       let rowArray = [];
-      // let counter = 1;
       for (let j = 0; j < rows; j ++) {
         let dataArray = []
         for (let i = 0; i < cols; i ++) {
@@ -443,31 +451,26 @@ class App extends Component {
         rowArray.push(dataArray)
       }
 
-      // for (let k = 0; k < rows; k ++) {
-      //   console.log("COUNTER", counter)
-      //   rowArray[k][0] = counter;
-      //   console.log("VALUE", rowArray[k])
-      //   counter ++;
-      // }
-
       return rowArray;
     }
+    // const tables = this.state.tables
+    // tables[tableName]:
     this.setState({
       tables: {
         ...this.state.tables,
         [tableName]: {
           columns: colArray(), 
-          values: dataArray(), 
+          values: dataArray(),
+          createdAt: new Date(),
           foreignKey: null, 
           xY: null, 
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         }
       }
     })
-    console.log("NEW TABLE:", this.state.tables)
-
   }
   render() {
     return (
