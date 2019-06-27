@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import Table from "./table.jsx"
 import Draggable from 'react-draggable';
 import LineTo, { SteppedLineTo } from 'react-lineto';
+import ReactPanZoom from "@ajainarayanan/react-pan-zoom";
 
-class Block extends Component {
+class Block extends React.PureComponent {
   render() {
     const { top, left, color, className } = this.props;
     const style = { top, left, backgroundColor: color, height: "100px"};  
@@ -21,12 +22,16 @@ class Block extends Component {
   }
 }
 
-class Canvas extends Component {
+
+class Canvas extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
         ticks: 0,
         paused: false,
+        dx: 0,
+        dy: 0,
+        zoom: 1
     };
     this.togglePause = this.togglePause.bind(this);
 }
@@ -87,6 +92,38 @@ renderPauseButton() {
   changeTableTitle = (tableName, val, tableID) => {
     this.props.changeTableTitle(tableName, val, tableID)
   }
+
+  zoomIn = () => {
+    this.setState({
+      zoom: this.state.zoom + 0.2
+    });
+  };
+  
+  zoomOut = () => {
+    this.setState({
+      zoom: this.state.zoom - 0.2
+    });
+  };
+  
+  onPan = (dx: number, dy: number) => {
+    this.setState({
+      dx,
+      dy
+    });
+  }
+
+  renderPanZoomControls = () => {
+    return (
+      <div>
+        <div onClick={this.zoomIn} onScroll={this.zoomIn}>
+          <span>+</span>
+        </div>
+        <div onClick={this.zoomOut}>
+          <span>-</span>
+        </div>
+      </div>
+    );
+  };
   
 
   render() {
@@ -98,6 +135,8 @@ renderPauseButton() {
   
     const x = Math.cos(t) * r + ox;
     const y = Math.sin(t) * r + oy;
+
+    
     const tables = this.props.tables
     const renderTables = Object.keys(tables)
       .map((tableKey, index) => {
@@ -113,15 +152,18 @@ renderPauseButton() {
             scale={1}
             onStart={this.handleStart}
             onDrag={this.handleDrag}
-            onStop={this.handleStop}>
+            onStop={this.handleStop}
+            zIndex='5'
+            >
             <div>
-              <p className="handle" >Drag me</p>
+              <p className="handle" style={{zIndex:'5'}} >Drag me</p>
             <Block
               className="stepped-A"
               top={`${y}px`}
               left={`${x}px`}>
+                
 
-              <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+                <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
 
               </Block>
             </div>
@@ -132,7 +174,7 @@ renderPauseButton() {
           borderColor: 'black',
           borderStyle: 'solid',
           borderWidth: 3,
-          zIndex: 0
+          zIndex: 2
         }
 
 
@@ -142,12 +184,25 @@ renderPauseButton() {
         <main>
           <div className="box" style={{height: '1000px', width: "100%", position: 'relative', overflow: 'auto', padding: '0', margin: '0'}}>
           <div style={{height: '1000px', width: '100%', padding: '10px'}}>
-          {renderTables}
+
+          {this.renderPanZoomControls()}
+          <ReactPanZoom
+            zoom={this.state.zoom}
+            pandx={this.state.dx}
+            pandy={this.state.dy}
+            onPan={this.onPan}
+            zIndex='0'
+            width='100%'
+            >
+          
+            {renderTables}
             
-            <SteppedLineTo from="stepped-A" to="stepped-B"
-                                fromAnchor="bottom" toAnchor="top" {...style} />
-                                </div>
-                                </div>
+            <SteppedLineTo from="stepped-A" to="stepped-B" fromAnchor="bottom" toAnchor="top" {...style} />
+
+            </ReactPanZoom>
+            </div>
+            </div>
+
         </main>
         
       </div>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ajainarayanan/react-pan-zoom": "0.0.3",
     "bulma": "^0.7.5",
     "bulma-carousel": "^4.0.4",
     "react": "^16.8.6",

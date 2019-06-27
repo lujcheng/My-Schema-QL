@@ -76,6 +76,7 @@ class App extends Component {
     this.select = this.select.bind(this)
     this.checkMatch = this.checkMatch.bind(this)
     this.join = this.join.bind(this)
+    this.createTable = this.createTable.bind(this)
     this.changeTableTitle = this.changeTableTitle.bind(this)
     this.where = this.where.bind(this)
     this.checkTableMatches = this.checkTableMatches.bind(this)
@@ -153,6 +154,23 @@ class App extends Component {
         }  
       }
     }
+  }
+
+  createTable = (tableName, colArray, dataArray) => {
+    this.setState({
+      tables: {
+        ...this.state.tables,
+        [tableName]: {
+          columns: colArray, 
+          values: dataArray, 
+          foreignKey: null, 
+          xY: null, 
+          selected: {
+            columnIndexes: null
+          }
+        }
+      }
+    })
   }
 
   join = (tables, keys) => {
@@ -280,6 +298,9 @@ class App extends Component {
       }))
     } 
   }
+    // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
+    // console.log(this.state.query.tables)
+  
   
   onChange = (event, args) => {
     const state = () => {
@@ -400,7 +421,6 @@ class App extends Component {
 
 
   }
-
   render() {
     return (
       <div>
