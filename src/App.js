@@ -76,7 +76,6 @@ class App extends Component {
     this.select = this.select.bind(this)
     this.checkMatch = this.checkMatch.bind(this)
     this.join = this.join.bind(this)
-    this.createTable = this.createTable.bind(this)
     this.changeTableTitle = this.changeTableTitle.bind(this)
     this.where = this.where.bind(this)
     this.checkTableMatches = this.checkTableMatches.bind(this)
@@ -401,7 +400,7 @@ class App extends Component {
 
 
   }
-  
+
   render() {
     return (
       <div>
