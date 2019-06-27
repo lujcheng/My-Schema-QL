@@ -10,15 +10,16 @@ class App extends Component {
     super(props) 
     this.state = {
       join: false,
-      match: false,
+      colMatch: false,
+      rowMatch: false,
       currentTable: null,
       user: "1",
       query: {
         select: null,
         from: null,
         join: null,
-        where: "ID > 2",
-        on: "ID=ID",
+        where: null,
+        on: null,
       },
       tables: {
         cars: {
@@ -134,25 +135,23 @@ class App extends Component {
   findRows = (table) => {
     if (table != null) {
       let query = this.state.query
-      let rows = this.state.tables[table].values
       if ("where" in query && typeof query.where === 'string') {
         let selectedIndexes = this.where(table, query.where)
-        rows = rows.filter((row, index) => {
-            return selectedIndexes.includes(index)
-        })
-      }
-      let rowIndexes = rows.map((rows, index) => index)
-      this.setState(prevState => ({
-        ...prevState, tables: {
-          ...prevState.tables, [table]: { 
-            ...prevState.tables[table], selected: {
-              ...prevState.tables[table].selected, rowIndexes: rowIndexes
+        if (selectedIndexes) {
+          this.setState(prevState => ({
+            ...prevState, tables: {
+              ...prevState.tables, [table]: { 
+                ...prevState.tables[table], selected: {
+                  ...prevState.tables[table].selected, rowIndexes: selectedIndexes
+                }
+              }
             }
-          }
-        }
-      }))
-      // should set row indexes selected
-      return rowIndexes
+          }))
+          this.setState({rowMatch: true})
+        } else {
+          this.setState({rowMatch: false})
+        }  
+      }
     }
   }
 
@@ -231,7 +230,7 @@ class App extends Component {
    */
 
   checkMatch = () => {
-    if (this.state.match === false) {
+    if (this.state.colMatch === false) {
       Object.keys(this.state.tables).forEach((table) => {
         this.setState(prevState => ({
           ...prevState, tables: {
@@ -244,12 +243,25 @@ class App extends Component {
         }))
       })
     } 
+    if (this.state.rowMatch === false) {
+      Object.keys(this.state.tables).forEach((table) => {
+        this.setState(prevState => ({
+          ...prevState, tables: {
+            ...prevState.tables, [table]: { 
+              ...prevState.tables[table], selected: {
+                ...prevState.tables[table].selected, rowIndexes: null
+              }
+            }
+          }
+        }))
+      })
+    } 
   }
 
   where = (tableName, input) => {
     // based on selected columns
     // query = "id > 3"
-    let query = input.split(/[ ,]+/)
+    let query = input.split(/[ ,]+/).filter(el => el != "")
     // expected output = ["id", ">", "3"]
 
     const operate = {
@@ -258,14 +270,20 @@ class App extends Component {
       '=': (a, b) => {return a == b}
     }
     // determine the column index
-    let colIndex = this.state.tables[tableName].columns.indexOf(query[0])
-    // loop through row values at column index
-    return this.state.tables[tableName].values.map((row, index) => {
-      if (operate[query[1]] (row[colIndex], query[2])) {
-        return index
+    console.log("query.lenght", query)
+    if (query.length >= 3) {
+      let colIndex = this.state.tables[tableName].columns.indexOf(query[0])
+      // loop through row values at column index
+      if (colIndex >= 0) {
+        return this.state.tables[tableName].values.map((row, index) => {
+          if (Object.keys(operate).includes(query[1]) && operate[query[1]] (row[colIndex], query[2])) {
+            console.log(row[colIndex], query[1], query[2], "index", index)
+            return index
+          }
+        }).filter(el => el != null)
+        // expected output = [..row index, row index]
       }
-    }).filter(el => el != null)
-    // expected output = [..row index, row index]
+    }
   }
 
   select = (currentTable) => {
@@ -283,12 +301,12 @@ class App extends Component {
     // look for indexes based on
     if (columns && Object.keys(this.state.tables).includes(table)) {
       if (columns[0] === '*') {
-        this.setState({match: true})
+        this.setState({colMatch: true})
         columnIndexes = Object.keys(this.state.tables[table].columns).toString()
       } else {
         columnIndexes = columns.map(column => {
           if (this.state.tables[table].columns.indexOf(column) >= 0) {
-            this.setState({match: true})
+            this.setState({colMatch: true})
             return this.state.tables[table].columns.indexOf(column)
         } else {
           return null
@@ -296,7 +314,7 @@ class App extends Component {
       })
     }
     } else {
-      this.setState({match: false})
+      this.setState({colMatch: false})
     }
     console.log("query.from?!?!?", columnIndexes)
     if (columnIndexes && Object.keys(this.state.tables).includes(table)) {
@@ -332,11 +350,11 @@ class App extends Component {
       })
       .then(() => {
         if (this.state.join === true && Object.keys(this.state.tables).includes(this.state.joinTable)) {
-          this.findRows(this.state.joinTable)
           this.select(this.state.joinTable)
+          this.findRows(this.state.joinTable)
         } else {
-          this.findRows(this.state.currentTable[0])
           this.select(this.state.currentTable[0])
+          this.findRows(this.state.currentTable[0])
         }
       })
       .then(() => {

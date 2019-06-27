@@ -98,6 +98,7 @@ class Table extends Component {
           }<td><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
         </tr>
       )
+
         } else {
           return ( 
               <tr key={Math.floor(Math.random() * 20)} className="data-row">
