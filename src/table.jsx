@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+
 class Table extends Component {
   constructor(props) {
     super(props)
@@ -135,6 +136,7 @@ class Table extends Component {
               </tr>
               {this.renderTableData()}
             </tbody>
+            
           </table>
         </div>
       )

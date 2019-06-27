@@ -156,23 +156,6 @@ class App extends Component {
     }
   }
 
-  createTable = (tableName, colArray, dataArray) => {
-    this.setState({
-      tables: {
-        ...this.state.tables,
-        [tableName]: {
-          columns: colArray, 
-          values: dataArray, 
-          foreignKey: null, 
-          xY: null, 
-          selected: {
-            columnIndexes: null
-          }
-        }
-      }
-    })
-  }
-
   join = (tables, keys) => {
     if (Object.keys(this.state.tables).includes(tables[0]) && Object.keys(this.state.tables).includes(tables[1])) {
       let stateTbl = this.state.tables
@@ -197,38 +180,6 @@ class App extends Component {
       this.setState({join: false })
     }
   }
-  
-  /*
----------------------------------------------------
-
-********** JOIN BASED ONE TWO TABLE NAMES, FOREIGN KEY SET IN STATE
-  const join = (tables) => {
-    stateTbl = state.tables
-    let joinColumns = stateTbl[tables[0]].columns
-    let joinValues = stateTbl[tables[0]].values
-    let forKey
-    let primeKey
-    for(let tbl=1; tbl < tables.length; tbl++) {
-      forKey = stateTbl[tables[tbl-1]].columns.indexOf(stateTbl[tables[tbl-1]].foreignKey)
-      primeKey = stateTbl[tables[tbl]].columns.indexOf(stateTbl[tables[tbl]].primaryKey)
-      console.log(forKey,primeKey)
-      joinColumns = joinColumns.concat(state.tables[tables[tbl]].columns)
-      for (let i=0; i < joinValues.length; i++) {
-        for (let e=0; e< state.tables[tables[tbl]].values.length; e++) {
-        if(joinValues[i][forKey] === state.tables[tables[tbl]].values[e][primeKey] )
-        joinValues[i] = joinValues[i].concat(state.tables[tables[tbl]].values[e])
-        }
-      }
-    }
-    console.log(joinValues)
-    // for each table
-    // find table values
-    // find columns
-    // find values
-    // join column and values to central table
-  }
-
-   */
 
   checkMatch = () => {
     if (this.state.colMatch === false) {
@@ -330,9 +281,6 @@ class App extends Component {
       }))
     } 
   }
-    // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
-    // console.log(this.state.query.tables)
-  
   
   onChange = (event, args) => {
     const state = () => {
@@ -453,6 +401,7 @@ class App extends Component {
 
 
   }
+  
   render() {
     return (
       <div>
