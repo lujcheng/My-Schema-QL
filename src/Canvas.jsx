@@ -21,17 +21,6 @@ class Block extends Component {
   }
 }
 
-class Rock extends Component {
-  render() {
-    let style = {backgroundColor:"#00f", height:"100px"}
-    return (
-      <div className="block stepped-A" style={{backgroundColor:"#00f", height:"100px"}}> 
-      </div>
-    )
-  }
-}
-
-
 class Canvas extends Component {
   constructor(props) {
     super(props);
@@ -115,6 +104,7 @@ renderPauseButton() {
         const table = tables[tableKey]
         return (
           <Draggable
+            bounds="parent"
             axis="both"
             handle=".handle"
             defaultPosition={{x: 0, y: 0}}
@@ -129,8 +119,7 @@ renderPauseButton() {
             <Block
               className="stepped-A"
               top={`${y}px`}
-              left={`${x}px`}
-              color="#00f">
+              left={`${x}px`}>
 
               <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
 
@@ -151,58 +140,9 @@ renderPauseButton() {
     return (
       <div>
         <main>
+          <div className="box" style={{height: '1000px', width: "100%", position: 'relative', overflow: 'auto', padding: '0', margin: '0'}}>
+          <div style={{height: '1000px', width: '100%', padding: '10px'}}>
           {renderTables}
-          <div className="box" style={{height: '500px', width: '500px', position: 'relative', overflow: 'auto', padding: '0'}}>
-          <div style={{height: '1000px', width: '1000px', padding: '10px'}}>
-          <Draggable
-            bounds="parent"
-            axis="both"
-            handle=".handle"
-            defaultPosition={{x: 0, y: 0}}
-            position={null}
-            grid={[5, 5]}
-            scale={1}
-            onStart={this.handleStart}
-            onDrag={this.handleDrag}
-            onStop={this.handleStop}>
-           <div className="handle">
-           <Block
-                    className=" handle stepped-A"
-                    top={`${y}px`}
-                    left={`${x}px`}
-                    color="#00f"
-                    >
-                    <div className="handle">
-                    A
-                    </div>
-                    </Block>
-                    </div>
-        </Draggable>
-       
-        <Draggable
-            bounds="parent"
-            axis="both"
-            handle=".handle"
-            defaultPosition={{x: 0, y: 0}}
-            position={null}
-            grid={[5, 5]}
-            scale={1}
-            onStart={this.handleStart}
-            onDrag={this.handleDrag}
-            onStop={this.handleStop}>
-            <div className="handle"> 
-            <Block
-                    className="stepped-B"
-                    top={`${y}px`}
-                    left={`${x}px`}
-                    color="#00f"
-                    >
-                     <div>
-                     B
-                    </div>
-                    </Block>  
-                    </div>
-        </Draggable>
             
             <SteppedLineTo from="stepped-A" to="stepped-B"
                                 fromAnchor="bottom" toAnchor="top" {...style} />
