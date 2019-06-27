@@ -101,6 +101,14 @@ renderPauseButton() {
   
 
   render() {
+    const ox = 300;
+    const oy = 120;
+    const r = 100;
+  
+    const t = this.state.ticks * Math.PI / 180;
+  
+    const x = Math.cos(t) * r + ox;
+    const y = Math.sin(t) * r + oy;
     const tables = this.props.tables
     const renderTables = Object.keys(tables)
       .map((tableKey, index) => {
@@ -116,8 +124,17 @@ renderPauseButton() {
             onStart={this.handleStart}
             onDrag={this.handleDrag}
             onStop={this.handleStop}>
-            <div className="handle">
+            <div>
+              <p className="handle" >Drag me</p>
+            <Block
+              className="stepped-A"
+              top={`${y}px`}
+              left={`${x}px`}
+              color="#00f">
+
               <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+
+              </Block>
             </div>
         </Draggable>)
         })
@@ -126,16 +143,9 @@ renderPauseButton() {
           borderColor: 'black',
           borderStyle: 'solid',
           borderWidth: 3,
+          zIndex: 0
         }
 
-        const ox = 300;
-        const oy = 120;
-        const r = 100;
-
-        const t = this.state.ticks * Math.PI / 180;
-
-        const x = Math.cos(t) * r + ox;
-        const y = Math.sin(t) * r + oy;
 
 
     return (
