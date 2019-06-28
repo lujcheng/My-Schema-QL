@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { CSSTransitionGroup } from 'react-transition-group'
 
 class Table extends Component {
   constructor(props) {
