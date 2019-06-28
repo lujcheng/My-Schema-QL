@@ -118,7 +118,7 @@ class Table extends Component {
   }
     render() {
       return (
-        <div>
+        <div className="single-table">
           <table>
             <thead>
               <tr id="table-title">

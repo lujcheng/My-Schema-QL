@@ -178,8 +178,8 @@ th, td {
 .new-table-form {
 	border-color: #141414;
 	border-style: solid;
-	display: flex;
-	justify-content: flex-end;
+	/* display: flex;
+	justify-content: flex-end; */
 }
 
 /* table.schema-table tbody > tr > td, thead {
@@ -238,7 +238,11 @@ table tr:last-child td:last-child {
   border-bottom-right-radius: 30px;
 } */
 
-.container {
-	margin-top: 10em;
-	display: flex;
+.tables-container {
+	padding-top: 10em;
+	/* display: flex; */
+}
+
+.single-table {
+	width: 50%;
 }

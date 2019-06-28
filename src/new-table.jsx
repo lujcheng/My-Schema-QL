@@ -33,7 +33,7 @@ class NewTable extends Component {
 
 	render() {
 		return (
-			<div className="new-table">
+			<div className="create-table">
 				<button type="button" className="button create-table-button" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
 				{
 					this.state.visible &&

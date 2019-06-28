@@ -483,12 +483,16 @@ class App extends Component {
 		      </nav>
         </header>
         <div>
-          <nav id="sub-nav-bar">
-            <Query onChange={this.onChange} />
-          </nav>
+          <div>
+            <nav id="sub-nav-bar">
+              <Query onChange={this.onChange} />
+            </nav>
+          </div>
         </div>
-        <div>
+        <div className="section">
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+        </div>
+        <div className="hero-foot">
         </div>
       </div>
     );

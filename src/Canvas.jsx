@@ -50,7 +50,7 @@ class Canvas extends Component {
         })
 
     return (
-      <div>
+      <div className="tables-container">
         <main>{renderTables}</main>
       </div>
     )
