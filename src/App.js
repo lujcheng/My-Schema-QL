@@ -31,6 +31,7 @@ class App extends Component {
             ["3", 'Chevy', 'Blazer', '2000'],
             ["4", 'Honda', 'Accord', '1978']
           ],
+          createdAt: new Date('January 1, 2019 00:01:00'),
           foreignKey: null,
           xY: null,
           selected: {
@@ -47,6 +48,7 @@ class App extends Component {
             ["3", 'Guild', 'Starfire', '2001'],
             [ "4", 'Gretsch', 'Jet', '2005']
           ],
+          createdAt: new Date('January 1, 2019 00:02:00'),
           foreignKey: null,
           xY: null,
           selected: {
@@ -59,10 +61,11 @@ class App extends Component {
           columns: ['ID', 'name', 'breed', 'age'],
           values: [
             ["1", 'Enfys', 'Husky', '12'],
-            ["2", 'Enfys', 'Pitbull', '15'],
-            ["3", 'Charlie', 'poodle', '21'],
+            ["2", 'Jack', 'Pitbull', '15'],
+            ["3", 'Charlie', 'Poodle', '21'],
             [ "4", 'Maple', 'Golden Doodle', '56']
           ],
+          createdAt: new Date('January 1, 2019 00:03:00'),
           foreignKey: null,
           xY: null,
           selected: {
@@ -83,7 +86,6 @@ class App extends Component {
     this.findRows = this.findRows.bind(this)
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
-
   checkTableMatches = () => {
     const query = this.state.query
     let currentTables = []
@@ -163,10 +165,12 @@ class App extends Component {
         [tableName]: {
           columns: colArray, 
           values: dataArray, 
+          createdAt: new Date(),
           foreignKey: null, 
           xY: null, 
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         }
       }
@@ -183,7 +187,7 @@ class App extends Component {
       joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
       for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
         for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-          console.log(stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
+          console.log("hi!!!: ", stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
           if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
             joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
           }
@@ -200,6 +204,7 @@ class App extends Component {
 
   checkMatch = () => {
     if (this.state.colMatch === false) {
+      console.log("hi cm")
       Object.keys(this.state.tables).forEach((table) => {
         this.setState(prevState => ({
           ...prevState, tables: {
@@ -331,26 +336,39 @@ class App extends Component {
       })
   }
   
-  renderTableChange = (tableName, val, col, row) => {
+  renderTableChange = (tableName, val, row, col) => {
     const tabName = tableName;
     const value = val;
     const colNum = col;
     const rowNum = row;
     const tempTables = this.state.tables;
-    let tempRow = [...tempTables[tabName].values[rowNum]];
+    let tempRow = tempTables[tabName].values[rowNum];
     tempRow[colNum] = value
     tempTables[tabName].values[rowNum] = tempRow
     this.setState({
       tables: tempTables
     })
-    console.log("TABLES", this.state.tables)
+  
   }
 
 
   deleteRow = (col, tableName) => {
+    console.log("COL", col)
     const tabName = tableName;
-    console.log("COLUMN NUMBER", col)
-    // const tempTable 
+    console.log(this.state.tables[tabName].values)
+    const rowDelete = this.state.tables[tabName].values.filter((value, index) => {
+      console.log("VALUE", value)
+      if (index !== col) {
+        console.log("IN HERE")
+        return value
+      }
+    })
+    console.log("ROW DELETE", rowDelete)
+    const tempTables = this.state.tables
+    tempTables[tabName].values = rowDelete
+    this.setState({
+      tables: tempTables
+    })
   }
 
   changeTableHeader = (tableName, val, col) => {
@@ -362,22 +380,22 @@ class App extends Component {
     this.setState({
       tables: tempTables
     })
-    console.log("TABLES FROM HEADER:", this.state.tables)
   }
 
   changeTableTitle = (tableName, val, tableID) => {
-    const tabName = tableName;
-    const value = val;
+    const oldTableName = tableName;
+    const newTableName = val;
     const tabID = tableID;
     const tables = this.state.tables;
-    tables[val] = tables[tabName];
-    delete tables[tabName];
-    this.setState({tables: tables})
-    console.log("TABLES", this.state.tables)
+    tables[newTableName] = tables[oldTableName];
+    this.setState({
+      tables: tables
+    })
+    delete tables[oldTableName];
   }
 
+
   renderNewTable = (tableObj) => {
-   
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
@@ -392,48 +410,58 @@ class App extends Component {
     }
 
     const dataArray = () => {
-      let dataArray = [];
       let rowArray = [];
-
-      for (let i = 0; i < cols; i ++) {
-        dataArray.push("")
-      }
       for (let j = 0; j < rows; j ++) {
+        let dataArray = []
+        for (let i = 0; i < cols; i ++) {
+          dataArray.push(null)
+        }
         rowArray.push(dataArray)
       }
+
       return rowArray;
     }
-
+    // const tables = this.state.tables
+    // tables[tableName]:
     this.setState({
       tables: {
         ...this.state.tables,
         [tableName]: {
           columns: colArray(), 
-          values: dataArray(), 
+          values: dataArray(),
+          createdAt: new Date(),
           foreignKey: null, 
           xY: null, 
           selected: {
-            columnIndexes: null
+            columnIndexes: null,
+            rowIndexes: null
           }
         }
       }
     })
-
-
   }
   render() {
     return (
       <div>
+        <header>
+		      <nav className="hero">
+			      <div>
+				      <h1>SCHEMA</h1>
+              <NewTable renderNewTable={this.renderNewTable} />
+			      </div>
+		      </nav>
+        </header>
         <div>
-          <NewTable renderNewTable={this.renderNewTable} />
-        </div>
-        <div>
-          <nav id="sub-nav-bar">
-            <Query onChange={this.onChange} />
-          </nav>
+          <div>
+            <nav>
+              <Query onChange={this.onChange} />
+            </nav>
+          </div>
         </div>
         <div>
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+        </div>
+        <div className="hero-foot">
         </div>
       </div>
     );

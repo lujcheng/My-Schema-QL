@@ -138,6 +138,13 @@ renderPauseButton() {
     
     const tables = this.props.tables
     const renderTables = Object.keys(tables)
+    .sort((a, b) => {
+      if (tables[a].createdAt < tables[b].createdAt) {
+        return 1
+      } else {
+        return -1
+      }
+    })
       .map((tableKey, index) => {
         const table = tables[tableKey]
         return (
@@ -154,11 +161,8 @@ renderPauseButton() {
               top={`${y}px`}
               left={`${x}px`}> DRAG MEEEE damnit man</p>
     
-              
+              <Table key={Math.floor(Math.random() * 1000)} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
 
-                <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
-
-   
             </div>
         </Draggable>
         )
@@ -174,6 +178,7 @@ renderPauseButton() {
 
 
     return (
+
       <div>
         <main className="box">
           {this.renderPanZoomControls()}
@@ -207,7 +212,6 @@ renderPauseButton() {
        
 
         </main>
-        
       </div>
     )
   }
