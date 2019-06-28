@@ -22,7 +22,7 @@ class App extends Component {
         on: null,
       },
       tables: {
-        Cars: {
+        cars: {
           
           columns: ['ID', 'make', 'model', 'year'],
           values: [
@@ -40,7 +40,7 @@ class App extends Component {
           }
         },
           
-        Guitars: {
+        guitars: {
           columns: ['ID', 'make', 'model', 'year'],
           values: [
             ["1", 'Fender', 'Tele', '2010'],
@@ -57,7 +57,7 @@ class App extends Component {
           }
         },
 
-        Dogs: {
+        dogs: {
           columns: ['ID', 'name', 'breed', 'age'],
           values: [
             ["1", 'Enfys', 'Husky', '12'],
