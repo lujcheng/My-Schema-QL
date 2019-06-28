@@ -18,6 +18,7 @@ class Table extends Component {
   
   onDelete = (event, col) => {
     event.preventDefault();
+    // event.stopPropagation();
     this.props.deleteRow(col, this.props.tableName)
   }
 
@@ -55,8 +56,9 @@ class Table extends Component {
     return columnHeaders.map((key, col) => {
       if (this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col)) {
         return (
-        <th className="colSelected" key={Math.floor(Math.random() * 1000)}>
+        <th className="colSelected is-centered header-row border" key={Math.floor(Math.random() * 1000)}>
           <input 
+            id="header-name"
             type="text" 
             defaultValue={key.toUpperCase()} 
             className="query-item input-query new-table-item" 
@@ -65,8 +67,9 @@ class Table extends Component {
         </th>)
       } else {
         return (
-        <th className="" key={Math.floor(Math.random() * 1000)}>
+        <th className="is-centered border" key={Math.floor(Math.random() * 1000)}>
           <input 
+            id="header-name"
             type="text" 
             defaultValue={key.toUpperCase()} 
             className="query-item input-query new-table-item" 
@@ -87,9 +90,9 @@ class Table extends Component {
           {
             items.map((item, row) => {
               if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
-                return <td key={Math.floor(Math.random() * 1000)} className="colSelected" ><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
+                return <td key={Math.floor(Math.random() * 1000)} className="colSelected is-centered" ><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
               } else {
-                return <td key={Math.floor(Math.random() * 1000)}><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
+                return <td id="cell" className="is-centered" key={Math.floor(Math.random() * 1000)}><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
               }
             })
           }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -102,9 +105,9 @@ class Table extends Component {
               {
                 items.map((item, row) => {
                   if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
-                    return <td key={Math.floor(Math.random() * 1000)} className="colSelected" ><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
+                    return <td key={Math.floor(Math.random() * 1000)} className="colSelected has-text-centered" ><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
                   } else {
-                    return <td key={Math.floor(Math.random() * 1000)} ><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
+                    return <td key={Math.floor(Math.random() * 1000)} className="has-text-centered"><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)}/></td>
                   }
                 })
               }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -117,19 +120,19 @@ class Table extends Component {
     render() {
       return (
         <div>
-          <table className="schema-table animated infinite bounce delay-2s" border='1'>
-            <thead className="table-title">
-              <tr>
-                <th colSpan={this.props.table.columns.length} className="has-text-centered table-title">
-                  <input type="text" defaultValue={this.props.tableName} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnterTitle(evt)}/>
+          <table>
+            <thead>
+              <tr id="table-title">
+                <th colSpan={this.props.table.columns.length} className="has-text-centered table-title is-centered">
+                  <input id="table-title" type="text" defaultValue={this.props.tableName} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnterTitle(evt)}/>
                   <button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
                 </th>
               </tr>
-            </thead>
-            <tbody>
-              <tr className="header-row">
+              <tr id="header-name" className="header-row">
                 {this.renderTableHeader()}
               </tr>
+            </thead>
+            <tbody>
               {this.renderTableData()}
             </tbody>
           </table>
