@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { CSSTransitionGroup } from 'react-transition-group'
 
 class Table extends Component {
   constructor(props) {
@@ -116,7 +117,7 @@ class Table extends Component {
     render() {
       return (
         <div>
-          <table className="schema-table" border='1'>
+          <table className="schema-table animated infinite bounce delay-2s" border='1'>
             <thead className="table-title">
               <tr>
                 <th colSpan={this.props.table.columns.length} className="has-text-centered table-title">
