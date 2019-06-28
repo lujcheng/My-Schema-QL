@@ -22,7 +22,7 @@ class App extends Component {
         on: null,
       },
       tables: {
-        cars: {
+        Cars: {
           
           columns: ['ID', 'make', 'model', 'year'],
           values: [
@@ -40,7 +40,7 @@ class App extends Component {
           }
         },
           
-        guitars: {
+        Guitars: {
           columns: ['ID', 'make', 'model', 'year'],
           values: [
             ["1", 'Fender', 'Tele', '2010'],
@@ -57,12 +57,12 @@ class App extends Component {
           }
         },
 
-        dogs: {
+        Dogs: {
           columns: ['ID', 'name', 'breed', 'age'],
           values: [
             ["1", 'Enfys', 'Husky', '12'],
-            ["2", 'Enfys', 'Pitbull', '15'],
-            ["3", 'Charlie', 'poodle', '21'],
+            ["2", 'Jack', 'Pitbull', '15'],
+            ["3", 'Charlie', 'Poodle', '21'],
             [ "4", 'Maple', 'Golden Doodle', '56']
           ],
           createdAt: new Date('January 1, 2019 00:03:00'),
@@ -474,9 +474,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div>
-          <NewTable renderNewTable={this.renderNewTable} />
-        </div>
+        <header>
+		      <nav>
+			      <div className="nav-elements">
+				      <h1 id="nav-title">SCHEMA</h1>
+              <NewTable renderNewTable={this.renderNewTable} />
+			      </div>
+		      </nav>
+        </header>
         <div>
           <nav id="sub-nav-bar">
             <Query onChange={this.onChange} />
