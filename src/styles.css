@@ -33,6 +33,7 @@ body {
 .error-message {
 	color: red;
 	display: flex;
+	justify-content: center;
 }
 
 .query-item {
@@ -88,6 +89,8 @@ body {
 
 .dropdown-box {
 	height: 3.1em;
+	margin-left: .5em;
+	margin-right: .5em;
 }
 
 /* carousel */

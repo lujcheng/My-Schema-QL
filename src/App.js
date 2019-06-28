@@ -187,7 +187,7 @@ class App extends Component {
       joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
       for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
         for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-          console.log(stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
+          console.log("hi!!!: ", stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
           if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
             joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
           }
@@ -236,6 +236,7 @@ class App extends Component {
 
   checkMatch = () => {
     if (this.state.colMatch === false) {
+      console.log("hi cm")
       Object.keys(this.state.tables).forEach((table) => {
         this.setState(prevState => ({
           ...prevState, tables: {
@@ -479,7 +480,7 @@ class App extends Component {
         </div>
         <div>
           <nav id="sub-nav-bar">
-            <Query onChange={this.onChange} />
+            <Query onChange={this.onChange}/>
           </nav>
         </div>
         <div>

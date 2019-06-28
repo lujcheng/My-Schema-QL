@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import {spaces , where} from './validations.jsx'
+import {spaces , where, required} from './validations.jsx'
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
-import InputField from './inputField';
 
 const keyWordToAllowedKeyWords = {
 	'WHERE': ['JOIN','ORDER BY','GROUP BY', 'HAVING', 'AND' ],
@@ -10,8 +9,16 @@ const keyWordToAllowedKeyWords = {
 	'ORDER BY': ['JOIN', 'GROUP BY', 'HAVING'],
 	'AND': ['ORDER BY', 'GROUP BY', 'HAVING', 'AND'],
 	'HAVING': ['WHERE', 'ORDER BY', 'GROUP BY', 'JOIN', 'AND'],
-	'FROM': ['WHERE', 'JOIN', 'ORDER BY', 'GROUP BY', 'HAVING' ]
-	}
+  'FROM': ['WHERE', 'JOIN', 'ORDER BY', 'GROUP BY', 'HAVING' ],
+  'GROUP BY': ['WHERE', 'JOIN', 'HAVING']
+}
+
+// const validationsForKeywords = {
+//   'WHERE': [required, where],
+//   'JOIN': [required, spaces],
+//   'ORDER BY': [required]
+//   'AND': [required]
+// }
 
 class Query extends Component {
 	constructor(props) {
@@ -21,6 +28,13 @@ class Query extends Component {
 			lastKeyword: "FROM"
 		}
 		this.toggleDropdown = this.toggleDropdown.bind(this)
+	}
+	
+	deleteInputFields = (evt) => {
+		evt.preventDefault();
+		this.setState({
+      inputFieldArr: []
+    })
 	}
 	
 	toggleDropdown = (lastKeyword) => {
@@ -34,23 +48,32 @@ class Query extends Component {
 	onButtonSubmit = (evt) => {
 		evt.preventDefault()
 		const tempArr = this.state.inputFieldArr;
-		const queryType = evt.target.keywords.value;
+    const queryType = evt.target.keywords.value;
+    console.log("querytype ", queryType);
 		if (queryType === "JOIN") {
 			tempArr.push(
-				<div className="is-inline-block">
-						<InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)}/>
-						<InputField queryType="ON" onChange={(e) => this.props.onChange(e, "ON")}/>
-				</div>
+				<div className="query-item">
+          <p className="query-item query-tags">JOIN</p>
+          <Input name="JOIN" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "join")} validations={[spaces, required]}/>
+          <p className="query-item query-tags">ON</p>
+          <Input name="ON" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "on")} validations={[spaces, required]} />
+        </div>
 			)
 		} 
 		else if (queryType === "WHERE") {
-				tempArr.push(
-				<div className="is-inline-block"><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)} validations={[where]}/></div>
+      tempArr.push(
+      <div className="is-inline-block">
+        <p className="query-item query-tags">WHERE</p>
+        <Input name="WHERE" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "where")} validations={[where, required]}/>
+      </div>
 			)	
 		}
 		else {
 			tempArr.push(
-				<div><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)}/></div>
+				<div>
+          <p className="query-item query-tags">JOIN</p>
+          <Input name="JOIN" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
+        </div>
 			)
 		}
 		this.setState({
@@ -62,21 +85,22 @@ class Query extends Component {
 	render() {
 		const printFields = this.state.inputFieldArr.map((field) => {
 			return (
-					<span>{field}</span>
+        <div>{field}</div>
 			)
 		})
 		return (
 			<Form action="" method="POST" className="sub-nav-elements" onSubmit={this.onButtonSubmit} >
 				<p className="query-item query-tags">SELECT</p>
-				<Input name="select" type="text" placeholder="" className="query-item input-query" onChange={(e) => this.props.onChange(e, "select")} />
+				<Input name="select" type="text" placeholder="" className="query-item input-query" onChange={(e) => this.props.onChange(e, "select")} validations={[required]}/>
 				<p className="query-item query-tags">FROM</p>
-				<Input name="from" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "from")} validations={[spaces]} />
-				{printFields}
+				<Input name="from" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "from")} validations={[required, spaces]} />
+        {printFields}
 				<select className="dropdown-box" name="keywords">
 					{this.toggleDropdown(this.state.lastKeyword)}
 				</select>
 				<button type="submit" className="button add-button" >+</button>
-			</Form>
+        <button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.deleteInputFields(evt)}><i className="far fa-trash-alt"></i></button>
+      </Form>
     )
   }
 }
