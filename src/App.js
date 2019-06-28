@@ -158,7 +158,6 @@ class App extends Component {
     }
   }
 
-  // Ask Lucas about this
   createTable = (tableName, colArray, dataArray) => {
     this.setState({
       tables: {
