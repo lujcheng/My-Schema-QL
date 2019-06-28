@@ -160,11 +160,11 @@ th, td {
 
 /* highlight selection */
 .data-row .colSelected, .header-row .colSelected {
-	border-color: red;
+	background-color: red;
 	border-width: 0.4em;
 }
 .rowSelected {
-	border-color: red;
+	background-color: red;
 	border-width: 0.4em;
 }
 
