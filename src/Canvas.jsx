@@ -4,38 +4,36 @@ import Draggable from 'react-draggable';
 import LineTo, { SteppedLineTo } from 'react-lineto';
 import ReactPanZoom from "@ajainarayanan/react-pan-zoom";
 
-class Block extends React.PureComponent {
-  render() {
-    const { top, left, color, className } = this.props;
-    const style = { top, left, backgroundColor: color, height: "100px"};  
 
-      return (
-          <div
-              className={`block ${className} handle`}
-              style={style}
-              onMouseOver={this.props.onMouseOver}
-              onMouseOut={this.props.onMouseOut}
-          >
-              {this.props.children}
-          </div>
-      );
-  }
-}
-
-
-class Canvas extends React.PureComponent {
+class Canvas extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
+        activeDrags: 0,
         ticks: 0,
         paused: false,
         dx: 0,
         dy: 0,
-        zoom: 1
-    };
-    this.togglePause = this.togglePause.bind(this);
+        zoom: 0.8
+    }
+    this.togglePause = this.togglePause.bind(this)
+    this.onStart = this.onStart.bind(this)
+    this.onStop = this.onStop.bind(this)
 }
 
+// react-draggable functions
+
+  onStart(e) {
+    e.stopPropagation()
+    this.setState({activeDrags: ++this.state.activeDrags});
+  }
+
+  onStop(e) {
+    e.stopPropagation()
+    this.setState({activeDrags: --this.state.activeDrags});
+  }
+
+  // SVG line-to functions
 componentDidMount() {
     this.startAnimation();
 }
@@ -45,6 +43,7 @@ componentWillUnmount() {
 }
 
 startAnimation() {
+
     const step = () => {
         this.setState(Object.assign({}, this.state, {
             ticks: this.state.ticks + 1,
@@ -115,7 +114,7 @@ renderPauseButton() {
   renderPanZoomControls = () => {
     return (
       <div>
-        <div onClick={this.zoomIn} onScroll={this.zoomIn}>
+        <div onClick={this.zoomIn}>
           <span>+</span>
         </div>
         <div onClick={this.zoomOut}>
@@ -142,32 +141,27 @@ renderPauseButton() {
       .map((tableKey, index) => {
         const table = tables[tableKey]
         return (
+          // .react-draggable
           <Draggable
-            bounds="parent"
             axis="both"
             handle=".handle"
             defaultPosition={{x: 0, y: 0}}
-            position={null}
-            grid={[5, 5]}
-            scale={1}
-            onStart={this.handleStart}
-            onDrag={this.handleDrag}
-            onStop={this.handleStop}
-            zIndex='5'
+            onStart={this.onStart}
+            onStop={this.onStop}
             >
-            <div>
-              <p className="handle" style={{zIndex:'5'}} >Drag me</p>
-            <Block
-              className="stepped-A"
+          <div style={{height:"100%", width:"100%"}}>
+            <p className="stepped-A handle"
               top={`${y}px`}
-              left={`${x}px`}>
-                
+              left={`${x}px`}> DRAG MEEEE damnit man</p>
+    
+              
 
                 <Table key={index} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
 
-              </Block>
+   
             </div>
-        </Draggable>)
+        </Draggable>
+        )
         })
         const style = {
           delay: true,
@@ -181,27 +175,36 @@ renderPauseButton() {
 
     return (
       <div>
-        <main>
-          <div className="box" style={{height: '1000px', width: "100%", position: 'relative', overflow: 'auto', padding: '0', margin: '0'}}>
-          <div style={{height: '1000px', width: '100%', padding: '10px'}}>
-
+        <main className="box">
           {this.renderPanZoomControls()}
           <ReactPanZoom
             zoom={this.state.zoom}
             pandx={this.state.dx}
             pandy={this.state.dy}
             onPan={this.onPan}
-            zIndex='0'
             width='100%'
+            height= '100vh'
             >
+              {renderTables}
           
-            {renderTables}
-            
-            <SteppedLineTo from="stepped-A" to="stepped-B" fromAnchor="bottom" toAnchor="top" {...style} />
-
-            </ReactPanZoom>
-            </div>
-            </div>
+              <SteppedLineTo from="stepped-A" to="stepped-B" fromAnchor="bottom" toAnchor="top" {...style} />
+    
+              <Draggable
+                axis="both"
+                handle=".handle"
+                defaultPosition={{x: 0, y: 0}}
+                grid={[5, 5]}
+                scale={1}
+                onStart={this.onStart}
+                onDrag={this.handleDrag}
+                onStop={this.onStop}
+                >
+              <div>
+                <p className= 'stepped-B handle'  top={`${y}px`} left={`${x}px`}> Test anchor </p> 
+              </div>
+            </Draggable>
+          </ReactPanZoom>
+       
 
         </main>
         

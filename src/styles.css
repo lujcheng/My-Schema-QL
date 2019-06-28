@@ -185,3 +185,20 @@ input {
 .edit-row-col {
 	padding-right: 1em;
 }
+
+.pan-container {
+	z-index: 0;
+}
+
+.react-draggable {
+	z-index: 3;
+}
+
+.react-draggable .handle {
+	z-index: 5;
+	padding: 30px;
+}
+
+.react-draggable table {
+	z-index: 5;
+}
