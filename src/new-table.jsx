@@ -33,23 +33,23 @@ class NewTable extends Component {
 
 	render() {
 		return (
-			<div className="create-table">
+			<div>
 				<button type="button" className="button create-table-button" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
 				{
 					this.state.visible &&
 				<form onSubmit={this.handleSubmission}>
-					<table className="create-table">
+					<table>
 						<tbody>
 							<tr>
 								<td className="header-row"><p>Table name:</p></td>
 								<td className="data-row"><input type="text" value={this.state.newTable.tableName} onChange={this.handleChange.bind(this, "tableName")} placeholder="Table name" className="query-item input-query"/></td>
 							</tr>
 							<tr>
-								<td className="header-row"><p>Columns (categories):</p></td>
+								<td className="header-row"><p>Columns:</p></td>
 								<td className="data-row"><input type="number" value={this.state.newTable.cols} onChange={this.handleChange.bind(this, "cols")} placeholder="#" className="query-item input-query"/></td>
 							</tr>
 							<tr>
-								<td className="header-row"><p>Rows (seed data):</p></td>
+								<td className="header-row"><p>Rows:</p></td>
 								<td className="data-row"><input type="number" value={this.state.newTable.rows} onChange={this.handleChange.bind(this, "rows")} placeholder="#" className="query-item input-query"/></td>
 							</tr>
 							<tr>

@@ -18,6 +18,7 @@ class Table extends Component {
   
   onDelete = (event, col) => {
     event.preventDefault();
+    // event.stopPropagation();
     this.props.deleteRow(col, this.props.tableName)
   }
 
@@ -118,7 +119,7 @@ class Table extends Component {
   }
     render() {
       return (
-        <div className="single-table">
+        <div>
           <table>
             <thead>
               <tr id="table-title">

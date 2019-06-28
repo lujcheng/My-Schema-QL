@@ -475,21 +475,21 @@ class App extends Component {
     return (
       <div>
         <header>
-		      <nav>
-			      <div className="nav-elements">
-				      <h1 id="nav-title">SCHEMA</h1>
+		      <nav className="hero">
+			      <div>
+				      <h1>SCHEMA</h1>
               <NewTable renderNewTable={this.renderNewTable} />
 			      </div>
 		      </nav>
         </header>
         <div>
           <div>
-            <nav id="sub-nav-bar">
+            <nav>
               <Query onChange={this.onChange} />
             </nav>
           </div>
         </div>
-        <div className="section">
+        <div>
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
         </div>
         <div className="hero-foot">
