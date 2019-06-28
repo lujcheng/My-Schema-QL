@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Input from 'react-validation/build/input';
-import { control } from 'react-validation';
+import { control , where} from 'react-validation';
 
 class InputField extends Component {
   
@@ -8,7 +8,7 @@ class InputField extends Component {
     return (
       <span>
         <p className="query-item query-tags">{this.props.queryType}</p>
-        <input {...this.props} name={this.props.queryType} type="text" placeholder="Table name" className="query-item input-query"/>
+        <input {...this.props} name={this.props.queryType} type="text" placeholder="Table name" className="query-item input-query" validations={this.props.validation}/>
       </span> 
     )
   }
