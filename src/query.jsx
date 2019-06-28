@@ -62,7 +62,7 @@ class Query extends Component {
 		} 
 		else if (queryType === "WHERE") {
       tempArr.push(
-      <div className="is-inline-block">
+      <div className="query-item">
         <p className="query-item query-tags">WHERE</p>
         <Input name="WHERE" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "where")} validations={[where, required]}/>
       </div>
@@ -70,8 +70,8 @@ class Query extends Component {
 		}
 		else {
 			tempArr.push(
-				<div>
-          <p className="query-item query-tags">JOIN</p>
+				<div className="query-item">
+          <p className="query-item query-tags">{queryType}</p>
           <Input name="JOIN" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
         </div>
 			)

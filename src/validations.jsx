@@ -15,7 +15,7 @@ export const spaces = (value) => {
 
 export const where = (value) => {
   if (value.split(" ").length !== 3) {
-    return <div><span className="error-message">expected: (val operator val)</span></div>;
+    return <span className="error-message">expected: (val operator val)</span>;
   }
 }
 

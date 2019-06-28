@@ -22,12 +22,15 @@ body {
 	display: flex;
 	justify-content: space-between;
 	padding: 1em;
+	flex-wrap: wrap;
 }
 
 .sub-nav-elements {
 	align-items: center;
 	display: flex;
 	justify-content: left;
+	flex-wrap: wrap;
+	margin-bottom: 1em;
 }
 
 .error-message {
@@ -38,6 +41,7 @@ body {
 
 .query-item {
 	padding-right: 0.3em;
+	display: flex;
 }
 
 .fa-table {
