@@ -61,8 +61,8 @@ class App extends Component {
           columns: ['ID', 'name', 'breed', 'age'],
           values: [
             ["1", 'Enfys', 'Husky', '12'],
-            ["2", 'Enfys', 'Pitbull', '15'],
-            ["3", 'Charlie', 'poodle', '21'],
+            ["2", 'Jack', 'Pitbull', '15'],
+            ["3", 'Charlie', 'Poodle', '21'],
             [ "4", 'Maple', 'Golden Doodle', '56']
           ],
           createdAt: new Date('January 1, 2019 00:03:00'),
@@ -475,16 +475,25 @@ class App extends Component {
   render() {
     return (
       <div>
+        <header>
+		      <nav className="hero">
+			      <div>
+				      <h1>SCHEMA</h1>
+              <NewTable renderNewTable={this.renderNewTable} />
+			      </div>
+		      </nav>
+        </header>
         <div>
-          <NewTable renderNewTable={this.renderNewTable} />
-        </div>
-        <div>
-          <nav id="sub-nav-bar">
-            <Query onChange={this.onChange}/>
-          </nav>
+          <div>
+            <nav>
+              <Query onChange={this.onChange} />
+            </nav>
+          </div>
         </div>
         <div>
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+        </div>
+        <div className="hero-foot">
         </div>
       </div>
     );
