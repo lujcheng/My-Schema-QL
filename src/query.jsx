@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {spaces} from './validations.jsx'
+import {spaces , where} from './validations.jsx'
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import InputField from './inputField';
@@ -42,7 +42,13 @@ class Query extends Component {
 						<InputField queryType="ON" onChange={(e) => this.props.onChange(e, "ON")}/>
 				</div>
 			)
-		} else {
+		} 
+		else if (queryType === "WHERE") {
+				tempArr.push(
+				<div className="is-inline-block"><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)} validations={[where]}/></div>
+			)	
+		}
+		else {
 			tempArr.push(
 				<div><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)}/></div>
 			)

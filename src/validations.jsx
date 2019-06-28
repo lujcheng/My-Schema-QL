@@ -7,3 +7,10 @@ export const spaces = (value) => {
   }
 };
 
+export const where = (value) => {
+  if (value.split(" ").length !== 3) {
+    console.log("HELLO")
+    return <span className="error-message">only one argument allowed</span>;
+  }
+}
+
