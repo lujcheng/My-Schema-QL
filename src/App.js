@@ -442,7 +442,7 @@ class App extends Component {
   }
   render() {
     return (
-      <body className="hero is-fullheight">
+      <div className="hero is-fullheight">
         <section className="section">
           <div className="level">
             <div className="level-left">
@@ -460,7 +460,7 @@ class App extends Component {
         </section>
         <section className="section">
         </section>
-      </body>
+      </div>
     );
   }
 }
