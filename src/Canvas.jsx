@@ -19,6 +19,8 @@ class Canvas extends Component {
     this.togglePause = this.togglePause.bind(this)
     this.onStart = this.onStart.bind(this)
     this.onStop = this.onStop.bind(this)
+    this.startAnimation = this.startAnimation.bind(this)
+    this.stopAnimation = this.stopAnimation.bind(this)
 }
 
 // react-draggable functions
@@ -34,16 +36,16 @@ class Canvas extends Component {
   }
 
   // SVG line-to functions
-componentDidMount() {
-    this.startAnimation();
-}
+// componentDidMount() {
+//     this.startAnimation();
+// }
 
-componentWillUnmount() {
-    this.stopAnimation();
-}
+// componentWillUnmount() {
+//     this.stopAnimation();
+// }
 
-startAnimation() {
-
+startAnimation(e) {
+    e.stopPropagation()
     const step = () => {
         this.setState(Object.assign({}, this.state, {
             ticks: this.state.ticks + 1,
@@ -53,7 +55,8 @@ startAnimation() {
     step();
 }
 
-stopAnimation() {
+stopAnimation(e) {
+  e.stopPropagation()
     cancelAnimationFrame(this.frame);
 }
 
@@ -153,15 +156,16 @@ renderPauseButton() {
             axis="both"
             handle=".handle"
             defaultPosition={{x: 0, y: 0}}
-            onStart={this.onStart}
-            onStop={this.onStop}
+            onStart={this.onStart, this.startAnimation}
+            onStop={this.onStop, this.stopAnimation}
+            key={tableKey}
             >
           <div style={{height:"100%", width:"100%"}}>
             <p className="stepped-A handle"
               top={`${y}px`}
               left={`${x}px`}> DRAG MEEEE damnit man</p>
     
-              <Table key={Math.floor(Math.random() * 1000)} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+              <Table  tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
 
             </div>
         </Draggable>
@@ -200,9 +204,9 @@ renderPauseButton() {
                 defaultPosition={{x: 0, y: 0}}
                 grid={[5, 5]}
                 scale={1}
-                onStart={this.onStart}
+                onStart={this.onStart, this.startAnimation}
                 onDrag={this.handleDrag}
-                onStop={this.onStop}
+                onStop={this.onStop, this.stopAnimation}
                 >
               <div>
                 <p className= 'stepped-B handle'  top={`${y}px`} left={`${x}px`}> Test anchor </p> 
