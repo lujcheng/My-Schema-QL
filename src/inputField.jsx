@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Input from 'react-validation/build/input';
-import { control } from 'react-validation';
+import { control , where} from 'react-validation';
 
 class InputField extends Component {
   

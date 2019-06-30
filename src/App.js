@@ -187,7 +187,7 @@ class App extends Component {
       joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
       for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
         for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-          console.log(stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
+          console.log("hi!!!: ", stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
           if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
             joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
           }
@@ -201,41 +201,10 @@ class App extends Component {
       this.setState({join: false })
     }
   }
-  
-  /*
----------------------------------------------------
-
-********** JOIN BASED ONE TWO TABLE NAMES, FOREIGN KEY SET IN STATE
-  const join = (tables) => {
-    stateTbl = state.tables
-    let joinColumns = stateTbl[tables[0]].columns
-    let joinValues = stateTbl[tables[0]].values
-    let forKey
-    let primeKey
-    for(let tbl=1; tbl < tables.length; tbl++) {
-      forKey = stateTbl[tables[tbl-1]].columns.indexOf(stateTbl[tables[tbl-1]].foreignKey)
-      primeKey = stateTbl[tables[tbl]].columns.indexOf(stateTbl[tables[tbl]].primaryKey)
-      console.log(forKey,primeKey)
-      joinColumns = joinColumns.concat(state.tables[tables[tbl]].columns)
-      for (let i=0; i < joinValues.length; i++) {
-        for (let e=0; e< state.tables[tables[tbl]].values.length; e++) {
-        if(joinValues[i][forKey] === state.tables[tables[tbl]].values[e][primeKey] )
-        joinValues[i] = joinValues[i].concat(state.tables[tables[tbl]].values[e])
-        }
-      }
-    }
-    console.log(joinValues)
-    // for each table
-    // find table values
-    // find columns
-    // find values
-    // join column and values to central table
-  }
-
-   */
 
   checkMatch = () => {
     if (this.state.colMatch === false) {
+      console.log("hi cm")
       Object.keys(this.state.tables).forEach((table) => {
         this.setState(prevState => ({
           ...prevState, tables: {

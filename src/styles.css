@@ -12,14 +12,30 @@ body {
 	font-family: 'Montserrat', sans-serif;
 } */
 
+#sub-nav-bar {
+	display: flex;
+	justify-content: space-between;
+	padding: 1em;
+	flex-wrap: wrap;
+}
 
 .sub-nav-elements {
+	align-items: center;
+	display: flex;
+	justify-content: left;
+	flex-wrap: wrap;
+	margin-bottom: 1em;
 }
 
 .error-message {
+	color: red;
+	display: flex;
+	justify-content: center;
 }
 
 .query-item {
+	padding-right: 0.3em;
+	display: flex;
 }
 
 .fa-table {
@@ -71,6 +87,8 @@ body {
 
 .dropdown-box {
 	height: 3.1em;
+	margin-left: .5em;
+	margin-right: .5em;
 }
 
 /* carousel */
@@ -175,6 +193,23 @@ input {
 
 .edit-row-col {
 	padding-right: 1em;
+}
+
+.pan-container {
+	z-index: 0;
+}
+
+.react-draggable {
+	z-index: 3;
+}
+
+.react-draggable .handle {
+	z-index: 5;
+	padding: 30px;
+}
+
+.react-draggable table {
+	z-index: 5;
 }
 
 .delete-button {
