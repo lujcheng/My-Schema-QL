@@ -190,3 +190,7 @@ table {
 	border-collapse: separate;
 	border-spacing: 0;
 }
+
+.field.is-grouped {
+	margin-left: 1rem;
+}

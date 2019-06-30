@@ -7,8 +7,14 @@ class InputField extends Component {
   render() {
     return (
       <>
-        <label className="label e">{this.props.queryType}</label>
-        <div><input {...this.props} name={this.props.queryType} type="text" placeholder="Table name" className="f input"/></div>
+      <div className="field is-grouped is-grouped-multiline">
+       <div className="field-label is normal">
+          <label className="label e">{this.props.queryType}</label>
+        </div>
+        <div className="control">
+          <input {...this.props} name={this.props.queryType} type="text" placeholder="Table name" className="f input"/>
+        </div>
+      </div>
       </> 
     )
   }

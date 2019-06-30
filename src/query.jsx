@@ -20,8 +20,8 @@ class Query extends Component {
 		const queryType = evt.target.keywords.value
 		if (queryType === "join") {
 			tempArr.push(
-				<><div className="control"><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)}/></div>
-				<div className="control"><InputField queryType={"on"} onChange={(e) => this.props.onChange(e, "on")}/></div></>
+				<><InputField queryType={queryType} onChange={(e) => this.props.onChange(e, queryType)}/>
+				<InputField queryType={"on"} onChange={(e) => this.props.onChange(e, "on")}/></>
 			)
 		} else {
 			tempArr.push(
@@ -43,28 +43,36 @@ class Query extends Component {
 		return (
 			<Form action="" method="POST" className="1" onSubmit={this.onButtonSubmit}>
 				<div className="field is-grouped is-grouped-multiline">
-					<div className="control">
-						<label className="label">SELECT</label>
-						<Input name="select" type="text" placeholder="" className="input" onChange={(e) => this.props.onChange(e, "select")} />
+					<div className="field is-grouped is-grouped-multiline">
+						<div className="field-label is normal">
+							<label className="label">SELECT</label>
+						</div>
+						<div className="control">
+							<Input name="select" type="text" placeholder="" className="input" onChange={(e) => this.props.onChange(e, "select")} />
+						</div>
 					</div>
-					<div className="control">
-						<label className="label">FROM</label>
-						<Input name="from" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, "from")} validations={[spaces]} />
+
+					<div className="field is-grouped is-grouped-multiline">
+						<div className="field-label is normal">
+							<label className="label">FROM</label>
+						</div>
+						<div className="control">
+							<Input name="from" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, "from")} validations={[spaces]} />
+						</div>
 					</div>
 					{printFields}
-				</div>
-				{/* <div className="e level-item column">
-					{printFields}
-				</div> */}
-				<div className="control">
-					<div className="select" >
-						<select name="keywords">
-							<option className="dropdown-value" value="join">JOIN</option>
-							<option className="dropdown-value" value="on">ON</option>
-							<option className="dropdown-value" value="where">WHERE</option>
-						</select>
+					<div className="field is-grouped is-grouped-multiline">
+						<div className="control">
+							<div className="select" >
+								<select name="keywords">
+									<option className="dropdown-value" value="join">JOIN</option>
+									<option className="dropdown-value" value="on">ON</option>
+									<option className="dropdown-value" value="where">WHERE</option>
+								</select>
+							</div>
+							<button type="submit" className="button is-normal is-dark" >+</button>
+						</div>
 					</div>
-					<button type="submit" className="button is-normal is-dark" >+</button>
 				</div>
 			</Form>
     )

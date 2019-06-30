@@ -474,17 +474,17 @@ class App extends Component {
   render() {
     return (
       <body className="hero is-fullheight">
-        
-        <section className="hero-body" >
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">SCHEMA</h1>
+        <section className="section">
+          <div className="level">
+            <div className="level-left">
+              <h1 className="title level-item">SCHEMA</h1>
             </div>
             <NewTable renderNewTable={this.renderNewTable} />
           </div>
         </section>
-       
+       <section className="section">
           <Query onChange={this.onChange} />
+        </section>
 
         <section className="section">
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
