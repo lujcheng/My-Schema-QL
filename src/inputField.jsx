@@ -6,10 +6,16 @@ class InputField extends Component {
   
   render() {
     return (
-      <span>
-        <p className="query-item query-tags">{this.props.queryType}</p>
-        <input {...this.props} name={this.props.queryType} type="text" placeholder="Table name" className="query-item input-query" validations={this.props.validation}/>
-      </span> 
+      <>
+      <div className="field is-grouped is-grouped-multiline">
+       <div className="field-label is normal">
+          <label className="label e">{this.props.queryType}</label>
+        </div>
+        <div className="control">
+          <input {...this.props} name={this.props.queryType} type="text" placeholder="Table name" className="f input"/>
+        </div>
+      </div>
+      </> 
     )
   }
 }

@@ -85,9 +85,12 @@ class Query extends Component {
 	render() {
 		const printFields = this.state.inputFieldArr.map((field) => {
 			return (
-        <div>{field}</div>
+				<>
+					{field}
+				</>
 			)
 		})
+		// Form - took out className "sub-nav-elements"
 		return (
 			<Form action="" method="POST" className="sub-nav-elements" onSubmit={this.onButtonSubmit} >
 				<p className="query-item query-tags">SELECT</p>
