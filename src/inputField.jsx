@@ -6,10 +6,10 @@ class InputField extends Component {
   
   render() {
     return (
-      <span>
-        <p className="query-item query-tags">{this.props.queryType}</p>
-        <input {...this.props} name={this.props.queryType} type="text" placeholder="Table name" className="query-item input-query"/>
-      </span> 
+      <>
+        <label className="label e">{this.props.queryType}</label>
+        <div><input {...this.props} name={this.props.queryType} type="text" placeholder="Table name" className="f input"/></div>
+      </> 
     )
   }
 }

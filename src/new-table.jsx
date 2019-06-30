@@ -34,7 +34,7 @@ class NewTable extends Component {
 	render() {
 		return (
 			<div>
-				<button type="button" className="button create-table-button" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
+				<button type="button" className="button is-dark" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
 				{
 					this.state.visible &&
 				<form onSubmit={this.handleSubmission}>

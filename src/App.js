@@ -473,28 +473,25 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
-        <header>
-		      <nav className="hero">
-			      <div>
-				      <h1>SCHEMA</h1>
-              <NewTable renderNewTable={this.renderNewTable} />
-			      </div>
-		      </nav>
-        </header>
-        <div>
-          <div>
-            <nav>
-              <Query onChange={this.onChange} />
-            </nav>
+      <body className="hero is-fullheight">
+        
+        <section className="hero-body" >
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">SCHEMA</h1>
+            </div>
+            <NewTable renderNewTable={this.renderNewTable} />
           </div>
-        </div>
-        <div>
+        </section>
+       
+          <Query onChange={this.onChange} />
+
+        <section className="section">
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
-        </div>
-        <div className="hero-foot">
-        </div>
-      </div>
+        </section>
+        <section className="section">
+        </section>
+      </body>
     );
   }
 }
