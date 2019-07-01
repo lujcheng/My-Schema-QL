@@ -10,6 +10,7 @@ class Table extends Component {
     }
   }
   focus = (e) => {
+    e.stopPropagation()
     e.target.focus()
   }
 
@@ -133,7 +134,7 @@ class Table extends Component {
             <thead>
               <tr>
                 <th colSpan={this.props.table.columns.length}>
-                  <input type="text" defaultValue={this.props.tableName} className="input" onKeyDown={(evt) => this.onEnterTitle(evt)}/>
+                  <input type="text" defaultValue={this.props.tableName} className="input" onKeyDown={(evt) => this.onEnterTitle(evt)} onDoubleClick={this.focus}/>
                   <button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
                 </th>
               </tr>

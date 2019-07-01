@@ -162,14 +162,11 @@ class Canvas extends Component {
             onStop={this.onStop, this.stopAnimation}
             key={tableKey}
             >
-          <div style={{height:"100%", width:"100%"}}>
-            <p className="stepped-A handle"
-              top={`${y}px`}
-              left={`${x}px`}> DRAG MEEEE damnit man</p>
-    
-              <Table className="handle" top={`${y}px`} left={`${x}px`} x={x} y={y} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
+            <div style={{width: "fit-content"}}>
+              <span className="handle" top={`${y}px`} left={`${x}px`}>Drag</span>
+              <Table x={x} y={y} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
 
-            </div>
+              </div>
         </Draggable>
         )
         })
