@@ -167,7 +167,7 @@ class Canvas extends Component {
               top={`${y}px`}
               left={`${x}px`}> DRAG MEEEE damnit man</p>
     
-              <Table  x={x} y={y} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
+              <Table className="handle" top={`${y}px`} left={`${x}px`} x={x} y={y} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
 
             </div>
         </Draggable>
@@ -184,7 +184,7 @@ class Canvas extends Component {
       if (this.props.svg[key] != null && typeof this.props.svg[key] === 'string') {
         console.log(key, this.props.svg[key])
         return (
-          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="bottom" toAnchor="top" {...style} />
+          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="center" toAnchor="center" {...style} />
         )
       }
     })
@@ -207,25 +207,7 @@ class Canvas extends Component {
             >
               {renderTables}
               {renderSVG}
-              <SteppedLineTo from="stepped-A" to="stepped-B" fromAnchor="bottom" toAnchor="top" {...style} />
-    
-              <Draggable
-                axis="both"
-                handle=".handle"
-                defaultPosition={{x: 0, y: 0}}
-                grid={[5, 5]}
-                scale={1}
-                onStart={this.onStart, this.startAnimation}
-                onDrag={this.handleDrag}
-                onStop={this.onStop, this.stopAnimation}
-                >
-              <div>
-                <p className= 'stepped-B handle'  top={`${y}px`} left={`${x}px`}> Test anchor </p> 
-              </div>
-            </Draggable>
           </ReactPanZoom>
-       
-
         </main>
       </div>
     )
