@@ -60,7 +60,7 @@ class Table extends Component {
     return columnHeaders.map((key, col) => {
       if (this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col)) {
         return (
-        <th className="colSelected is-centered header-row border" key={key + col}>
+        <th className="colSelected is-centered header-row border" key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}} >
           <input 
             id="header-name"
             type="text" 
@@ -72,7 +72,7 @@ class Table extends Component {
         </th>)
       } else {
         return (
-        <th className="is-centered border" key={key + col}>
+        <th className="is-centered border" key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
           <input 
             id="header-name"
             type="text" 
@@ -91,7 +91,7 @@ class Table extends Component {
     return data.map((items, col) => {
       if (this.props.table.selected.rowIndexes != null && this.props.table.selected.rowIndexes.includes(col)) {
       return (
-        <tr key={items + col} className="data-row rowSelected">
+        <tr key={items + col} className="data-row rowSelected" >
 
           {
             items.map((item, row) => {
@@ -99,8 +99,6 @@ class Table extends Component {
               if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
                 return <td key={item + col + row} className="colSelected is-centered" ><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
               } else {
-                return <td id="cell" className="is-centered" key={item + col 
-                + row}><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
               }
             })
           }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>

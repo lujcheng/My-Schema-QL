@@ -21,6 +21,7 @@ class Canvas extends Component {
     this.onStop = this.onStop.bind(this)
     this.startAnimation = this.startAnimation.bind(this)
     this.stopAnimation = this.stopAnimation.bind(this)
+    this.createSVG = this.createSVG.bind(this)
 }
 
 // react-draggable functions
@@ -44,7 +45,7 @@ class Canvas extends Component {
 //     this.stopAnimation();
 // }
 
-startAnimation(e) {
+  startAnimation(e) {
     e.stopPropagation()
     const step = () => {
         this.setState(Object.assign({}, this.state, {
@@ -53,14 +54,14 @@ startAnimation(e) {
         this.frame = requestAnimationFrame(step);
     };
     step();
-}
+  }
 
-stopAnimation(e) {
-  e.stopPropagation()
-    cancelAnimationFrame(this.frame);
-}
+  stopAnimation(e) {
+    e.stopPropagation()
+      cancelAnimationFrame(this.frame);
+  }
 
-togglePause() {
+  togglePause() {
     const paused = !this.state.paused;
     if (paused) {
         this.stopAnimation();
@@ -68,16 +69,29 @@ togglePause() {
         this.startAnimation();
     }
     this.setState(Object.assign({}, this.state, { paused }));
-}
+  }
 
-renderPauseButton() {
+  renderPauseButton() {
     const text = this.state.paused ? 'Play' : 'Pause';
     return (
         <button onClick={this.togglePause}>{text}</button>
     );
-}
+  }
 
-// end of line-to
+// table handlers
+  createSVG = (e, tableName)=> {
+    e.stopPropagation()
+    let newClass = `${tableName}${e.target.value}`
+    if(e.altKey) {
+      let classNames = e.target.className.split(' ')
+      if(classNames.includes(newClass)) {
+        e.target.className = classNames.filter(n => n !== newClass).join(' ')
+      } else {
+        e.target.className += ` ${tableName}${e.target.value}`
+      }
+    }
+    console.log(e.target.className)
+  }
   
   deleteRow = (col, tableName) => {
     this.props.deleteRow(col, tableName)
@@ -95,6 +109,7 @@ renderPauseButton() {
     this.props.changeTableTitle(tableName, val, tableID)
   }
 
+  // react-pan-zoom
   zoomIn = () => {
     this.setState({
       zoom: this.state.zoom + 0.2
@@ -165,7 +180,7 @@ renderPauseButton() {
               top={`${y}px`}
               left={`${x}px`}> DRAG MEEEE damnit man</p>
     
-              <Table  tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+              <Table  tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
 
             </div>
         </Draggable>

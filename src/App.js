@@ -21,6 +21,7 @@ class App extends Component {
         where: null,
         on: null,
       },
+      svg: null,
       tables: {
         cars: {
           
@@ -86,6 +87,22 @@ class App extends Component {
     this.findRows = this.findRows.bind(this)
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
+
+
+    createSVG = (e, tableName)=> {
+    e.stopPropagation()
+    let newClass = `${tableName}${e.target.value}`
+    if(e.altKey) {
+      let classNames = e.target.className.split(' ')
+      if(classNames.includes(newClass)) {
+        e.target.className = classNames.filter(n => n !== newClass).join(' ')
+      } else {
+        e.target.className += ` ${tableName}${e.target.value}`
+      }
+    }
+    console.log(e.target.className)
+  }
+
   checkTableMatches = () => {
     const query = this.state.query
     let currentTables = []
@@ -456,7 +473,7 @@ class App extends Component {
         </section>
 
         <section className="section">
-          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG}/>
         </section>
         <section className="section">
         </section>
