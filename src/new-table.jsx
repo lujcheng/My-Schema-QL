@@ -38,7 +38,7 @@ class NewTable extends Component {
 	render() {
 		return (
 			<div>
-				<button type="button" className="button is-dark" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
+				<button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
 				{
 					this.state.visible &&
 				// create table popup
@@ -54,7 +54,7 @@ class NewTable extends Component {
 									<tbody>
 										<tr>
 											<td className="header-row"><p>Table name:</p></td>
-											<td className="data-row"><input type="text" value={this.state.newTable.tableName} onChange={this.handleChange.bind(this, "tableName")} placeholder="Table name" className="input"/></td>
+											<td className="data-row"><input type="text" value={this.state.newTable.tableName} onChange={this.handleChange.bind(this, "tableName")} className="input"/></td>
 										</tr>
 										<tr>
 											<td className="header-row"><p>Columns:</p></td>
@@ -65,7 +65,7 @@ class NewTable extends Component {
 											<td className="data-row"><input type="number" value={this.state.newTable.rows} onChange={this.handleChange.bind(this, "rows")} placeholder="#" className="input"/></td>
 										</tr>
 										<tr>
-											<td colSpan="2"><button type="submit" className="button add-button">Create</button></td>
+											<td colSpan="2"><button type="submit" className="button is-paddingless is-pulled-right is-dark is-normal">Create</button></td>
 										</tr>
 									</tbody>
 								</table>

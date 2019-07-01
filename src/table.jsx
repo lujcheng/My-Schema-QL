@@ -127,7 +127,7 @@ class Table extends Component {
     render() {
       return (
         <div>
-          <table className="table is-striped is-narrow is-bordered">
+          <table className="table is-narrow">
             <thead>
               <tr>
                 <th colSpan={this.props.table.columns.length}>

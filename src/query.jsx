@@ -58,7 +58,7 @@ class Query extends Component {
 							<label className="label">JOIN</label>
 						</div>
 						<div className="control">
-							<Input name="JOIN" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, "join")} validations={[spaces, required]}/>
+							<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, "join")} validations={[spaces, required]}/>
 						</div>
 					</div>
 					
@@ -67,7 +67,7 @@ class Query extends Component {
 							<label className="label">ON</label>
 						</div>
 						<div className="control">
-							<Input name="ON" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, "on")} validations={[spaces, required]} />
+							<Input name="ON" type="text" className="input" onChange={(e) => this.props.onChange(e, "on")} validations={[spaces, required]} />
 						</div>
         			</div>
 				</>
@@ -81,7 +81,7 @@ class Query extends Component {
 				<label className="label">WHERE</label>
 			</div>
 			<div className="control">
-				<Input name="WHERE" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, "where")} validations={[where, required]}/>
+				<Input name="WHERE" type="text" className="input" onChange={(e) => this.props.onChange(e, "where")} validations={[where, required]}/>
 			</div>
 		</div>
       </>
@@ -95,7 +95,7 @@ class Query extends Component {
          					 <label className="label">{queryType}</label>
 						</div>
 						<div className="control">
-          					<Input name="JOIN" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
+          					<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
 						</div>
 					</div>
         		</>
@@ -116,38 +116,40 @@ class Query extends Component {
 			)
 		})
 		return (
-			<Form action="" method="POST" onSubmit={this.onButtonSubmit} >
-				<div className="field is-grouped is-grouped-multiline">
+			<div className="box">
+				<Form action="" method="POST" onSubmit={this.onButtonSubmit} >
 					<div className="field is-grouped is-grouped-multiline">
-						<div className="field-label is-normal">
-							<label className="label">SELECT</label>
+						<div className="field is-grouped is-grouped-multiline">
+							<div className="field-label is-normal">
+								<label className="label">SELECT</label>
+							</div>
+							<div className="control">
+								<Input name="select" type="text" className="input" onChange={(e) => this.props.onChange(e, "select")} validations={[required]}/>
+							</div>
 						</div>
-						<div className="control">
-							<Input name="select" type="text" placeholder="" className="input" onChange={(e) => this.props.onChange(e, "select")} validations={[required]}/>
+						<div className="field is-grouped is-grouped-multiline">
+							<div className="field-label is-normal">
+								<label className="label">FROM</label>
+							</div>
+							<div className="control">
+								<Input name="from" type="text" className="input" onChange={(e) => this.props.onChange(e, "from")} validations={[required, spaces]} />
+							</div>
+						</div>
+						{printFields}
+						<div className="field is-grouped is-grouped-multiline">
+							<div className="control">
+								<div className="select">
+									<select name="keywords">
+										{this.toggleDropdown(this.state.lastKeyword)}
+									</select>
+								</div>	
+								<button type="submit" className="button is-normal is-dark" >+</button>
+								<button type="button" className="button is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.deleteInputFields(evt)}><i className="far fa-trash-alt"></i></button>
+							</div>
 						</div>
 					</div>
-					<div className="field is-grouped is-grouped-multiline">
-						<div className="field-label is-normal">
-							<label className="label">FROM</label>
-						</div>
-						<div className="control">
-							<Input name="from" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, "from")} validations={[required, spaces]} />
-						</div>
-					</div>
-					{printFields}
-					<div className="field is-grouped is-grouped-multiline">
-						<div className="control">
-							<div className="select">
-								<select name="keywords">
-									{this.toggleDropdown(this.state.lastKeyword)}
-								</select>
-							</div>	
-							<button type="submit" className="button is-normal is-dark" >+</button>
-							<button type="button" className="button is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.deleteInputFields(evt)}><i className="far fa-trash-alt"></i></button>
-						</div>
-					</div>
-				</div>
-      </Form>
+				</Form>
+			</div>
     )
   }
 }

@@ -388,10 +388,10 @@ class App extends Component {
     const tabID = tableID;
     const tables = this.state.tables;
     tables[newTableName] = tables[oldTableName];
+    delete tables[oldTableName];
     this.setState({
       tables: tables
     })
-    delete tables[oldTableName];
   }
 
 
@@ -445,10 +445,10 @@ class App extends Component {
       <div className="hero is-fullheight">
         <section className="navbar">
           <div className="navbar-brand">
-            <h1 className="title">SCHEMA</h1>
+            <h1 className="title is-1">SCHEMA</h1>
           </div>
         </section>
-        
+
         <section className="hero-body">
           <NewTable renderNewTable={this.renderNewTable} />
         </section>
