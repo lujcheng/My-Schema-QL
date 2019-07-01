@@ -448,9 +448,11 @@ class App extends Component {
             <h1 className="title">SCHEMA</h1>
           </div>
         </section>
+        
         <section className="hero-body">
           <NewTable renderNewTable={this.renderNewTable} />
         </section>
+
        <section className="section">
           <Query onChange={this.onChange} />
         </section>
@@ -458,6 +460,7 @@ class App extends Component {
         <section className="section">
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
         </section>
+
         <section className="section">
         </section>
       </div>

@@ -110,7 +110,7 @@ body {
 
 /* tables */
 
-.new-table-item {
+/* .new-table-item {
 	background-color: transparent;
 	border-style: none;
 }
@@ -119,62 +119,23 @@ body {
 .new-table {
 	position: relative;
 	display: inline-block;
-}
+} */
 
 
-table {
+/* table {
 	border: 0.5px solid #1B1B1B;
-}
+} */
 
 table {
 	font-family: 'Libre Franklin', sans-serif;
-	margin: 3em;
 }
 
-th, td {
-	padding: 0.5em;
-}
-
-#table-title {
-	background-color:#1B1B1B;
-	color:#F3F3F3;
-	font-size: 1.2em;
-	text-align: center;
-}
-
-#header-name {
-	color:#141414;
-	font-size: 1.2em;
-	text-align: center;
-	font-family: 'Libre Franklin', sans-serif;
-}
-
-#cell {
-	color:#141414;
-	font-size: 1em;
-	text-align: center;
-	font-family: 'Libre Franklin', sans-serif;
-}
-
-#header-name {
-	background-color: #E1E1E1;
-	color:#141414;
-	font-weight: bold;
-}
-
-.data-row {
-	background-color:#F3F3F3;
-	color:#141414;
-}
 
 .new-table-form {
 	border-color: #141414;
 	border-style: solid;
 }
 
-/* table.schema-table tbody > tr > td, thead {
-	border: 1px solid #1B1B1B;
-} */
 
 /* highlight selection */
 .data-row .colSelected, .header-row .colSelected {

@@ -46,19 +46,19 @@ class NewTable extends Component {
 						</header>
 						<section className="modal-card-body">
 							<form onSubmit={this.handleSubmission}>
-								<table>
+								<table className="table is-striped is-narrow is-bordered">
 									<tbody>
 										<tr>
 											<td className="header-row"><p>Table name:</p></td>
-											<td className="data-row"><input type="text" value={this.state.newTable.tableName} onChange={this.handleChange.bind(this, "tableName")} placeholder="Table name" className="query-item input-query"/></td>
+											<td className="data-row"><input type="text" value={this.state.newTable.tableName} onChange={this.handleChange.bind(this, "tableName")} placeholder="Table name" className="input"/></td>
 										</tr>
 										<tr>
 											<td className="header-row"><p>Columns:</p></td>
-											<td className="data-row"><input type="number" value={this.state.newTable.cols} onChange={this.handleChange.bind(this, "cols")} placeholder="#" className="query-item input-query"/></td>
+											<td className="data-row"><input type="number" value={this.state.newTable.cols} onChange={this.handleChange.bind(this, "cols")} placeholder="#" className="input"/></td>
 										</tr>
 										<tr>
 											<td className="header-row"><p>Rows:</p></td>
-											<td className="data-row"><input type="number" value={this.state.newTable.rows} onChange={this.handleChange.bind(this, "rows")} placeholder="#" className="query-item input-query"/></td>
+											<td className="data-row"><input type="number" value={this.state.newTable.rows} onChange={this.handleChange.bind(this, "rows")} placeholder="#" className="input"/></td>
 										</tr>
 										<tr>
 											<td colSpan="2"><button type="submit" className="button add-button">Create</button></td>
