@@ -52,45 +52,6 @@ body {
 	margin: 0.2em;
 }
 
-/* .button {
-	background-color:#1B1B1B;
-	border: none;
-	color:#F3F3F3;
-	font-family: 'Libre Franklin', sans-serif;
-	font-weight: bold;
-	margin-right: 0.5em;
-	padding: 0.7em;
-} */
-
-.create-table-button {
-	font-size: 1.1em;
-	line-height: 1.1em;
-	margin: 1.2em;
-}
-
-/* .add-button {
-	border-radius: 10px;
-	font-size: 1em;
-} */
-
-.input-query {
-	font-size: 1em;
-	height: 2.2em;
-	margin-right: 0.3em;
-	color: #141414;
-}
-
-.query-tags {
-	color: #141414;
-	font-size: 1.5em;
-}
-
-.dropdown-box {
-	height: 3.1em;
-	margin-left: .5em;
-	margin-right: .5em;
-}
-
 /* carousel */
 #carousel-demo {
 	background-color: #005b96;
@@ -108,73 +69,34 @@ body {
 	text-align: center;
 }
 
-/* tables */
-
-.new-table-item {
-	background-color: transparent;
-	border-style: none;
-}
-
-
-.new-table {
-	position: relative;
-	display: inline-block;
-}
-
-
-table {
-	border: 0.5px solid #1B1B1B;
-}
 
 table {
 	font-family: 'Libre Franklin', sans-serif;
-	margin: 3em;
 }
 
-th, td {
-	padding: 0.5em;
-}
-
-#table-title {
-	background-color:#1B1B1B;
-	color:#F3F3F3;
-	font-size: 1.2em;
-	text-align: center;
-}
-
-#header-name {
-	color:#141414;
-	font-size: 1.2em;
-	text-align: center;
-	font-family: 'Libre Franklin', sans-serif;
-}
-
-#cell {
-	color:#141414;
-	font-size: 1em;
-	text-align: center;
-	font-family: 'Libre Franklin', sans-serif;
-}
-
-#header-name {
-	background-color: #E1E1E1;
-	color:#141414;
-	font-weight: bold;
-}
-
-.data-row {
-	background-color:#F3F3F3;
-	color:#141414;
-}
 
 .new-table-form {
 	border-color: #141414;
 	border-style: solid;
 }
 
-/* table.schema-table tbody > tr > td, thead {
-	border: 1px solid #1B1B1B;
-} */
+thead tr th {
+	background-color: #363636
+}
+
+th input.input {
+	background-color: #363636;
+	color: #FFFFFF;
+}
+
+tbody tr td {
+	background-color: #DCDCDC;
+}
+
+td input.input {
+	background-color: #DCDCDC;
+}
+
 
 /* highlight selection */
 .data-row .colSelected, .header-row .colSelected {
@@ -220,12 +142,24 @@ input {
 	border: 0.5px solid #1B1B1B;
 }
 
-/* ROUNDED TABLE CORNERS*/
-table {
-	border-collapse: separate;
-	border-spacing: 0;
-}
 
 .field.is-grouped {
 	margin-left: 1rem;
+}
+
+.button.is-normal {
+	margin-left: 0.2rem;
+}
+
+
+input.input {
+	width: 6em;
+}
+
+.table th:not([align]) {
+	text-align: center;
+}
+
+div.select {
+	width: 7em;
 }
