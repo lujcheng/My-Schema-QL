@@ -75,18 +75,30 @@ class Query extends Component {
 		} 
 		else if (queryType === "WHERE") {
       tempArr.push(
-      <div className="query-item">
-        <p className="query-item query-tags">WHERE</p>
-        <Input name="WHERE" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "where")} validations={[where, required]}/>
-      </div>
+      <>
+	  	<div className="field is-grouped is-grouped-multiline">	
+		  	<div className="field-label is-normal">
+				<label className="label">WHERE</label>
+			</div>
+			<div className="control">
+				<Input name="WHERE" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, "where")} validations={[where, required]}/>
+			</div>
+		</div>
+      </>
 			)	
 		}
 		else {
 			tempArr.push(
-				<div className="query-item">
-          <p className="query-item query-tags">{queryType}</p>
-          <Input name="JOIN" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
-        </div>
+				<>
+					<div className="field is-grouped is-grouped-multiline">	
+						<div className="field-label is-normal">
+         					 <label className="label">{queryType}</label>
+						</div>
+						<div className="control">
+          					<Input name="JOIN" type="text" placeholder="Table name" className="input" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
+						</div>
+					</div>
+        		</>
 			)
 		}
 		this.setState({
@@ -131,7 +143,7 @@ class Query extends Component {
 								</select>
 							</div>	
 							<button type="submit" className="button is-normal is-dark" >+</button>
-							<button type="button" className="button is-normal is-dark" onClick={(evt) => this.deleteInputFields(evt)}><i className="far fa-trash-alt"></i></button>
+							<button type="button" className="button is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.deleteInputFields(evt)}><i className="far fa-trash-alt"></i></button>
 						</div>
 					</div>
 				</div>

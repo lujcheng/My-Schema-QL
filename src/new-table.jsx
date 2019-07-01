@@ -29,6 +29,9 @@ class NewTable extends Component {
 	handleSubmission = (e) => {
 		e.preventDefault();
 		this.props.renderNewTable(this.state.newTable)
+		this.setState(prevState => ({
+			visible: !prevState.visible
+		}))
 	}
 
 
@@ -38,6 +41,7 @@ class NewTable extends Component {
 				<button type="button" className="button is-dark" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
 				{
 					this.state.visible &&
+				// create table popup
 				<div className={this.state.visible ? "modal is-active" : null}>
 					<div className="modal-background"></div>
 					<div className="modal-card">

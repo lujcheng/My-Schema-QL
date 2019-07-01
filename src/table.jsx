@@ -117,7 +117,7 @@ class Table extends Component {
                     + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                   }
                 })
-              }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
+              }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
             </tr>
           )
 
@@ -132,7 +132,7 @@ class Table extends Component {
               <tr>
                 <th colSpan={this.props.table.columns.length}>
                   <input type="text" defaultValue={this.props.tableName} className="input" onKeyDown={(evt) => this.onEnterTitle(evt)}/>
-                  <button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
+                  <button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
                 </th>
               </tr>
               <tr className="header-row">
