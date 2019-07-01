@@ -21,7 +21,7 @@ class App extends Component {
         where: null,
         on: null,
       },
-      svg: null,
+      svg: {},
       tables: {
         cars: {
           
@@ -100,7 +100,26 @@ class App extends Component {
         e.target.className += ` ${tableName}${e.target.value}`
       }
     }
-    console.log(e.target.className)
+    let svg = this.state.svg
+    if(svg[newClass]) {
+      delete svg[newClass]
+      this.setState({svg: svg})
+    } else {
+      svg.map((keys) => {
+        if(keys === null) {
+          svg.keys = newClass
+          this.setState({svg: svg})
+        } else if (keys === newClass) {
+          svg.keys = null
+          this.setState({svg: svg})
+          } else {
+              svg[newClass] = null
+              this.setState({svg: svg})
+            }
+
+      })
+    }
+    console.log(this.state.svg)
   }
 
   checkTableMatches = () => {
