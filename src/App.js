@@ -4,12 +4,16 @@ import './styles.css';
 import MyCanvas from './Canvas.jsx';
 import Query from './query.jsx';
 import NewTable from './new-table.jsx'
+import io from 'socket.io-client';
+
+const socketURL = 'http://172.46.3.39:8080';
 
 class App extends Component {
   constructor(props) {
     super(props) 
     this.state = {
-      join: false,
+      socket: null,
+      joinmatch: false,
       colMatch: false,
       rowMatch: false,
       currentTable: null,
@@ -61,8 +65,8 @@ class App extends Component {
           columns: ['ID', 'name', 'breed', 'age'],
           values: [
             ["1", 'Enfys', 'Husky', '12'],
-            ["2", 'Jack', 'Pitbull', '15'],
-            ["3", 'Charlie', 'Poodle', '21'],
+            ["2", 'Enfys', 'Pitbull', '15'],
+            ["3", 'Charlie', 'poodle', '21'],
             [ "4", 'Maple', 'Golden Doodle', '56']
           ],
           createdAt: new Date('January 1, 2019 00:03:00'),
@@ -86,6 +90,48 @@ class App extends Component {
     this.findRows = this.findRows.bind(this)
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
+
+  
+
+  componentDidMount() {
+    const socket = io(socketURL)
+    this.setState({socket})
+
+    socket.on('state-update', (contents) => {
+      this.setState(contents)
+    })
+
+    socket.on('new-table', (contents) => {
+      this.setState({
+      tables: contents
+      })
+    })
+
+    socket.on('table-update', (contents) => {
+      this.setState({
+      tables: contents
+      })
+    })
+
+    socket.on('row-delete', (contents) => {
+      this.setState({
+      tables: contents
+      })
+    })
+
+    socket.on('header-change', (contents) => {
+      this.setState({
+      tables: contents
+      })
+    })
+
+    socket.on('title-change', (contents) => {
+      this.setState({
+      tables: contents
+      })
+    })
+  }
+
   checkTableMatches = () => {
     const query = this.state.query
     let currentTables = []
@@ -187,7 +233,7 @@ class App extends Component {
       joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
       for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
         for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-          console.log("hi!!!: ", stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
+          console.log(stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
           if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
             joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
           }
@@ -195,16 +241,15 @@ class App extends Component {
       }
       this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
       this.setState({joinTable: `${tables[0]}_${tables[1]}` })
-      this.setState({join: true})
+      this.setState({joinmatch: true})
       return `${tables[0]}_${tables[1]}`
     } else {
-      this.setState({join: false })
+      this.setState({joinmatch: false })
     }
   }
 
   checkMatch = () => {
     if (this.state.colMatch === false) {
-      console.log("hi cm")
       Object.keys(this.state.tables).forEach((table) => {
         this.setState(prevState => ({
           ...prevState, tables: {
@@ -334,7 +379,13 @@ class App extends Component {
       .then(() => {
         this.checkMatch()
       })
-  }
+      .then(() => {
+        const data = Object.assign({}, this.state)
+        console.log("socket ", this.state.socket)
+        delete data['socket']
+        this.state.socket.emit('input-update', data)
+      })
+    }
   
   renderTableChange = (tableName, val, row, col) => {
     const tabName = tableName;
@@ -348,7 +399,11 @@ class App extends Component {
     this.setState({
       tables: tempTables
     })
-  
+    setTimeout(() => {
+      let data = this.state.tables;
+      this.state.socket.emit('table-change', data);
+      console.log("data ", data)
+    }, 30);
   }
 
 
@@ -369,6 +424,10 @@ class App extends Component {
     this.setState({
       tables: tempTables
     })
+    setTimeout(() => {
+      let data = this.state.tables;
+      this.state.socket.emit('delete-row', data);
+    }, 30);
   }
 
   changeTableHeader = (tableName, val, col) => {
@@ -380,6 +439,10 @@ class App extends Component {
     this.setState({
       tables: tempTables
     })
+    setTimeout(() => {
+      let data = this.state.tables;
+      this.state.socket.emit('change-header', data);
+    }, 30);
   }
 
   changeTableTitle = (tableName, val, tableID) => {
@@ -392,6 +455,10 @@ class App extends Component {
       tables: tables
     })
     delete tables[oldTableName];
+    setTimeout(() => {
+      let data = this.state.tables;
+      this.state.socket.emit('change-title', data);
+    }, 30);
   }
 
 
@@ -421,8 +488,6 @@ class App extends Component {
 
       return rowArray;
     }
-    // const tables = this.state.tables
-    // tables[tableName]:
     this.setState({
       tables: {
         ...this.state.tables,
@@ -439,6 +504,10 @@ class App extends Component {
         }
       }
     })
+    setTimeout(() => {
+      let data = this.state.tables;
+      this.state.socket.emit('create-table', data);
+    }, 30);
   }
   render() {
     return (
