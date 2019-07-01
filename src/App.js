@@ -556,15 +556,24 @@ class App extends Component {
           <div className="navbar-brand">
             <h1 className="title is-1">SCHEMA</h1>
           </div>
+          <div className="navbar-end">
+            <nav className="breadcrumb is-right is-large" aria-label="breadcrumbs">
+              <ul>
+                <li><button className="button is-white is-large">GET LINK</button></li>
+                <li><button className="button is-white is-large">TUTORIAL</button></li>
+              </ul>
+            </nav>
+          </div>
         </section>
 
-        <section className="hero-body">
-          <NewTable renderNewTable={this.renderNewTable} />
-        </section>
 
        <section className="section">
           <Query onChange={this.onChange} />
         </section>
+
+        <div className="container">
+          <NewTable renderNewTable={this.renderNewTable} />
+        </div>
 
         <section className="section">
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg}/>

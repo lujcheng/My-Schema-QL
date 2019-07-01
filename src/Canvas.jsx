@@ -191,8 +191,8 @@ class Canvas extends Component {
 
     return (
 
-      <div>
-        <main className="box">
+      <div className="box container">
+        <div className="field is-grouped is-grouped-multiline">
           {this.renderPanZoomControls()}
           <ReactPanZoom
             zoom={this.state.zoom}
@@ -200,12 +200,12 @@ class Canvas extends Component {
             pandy={this.state.dy}
             onPan={this.onPan}
             width='100%'
-            height= '100vh'
+            // height= '100vh'
             >
               {renderTables}
               {renderSVG}
           </ReactPanZoom>
-        </main>
+        </div>
       </div>
     )
   }
