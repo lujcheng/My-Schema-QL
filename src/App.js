@@ -22,7 +22,6 @@ class App extends Component {
         on: null,
       },
       svg: {
-        test: "test"
       },
       tables: {
         cars: {
@@ -500,7 +499,7 @@ class App extends Component {
         </section>
 
         <section className="section">
-          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg}/>
         </section>
         <section className="section">
         </section>

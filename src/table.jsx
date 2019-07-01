@@ -62,6 +62,7 @@ class Table extends Component {
         return (
         <th className="colSelected is-centered header-row border" key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}} >
           <input 
+          top={`${this.props.y}px`} left={`${this.props.x}px`}
             id="header-name"
             type="text" 
             defaultValue={key.toUpperCase()} 
@@ -74,6 +75,7 @@ class Table extends Component {
         return (
         <th className="is-centered border" key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
           <input 
+          top={`${this.props.y}px`} left={`${this.props.x}px`}
             id="header-name"
             type="text" 
             defaultValue={key.toUpperCase()} 

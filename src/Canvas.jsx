@@ -21,7 +21,7 @@ class Canvas extends Component {
     this.onStop = this.onStop.bind(this)
     this.startAnimation = this.startAnimation.bind(this)
     this.stopAnimation = this.stopAnimation.bind(this)
-    this.createSVG = this.createSVG.bind(this)
+
 }
 
 // react-draggable functions
@@ -79,19 +79,7 @@ class Canvas extends Component {
   }
 
 // table handlers
-  createSVG = (e, tableName)=> {
-    e.stopPropagation()
-    let newClass = `${tableName}${e.target.value}`
-    if(e.altKey) {
-      let classNames = e.target.className.split(' ')
-      if(classNames.includes(newClass)) {
-        e.target.className = classNames.filter(n => n !== newClass).join(' ')
-      } else {
-        e.target.className += ` ${tableName}${e.target.value}`
-      }
-    }
-    console.log(e.target.className)
-  }
+
   
   deleteRow = (col, tableName) => {
     this.props.deleteRow(col, tableName)
@@ -142,7 +130,6 @@ class Canvas extends Component {
     );
   };
   
-
   render() {
     const ox = 300;
     const oy = 120;
@@ -156,13 +143,13 @@ class Canvas extends Component {
     
     const tables = this.props.tables
     const renderTables = Object.keys(tables)
-    .sort((a, b) => {
-      if (tables[a].createdAt < tables[b].createdAt) {
-        return 1
-      } else {
-        return -1
-      }
-    })
+      .sort((a, b) => {
+        if (tables[a].createdAt < tables[b].createdAt) {
+          return 1
+        } else {
+          return -1
+        }
+      })
       .map((tableKey, index) => {
         const table = tables[tableKey]
         return (
@@ -180,19 +167,28 @@ class Canvas extends Component {
               top={`${y}px`}
               left={`${x}px`}> DRAG MEEEE damnit man</p>
     
-              <Table  tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
+              <Table  x={x} y={y} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
 
             </div>
         </Draggable>
         )
         })
-        const style = {
-          delay: true,
-          borderColor: 'black',
-          borderStyle: 'solid',
-          borderWidth: 3,
-          zIndex: 2
-        }
+    const style = {
+      delay: true,
+      borderColor: 'black',
+      borderStyle: 'solid',
+      borderWidth: 3,
+    }
+
+    const renderSVG = Object.keys(this.props.svg).map(key => {
+      if (this.props.svg[key] != null && typeof this.props.svg[key] === 'string') {
+        console.log(key, this.props.svg[key])
+        return (
+          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="bottom" toAnchor="top" {...style} />
+        )
+      }
+    })
+    
 
 
 
@@ -210,7 +206,7 @@ class Canvas extends Component {
             height= '100vh'
             >
               {renderTables}
-          
+              {renderSVG}
               <SteppedLineTo from="stepped-A" to="stepped-B" fromAnchor="bottom" toAnchor="top" {...style} />
     
               <Draggable
