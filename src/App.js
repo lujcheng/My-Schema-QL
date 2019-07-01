@@ -6,7 +6,7 @@ import Query from './query.jsx';
 import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
 
-const socketURL = 'http://localhost:8080';
+const socketURL = 'http://172.46.3.39:8080';
 
 class App extends Component {
   constructor(props) {
@@ -108,6 +108,24 @@ class App extends Component {
     })
 
     socket.on('table-update', (contents) => {
+      this.setState({
+      tables: contents
+      })
+    })
+
+    socket.on('row-delete', (contents) => {
+      this.setState({
+      tables: contents
+      })
+    })
+
+    socket.on('header-change', (contents) => {
+      this.setState({
+      tables: contents
+      })
+    })
+
+    socket.on('title-change', (contents) => {
       this.setState({
       tables: contents
       })
@@ -215,7 +233,7 @@ class App extends Component {
       joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
       for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
         for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-          console.log("hi!!!: ", stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
+          console.log(stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
           if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
             joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
           }
@@ -438,6 +456,10 @@ class App extends Component {
     this.setState({
       tables: tempTables
     })
+    setTimeout(() => {
+      let data = this.state.tables;
+      this.state.socket.emit('delete-row', data);
+    }, 30);
   }
 
   changeTableHeader = (tableName, val, col) => {
@@ -449,6 +471,10 @@ class App extends Component {
     this.setState({
       tables: tempTables
     })
+    setTimeout(() => {
+      let data = this.state.tables;
+      this.state.socket.emit('change-header', data);
+    }, 30);
   }
 
   changeTableTitle = (tableName, val, tableID) => {
@@ -461,6 +487,10 @@ class App extends Component {
       tables: tables
     })
     delete tables[oldTableName];
+    setTimeout(() => {
+      let data = this.state.tables;
+      this.state.socket.emit('change-title', data);
+    }, 30);
   }
 
 
