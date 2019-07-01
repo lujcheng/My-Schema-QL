@@ -33,11 +33,11 @@ class NewTable extends Component {
 
 	render() {
 		return (
-			<div>
-				<button type="button" className="button create-table-button" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
+			<div className="level-right tile is-ancestor">
+				<button type="button" className="button is-dark tile is-vertical" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
 				{
 					this.state.visible &&
-				<form onSubmit={this.handleSubmission}>
+				<form onSubmit={this.handleSubmission} className="tile is-vertical">
 					<table>
 						<tbody>
 							<tr>

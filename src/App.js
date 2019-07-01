@@ -247,38 +247,6 @@ class App extends Component {
       this.setState({joinmatch: false })
     }
   }
-  
-  /*
----------------------------------------------------
-
-********** JOIN BASED ONE TWO TABLE NAMES, FOREIGN KEY SET IN STATE
-  const join = (tables) => {
-    stateTbl = state.tables
-    let joinColumns = stateTbl[tables[0]].columns
-    let joinValues = stateTbl[tables[0]].values
-    let forKey
-    let primeKey
-    for(let tbl=1; tbl < tables.length; tbl++) {
-      forKey = stateTbl[tables[tbl-1]].columns.indexOf(stateTbl[tables[tbl-1]].foreignKey)
-      primeKey = stateTbl[tables[tbl]].columns.indexOf(stateTbl[tables[tbl]].primaryKey)
-      console.log(forKey,primeKey)
-      joinColumns = joinColumns.concat(state.tables[tables[tbl]].columns)
-      for (let i=0; i < joinValues.length; i++) {
-        for (let e=0; e< state.tables[tables[tbl]].values.length; e++) {
-        if(joinValues[i][forKey] === state.tables[tables[tbl]].values[e][primeKey] )
-        joinValues[i] = joinValues[i].concat(state.tables[tables[tbl]].values[e])
-        }
-      }
-    }
-    console.log(joinValues)
-    // for each table
-    // find table values
-    // find columns
-    // find values
-    // join column and values to central table
-  }
-
-   */
 
   checkMatch = () => {
     if (this.state.colMatch === false) {
@@ -543,18 +511,24 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
-        <div>
-          <NewTable renderNewTable={this.renderNewTable} />
-        </div>
-        <div>
-          <nav id="sub-nav-bar">
-            <Query onChange={this.onChange}/>
-          </nav>
-        </div>
-        <div>
+      <div className="hero is-fullheight">
+        <section className="section">
+          <div className="level">
+            <div className="level-left">
+              <h1 className="title level-item">SCHEMA</h1>
+            </div>
+            <NewTable renderNewTable={this.renderNewTable} />
+          </div>
+        </section>
+       <section className="section">
+          <Query onChange={this.onChange} />
+        </section>
+
+        <section className="section">
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
-        </div>
+        </section>
+        <section className="section">
+        </section>
       </div>
     );
   }
