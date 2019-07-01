@@ -43,9 +43,9 @@ class NewTable extends Component {
 					this.state.visible &&
 				// create table popup
 				<div className={this.state.visible ? "modal is-active" : null}>
-					<div className="modal-background"></div>
+				<div className="modal-background"></div>
 					<div className="modal-card">
-						<header className="modal-card-title">
+						<header className="modal-card-head">
 							<button className="delete" aria-label="close" onClick={this.handleClick}></button>
 						</header>
 						<section className="modal-card-body">
@@ -54,15 +54,15 @@ class NewTable extends Component {
 									<tbody>
 										<tr>
 											<td className="header-row"><p>Table name:</p></td>
-											<td className="data-row"><input type="text" value={this.state.newTable.tableName} onChange={this.handleChange.bind(this, "tableName")} className="input"/></td>
+											<td className="data-row"><input type="text" value={this.state.newTable.tableName} onChange={this.handleChange.bind(this, "tableName")} className="input new-table"/></td>
 										</tr>
 										<tr>
 											<td className="header-row"><p>Columns:</p></td>
-											<td className="data-row"><input type="number" value={this.state.newTable.cols} onChange={this.handleChange.bind(this, "cols")} placeholder="#" className="input"/></td>
+											<td className="data-row"><input type="number" value={this.state.newTable.cols} onChange={this.handleChange.bind(this, "cols")} placeholder="#" className="input new-table"/></td>
 										</tr>
 										<tr>
 											<td className="header-row"><p>Rows:</p></td>
-											<td className="data-row"><input type="number" value={this.state.newTable.rows} onChange={this.handleChange.bind(this, "rows")} placeholder="#" className="input"/></td>
+											<td className="data-row"><input type="number" value={this.state.newTable.rows} onChange={this.handleChange.bind(this, "rows")} placeholder="#" className="input new-table"/></td>
 										</tr>
 										<tr>
 											<td colSpan="2"><button type="submit" className="button is-paddingless is-pulled-right is-dark is-normal">Create</button></td>
@@ -71,6 +71,8 @@ class NewTable extends Component {
 								</table>
 							</form>
 						</section>
+						<footer class="modal-card-foot">
+						</footer>
 					</div>
 				</div>
 				}
