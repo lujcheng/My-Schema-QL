@@ -443,13 +443,13 @@ class App extends Component {
   render() {
     return (
       <div className="hero is-fullheight">
-        <section className="section">
-          <div className="level">
-            <div className="level-left">
-              <h1 className="title level-item">SCHEMA</h1>
-            </div>
-            <NewTable renderNewTable={this.renderNewTable} />
+        <section className="navbar">
+          <div className="navbar-brand">
+            <h1 className="title">SCHEMA</h1>
           </div>
+        </section>
+        <section className="hero-body">
+          <NewTable renderNewTable={this.renderNewTable} />
         </section>
        <section className="section">
           <Query onChange={this.onChange} />

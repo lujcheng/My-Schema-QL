@@ -22,7 +22,6 @@ class Table extends Component {
   
   onDelete = (event, col) => {
     event.preventDefault();
-    // event.stopPropagation();
     this.props.deleteRow(col, this.props.tableName)
   }
 
@@ -97,10 +96,10 @@ class Table extends Component {
             items.map((item, row) => {
             
               if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
-                return <td key={item + col + row} className="colSelected is-centered" ><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                return <th key={item + col + row} className="colSelected is-centered" ><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></th>
               } else {
-                return <td id="cell" className="is-centered" key={item + col 
-                + row}><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                return <th id="cell" className="is-centered" key={item + col 
+                + row}><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></th>
               }
             })
           }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -112,7 +111,6 @@ class Table extends Component {
               <tr key={items + col} className="data-row">
               {
                 items.map((item, row) => {
-                console.log("x")
                   if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
                     return <td key={item + col 
                     + row} className="colSelected has-text-centered" ><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>

@@ -229,3 +229,7 @@ table {
 .field.is-grouped {
 	margin-left: 1rem;
 }
+
+.button.is-normal {
+	margin-left: 0.2rem;
+}
