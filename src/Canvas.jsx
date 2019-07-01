@@ -183,8 +183,8 @@ renderPauseButton() {
 
     return (
 
-      <div>
-        <main className="box">
+      <>
+        <main className="box container">
           {this.renderPanZoomControls()}
           <ReactPanZoom
             zoom={this.state.zoom}
@@ -216,7 +216,7 @@ renderPauseButton() {
        
 
         </main>
-      </div>
+      </>
     )
   }
 }

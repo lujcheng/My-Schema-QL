@@ -81,12 +81,13 @@ table {
 }
 
 thead tr th {
-	background-color: #363636
+	background-color: #363636;
 }
 
 th input.input {
-	background-color: #363636;
+	background-color: transparent;
 	color: #FFFFFF;
+	border: 0;
 }
 
 tbody tr td {
@@ -94,7 +95,8 @@ tbody tr td {
 }
 
 td input.input {
-	background-color: #DCDCDC;
+	background-color: transparent;
+	border: 0;
 }
 
 
@@ -151,6 +153,10 @@ input {
 	margin-left: 0.2rem;
 }
 
+main.box.container {
+	overflow: hidden;
+}
+
 
 input.input {
 	width: 6em;
@@ -162,4 +168,8 @@ input.input {
 
 div.select {
 	width: 7em;
+}
+
+main.box {
+	z-index: 2;
 }
