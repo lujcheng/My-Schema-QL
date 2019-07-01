@@ -183,8 +183,8 @@ renderPauseButton() {
 
     return (
 
-      <>
-        <main className="box container">
+      <div className="box container">
+        <div className="field is-grouped is-grouped-multiline">
           {this.renderPanZoomControls()}
           <ReactPanZoom
             zoom={this.state.zoom}
@@ -192,7 +192,7 @@ renderPauseButton() {
             pandy={this.state.dy}
             onPan={this.onPan}
             width='100%'
-            height= '100vh'
+            // height= '100vh'
             >
               {renderTables}
           
@@ -215,8 +215,8 @@ renderPauseButton() {
           </ReactPanZoom>
        
 
-        </main>
-      </>
+        </div>
+      </div>
     )
   }
 }

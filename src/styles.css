@@ -1,4 +1,4 @@
-html {
+* {
 	font-family: 'Libre Franklin', sans-serif;
 }
 
@@ -6,26 +6,7 @@ body {
 	background-color: #FFFFFF;
 }
 
-/* header and navigation */
-/* #nav-title {
-	color: #000000;
-	font-family: 'Montserrat', sans-serif;
-} */
 
-#sub-nav-bar {
-	display: flex;
-	justify-content: space-between;
-	padding: 1em;
-	flex-wrap: wrap;
-}
-
-.sub-nav-elements {
-	align-items: center;
-	display: flex;
-	justify-content: left;
-	flex-wrap: wrap;
-	margin-bottom: 1em;
-}
 
 .error-message {
 	color: red;
@@ -153,7 +134,7 @@ input {
 	margin-left: 0.2rem;
 }
 
-main.box.container {
+div.box.container {
 	overflow: hidden;
 }
 
@@ -172,4 +153,12 @@ div.select {
 
 main.box {
 	z-index: 2;
+}
+
+section.modal-card-body {
+	background-color: #DCDCDC;
+}
+
+input.input.new-table {
+	background-color: #FFFFFF;
 }
