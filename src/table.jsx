@@ -59,24 +59,26 @@ class Table extends Component {
     return columnHeaders.map((key, col) => {
       if (this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col)) {
         return (
-        <th className="colSelected header-row" key={key + col}>
+        <th className="colSelected header-row" key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
           <input 
             type="text" 
             defaultValue={key.toUpperCase()} 
             className="input" 
             onKeyDown={(evt) => this.onEnterHeader(evt, col)}
             onDoubleClick={this.focus}
+            top={`${this.props.y}px`} left={`${this.props.x}px`}
             />
         </th>)
       } else {
         return (
-        <th key={key + col}>
+        <th key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
           <input 
             type="text" 
             defaultValue={key.toUpperCase()} 
             className="input" 
             onKeyDown={(evt) => this.onEnterHeader(evt, col)} 
             onDoubleClick={this.focus}
+             top={`${this.props.y}px`} left={`${this.props.x}px`}
             />
         </th>)
       }
@@ -88,7 +90,7 @@ class Table extends Component {
     return data.map((items, col) => {
       if (this.props.table.selected.rowIndexes != null && this.props.table.selected.rowIndexes.includes(col)) {
       return (
-        <tr key={items + col} className="data-row rowSelected">
+        <tr key={items + col} className="data-row rowSelected" >
 
           {
             items.map((item, row) => {

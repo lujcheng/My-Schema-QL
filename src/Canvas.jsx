@@ -21,6 +21,7 @@ class Canvas extends Component {
     this.onStop = this.onStop.bind(this)
     this.startAnimation = this.startAnimation.bind(this)
     this.stopAnimation = this.stopAnimation.bind(this)
+
 }
 
 // react-draggable functions
@@ -44,7 +45,7 @@ class Canvas extends Component {
 //     this.stopAnimation();
 // }
 
-startAnimation(e) {
+  startAnimation(e) {
     e.stopPropagation()
     const step = () => {
         this.setState(Object.assign({}, this.state, {
@@ -53,14 +54,14 @@ startAnimation(e) {
         this.frame = requestAnimationFrame(step);
     };
     step();
-}
+  }
 
-stopAnimation(e) {
-  e.stopPropagation()
-    cancelAnimationFrame(this.frame);
-}
+  stopAnimation(e) {
+    e.stopPropagation()
+      cancelAnimationFrame(this.frame);
+  }
 
-togglePause() {
+  togglePause() {
     const paused = !this.state.paused;
     if (paused) {
         this.stopAnimation();
@@ -68,16 +69,17 @@ togglePause() {
         this.startAnimation();
     }
     this.setState(Object.assign({}, this.state, { paused }));
-}
+  }
 
-renderPauseButton() {
+  renderPauseButton() {
     const text = this.state.paused ? 'Play' : 'Pause';
     return (
         <button onClick={this.togglePause}>{text}</button>
     );
-}
+  }
 
-// end of line-to
+// table handlers
+
   
   deleteRow = (col, tableName) => {
     this.props.deleteRow(col, tableName)
@@ -95,6 +97,7 @@ renderPauseButton() {
     this.props.changeTableTitle(tableName, val, tableID)
   }
 
+  // react-pan-zoom
   zoomIn = () => {
     this.setState({
       zoom: this.state.zoom + 0.2
@@ -127,7 +130,6 @@ renderPauseButton() {
     );
   };
   
-
   render() {
     const ox = 300;
     const oy = 120;
@@ -141,13 +143,13 @@ renderPauseButton() {
     
     const tables = this.props.tables
     const renderTables = Object.keys(tables)
-    .sort((a, b) => {
-      if (tables[a].createdAt < tables[b].createdAt) {
-        return 1
-      } else {
-        return -1
-      }
-    })
+      .sort((a, b) => {
+        if (tables[a].createdAt < tables[b].createdAt) {
+          return 1
+        } else {
+          return -1
+        }
+      })
       .map((tableKey, index) => {
         const table = tables[tableKey]
         return (
@@ -165,19 +167,28 @@ renderPauseButton() {
               top={`${y}px`}
               left={`${x}px`}> DRAG MEEEE damnit man</p>
     
-              <Table  tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+              <Table  x={x} y={y} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
 
             </div>
         </Draggable>
         )
         })
-        const style = {
-          delay: true,
-          borderColor: 'black',
-          borderStyle: 'solid',
-          borderWidth: 3,
-          zIndex: 2
-        }
+    const style = {
+      delay: true,
+      borderColor: 'black',
+      borderStyle: 'solid',
+      borderWidth: 3,
+    }
+
+    const renderSVG = Object.keys(this.props.svg).map(key => {
+      if (this.props.svg[key] != null && typeof this.props.svg[key] === 'string') {
+        console.log(key, this.props.svg[key])
+        return (
+          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="bottom" toAnchor="top" {...style} />
+        )
+      }
+    })
+    
 
 
 
@@ -195,7 +206,7 @@ renderPauseButton() {
             height= '100vh'
             >
               {renderTables}
-          
+              {renderSVG}
               <SteppedLineTo from="stepped-A" to="stepped-B" fromAnchor="bottom" toAnchor="top" {...style} />
     
               <Draggable

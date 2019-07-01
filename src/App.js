@@ -25,6 +25,8 @@ class App extends Component {
         where: null,
         on: null,
       },
+      svg: {
+      },
       tables: {
         cars: {
           
@@ -91,7 +93,44 @@ class App extends Component {
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
 
-  
+    createSVG = (e, tableName)=> {
+    e.stopPropagation()
+    let newClass = `${tableName}${e.target.value}`
+    if(e.altKey) {
+      let classNames = e.target.className.split(' ')
+      if(classNames.includes(newClass)) {
+        e.target.className = classNames.filter(n => n !== newClass).join(' ')
+      } else {
+        e.target.className += ` ${tableName}${e.target.value}`
+      }
+      let svg = this.state.svg
+      let match = false
+      if(svg[newClass] === null) {
+        delete svg[newClass]
+        this.setState({svg: svg})
+        match = true
+      } else {
+        console.log(svg)
+        Object.keys(svg).map(keys => {
+          console.log(keys)
+          if(svg[keys] === null) {
+            svg[keys] = newClass 
+            this.setState({svg: svg})
+            match = true
+          } else if (svg[keys] === newClass) {
+            svg[keys] = null
+            this.setState({svg: svg})
+            match = true
+            }
+        })
+      } 
+      if (!match) {
+        svg[newClass] = null
+        this.setState({svg: svg})
+      }
+    }
+    console.log(this.state.svg)
+  }
 
   componentDidMount() {
     const socket = io(socketURL)
@@ -528,7 +567,7 @@ class App extends Component {
         </section>
 
         <section className="section">
-          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg}/>
         </section>
 
         <section className="section">
