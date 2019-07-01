@@ -4,6 +4,7 @@ import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 
 const keyWordToAllowedKeyWords = {
+	'SELECT': ['FROM'],
 	'WHERE': ['JOIN','ORDER BY','GROUP BY', 'HAVING', 'AND' ],
 	'JOIN': ['WHERE', 'JOIN', 'ORDER BY', 'GROUP BY', 'HAVING'],
 	'ORDER BY': ['JOIN', 'GROUP BY', 'HAVING'],
@@ -25,9 +26,22 @@ class Query extends Component {
 		super(props) 
 		this.state = {
 			inputFieldArr: [],
-			lastKeyword: "FROM"
+			lastKeyword: "SELECT",
+			queryArray: []
 		}
 		this.toggleDropdown = this.toggleDropdown.bind(this)
+	}
+
+	printQuery = () => {
+		let lastKeyword = this.state.lastKeyword
+		let queryArr = [];
+		console.log("this.state.queryArray", this.state.queryArray)
+		queryArr.push(lastKeyword)
+		queryArr.push(this.props.query[lastKeyword.toLowerCase()]);
+		console.log("queryArr ", queryArr)
+		let queryString = queryArr.join(",").toUpperCase();
+		this.setState({queryArray: [...this.state.queryArray, queryString]})
+		return <p>{this.state.queryArray}</p>
 	}
 	
 	deleteInputFields = (evt) => {
@@ -47,6 +61,7 @@ class Query extends Component {
 	
 	onButtonSubmit = (evt) => {
 		evt.preventDefault()
+		this.printQuery();
 		const tempArr = this.state.inputFieldArr;
     const queryType = evt.target.keywords.value;
     console.log("querytype ", queryType);
@@ -86,8 +101,20 @@ class Query extends Component {
 		</div>
       </>
 			)	
-		}
-		else {
+		} else if (queryType === "FROM") {
+      tempArr.push(
+      <>
+	  	<div className="field is-grouped is-grouped-multiline">	
+		  	<div className="field-label is-normal">
+				<label className="label">FROM</label>
+			</div>
+			<div className="control">
+				<Input name="FROM" type="text" className="input" onChange={(e) => this.props.onChange(e, "from")} validations={[required]}/>
+			</div>
+		</div>
+      </>
+			)	
+		}	else {
 			tempArr.push(
 				<>
 					<div className="field is-grouped is-grouped-multiline">	
@@ -127,14 +154,14 @@ class Query extends Component {
 								<Input name="select" type="text" className="input" onChange={(e) => this.props.onChange(e, "select")} validations={[required]}/>
 							</div>
 						</div>
-						<div className="field is-grouped is-grouped-multiline">
+						{/* <div className="field is-grouped is-grouped-multiline">
 							<div className="field-label is-normal">
 								<label className="label">FROM</label>
 							</div>
 							<div className="control">
 								<Input name="from" type="text" className="input" onChange={(e) => this.props.onChange(e, "from")} validations={[required, spaces]} />
 							</div>
-						</div>
+						</div> */}
 						{printFields}
 						<div className="field is-grouped is-grouped-multiline">
 							<div className="control">
@@ -149,6 +176,7 @@ class Query extends Component {
 						</div>
 					</div>
 				</Form>
+				<p>{this.state.queryArray}</p>
 			</div>
     )
   }

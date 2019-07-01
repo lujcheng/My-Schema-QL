@@ -6,7 +6,7 @@ import Query from './query.jsx';
 import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
 
-const socketURL = 'http://172.46.3.39:8080';
+const socketURL = 'http://localhost:8080';
 
 class App extends Component {
   constructor(props) {
@@ -18,12 +18,13 @@ class App extends Component {
       rowMatch: false,
       currentTable: null,
       user: "1",
+      clientColor: "",
       query: {
-        select: null,
-        from: null,
-        join: null,
-        where: null,
-        on: null,
+        select: "",
+        from: "",
+        join: "",
+        where: "",
+        on: "",
       },
       svg: {
       },
@@ -169,6 +170,13 @@ class App extends Component {
       tables: contents
       })
     })
+
+    socket.on('set-client-color', (contents) => {
+      this.setState({
+      clientColor: contents
+      })
+    })
+    console.log("state== ",this.state.clientColor)
   }
 
   checkTableMatches = () => {
@@ -445,7 +453,6 @@ class App extends Component {
     }, 30);
   }
 
-
   deleteRow = (col, tableName) => {
     console.log("COL", col)
     const tabName = tableName;
@@ -568,7 +575,7 @@ class App extends Component {
 
 
        <section className="section">
-          <Query onChange={this.onChange} />
+          <Query onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query}/>
         </section>
 
         <div className="container">
