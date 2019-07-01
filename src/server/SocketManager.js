@@ -1,4 +1,9 @@
 const io = require('./server.js').io
+
+let getRandomInt = (max) => {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 module.exports = function(socket) {
   socket.on('input-update', data => {
     io.emit('state-update', data)
@@ -27,4 +32,14 @@ module.exports = function(socket) {
     console.log("delete ", data)
     io.emit('title-change', data)
   })
+
+  socket.on('connection', data => {
+    const color = ["yellow", "blue", "red", "purple", "green", "grey", "orange", "black", "gold"];
+    const clientColor = {
+      clientColor: color[getRandomInt(9)]
+    }
+    console.log("color ", clientColor)
+    io.emit("set-client-color", clientColor)
+  })
 }
+
