@@ -21,7 +21,9 @@ class App extends Component {
         where: null,
         on: null,
       },
-      svg: {},
+      svg: {
+        test: "test"
+      },
       tables: {
         cars: {
           
@@ -99,25 +101,31 @@ class App extends Component {
       } else {
         e.target.className += ` ${tableName}${e.target.value}`
       }
-    }
-    let svg = this.state.svg
-    if(svg[newClass]) {
-      delete svg[newClass]
-      this.setState({svg: svg})
-    } else {
-      svg.map((keys) => {
-        if(keys === null) {
-          svg.keys = newClass
-          this.setState({svg: svg})
-        } else if (keys === newClass) {
-          svg.keys = null
-          this.setState({svg: svg})
-          } else {
-              svg[newClass] = null
-              this.setState({svg: svg})
+      let svg = this.state.svg
+      let match = false
+      if(svg[newClass] === null) {
+        delete svg[newClass]
+        this.setState({svg: svg})
+        match = true
+      } else {
+        console.log(svg)
+        Object.keys(svg).map(keys => {
+          console.log(keys)
+          if(svg[keys] === null) {
+            svg[keys] = newClass 
+            this.setState({svg: svg})
+            match = true
+          } else if (svg[keys] === newClass) {
+            svg[keys] = null
+            this.setState({svg: svg})
+            match = true
             }
-
-      })
+        })
+      } 
+      if (!match) {
+        svg[newClass] = null
+        this.setState({svg: svg})
+      }
     }
     console.log(this.state.svg)
   }
