@@ -22,7 +22,6 @@ class Table extends Component {
   
   onDelete = (event, col) => {
     event.preventDefault();
-    // event.stopPropagation();
     this.props.deleteRow(col, this.props.tableName)
   }
 
@@ -60,24 +59,22 @@ class Table extends Component {
     return columnHeaders.map((key, col) => {
       if (this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col)) {
         return (
-        <th className="colSelected is-centered header-row border" key={key + col}>
+        <th className="colSelected header-row" key={key + col}>
           <input 
-            id="header-name"
             type="text" 
             defaultValue={key.toUpperCase()} 
-            className="query-item input-query new-table-item" 
+            className="input" 
             onKeyDown={(evt) => this.onEnterHeader(evt, col)}
             onDoubleClick={this.focus}
             />
         </th>)
       } else {
         return (
-        <th className="is-centered border" key={key + col}>
+        <th key={key + col}>
           <input 
-            id="header-name"
             type="text" 
             defaultValue={key.toUpperCase()} 
-            className="query-item input-query new-table-item" 
+            className="input" 
             onKeyDown={(evt) => this.onEnterHeader(evt, col)} 
             onDoubleClick={this.focus}
             />
@@ -97,10 +94,10 @@ class Table extends Component {
             items.map((item, row) => {
             
               if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
-                return <td key={item + col + row} className="colSelected is-centered" ><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                return <th key={item + col + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></th>
               } else {
-                return <td id="cell" className="is-centered" key={item + col 
-                + row}><input type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                return <th key={item + col 
+                + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></th>
               }
             })
           }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -112,16 +109,15 @@ class Table extends Component {
               <tr key={items + col} className="data-row">
               {
                 items.map((item, row) => {
-                console.log("x")
                   if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
                     return <td key={item + col 
-                    + row} className="colSelected has-text-centered" ><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                    + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                   } else {
                     return <td key={item + col 
-                    + row} className="has-text-centered"><input id="cell" type="text" defaultValue={item} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                    + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                   }
                 })
-              }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
+              }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
             </tr>
           )
 
@@ -131,15 +127,15 @@ class Table extends Component {
     render() {
       return (
         <div>
-          <table>
+          <table className="table is-narrow">
             <thead>
-              <tr id="table-title">
-                <th colSpan={this.props.table.columns.length} className="has-text-centered table-title is-centered">
-                  <input id="table-title" type="text" defaultValue={this.props.tableName} className="query-item input-query new-table-item" onKeyDown={(evt) => this.onEnterTitle(evt)}/>
-                  <button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
+              <tr>
+                <th colSpan={this.props.table.columns.length}>
+                  <input type="text" defaultValue={this.props.tableName} className="input" onKeyDown={(evt) => this.onEnterTitle(evt)}/>
+                  <button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
                 </th>
               </tr>
-              <tr id="header-name" className="header-row">
+              <tr className="header-row">
                 {this.renderTableHeader()}
               </tr>
             </thead>

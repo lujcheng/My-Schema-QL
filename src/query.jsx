@@ -52,28 +52,53 @@ class Query extends Component {
     console.log("querytype ", queryType);
 		if (queryType === "JOIN") {
 			tempArr.push(
-				<div className="query-item">
-          <p className="query-item query-tags">JOIN</p>
-          <Input name="JOIN" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "join")} validations={[spaces, required]}/>
-          <p className="query-item query-tags">ON</p>
-          <Input name="ON" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "on")} validations={[spaces, required]} />
-        </div>
+				<>
+					<div className="field is-grouped is-grouped-multiline">
+						<div className="field-label is-normal">
+							<label className="label">JOIN</label>
+						</div>
+						<div className="control">
+							<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, "join")} validations={[spaces, required]}/>
+						</div>
+					</div>
+					
+					<div className="field is-grouped is-grouped-multiline">
+						<div className="field-label is-normal">
+							<label className="label">ON</label>
+						</div>
+						<div className="control">
+							<Input name="ON" type="text" className="input" onChange={(e) => this.props.onChange(e, "on")} validations={[spaces, required]} />
+						</div>
+        			</div>
+				</>
 			)
 		} 
 		else if (queryType === "WHERE") {
       tempArr.push(
-      <div className="query-item">
-        <p className="query-item query-tags">WHERE</p>
-        <Input name="WHERE" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "where")} validations={[where, required]}/>
-      </div>
+      <>
+	  	<div className="field is-grouped is-grouped-multiline">	
+		  	<div className="field-label is-normal">
+				<label className="label">WHERE</label>
+			</div>
+			<div className="control">
+				<Input name="WHERE" type="text" className="input" onChange={(e) => this.props.onChange(e, "where")} validations={[where, required]}/>
+			</div>
+		</div>
+      </>
 			)	
 		}
 		else {
 			tempArr.push(
-				<div className="query-item">
-          <p className="query-item query-tags">{queryType}</p>
-          <Input name="JOIN" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
-        </div>
+				<>
+					<div className="field is-grouped is-grouped-multiline">	
+						<div className="field-label is-normal">
+         					 <label className="label">{queryType}</label>
+						</div>
+						<div className="control">
+          					<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
+						</div>
+					</div>
+        		</>
 			)
 		}
 		this.setState({
@@ -90,20 +115,41 @@ class Query extends Component {
 				</>
 			)
 		})
-		// Form - took out className "sub-nav-elements"
 		return (
-			<Form action="" method="POST" className="sub-nav-elements" onSubmit={this.onButtonSubmit} >
-				<p className="query-item query-tags">SELECT</p>
-				<Input name="select" type="text" placeholder="" className="query-item input-query" onChange={(e) => this.props.onChange(e, "select")} validations={[required]}/>
-				<p className="query-item query-tags">FROM</p>
-				<Input name="from" type="text" placeholder="Table name" className="query-item input-query" onChange={(e) => this.props.onChange(e, "from")} validations={[required, spaces]} />
-        {printFields}
-				<select className="dropdown-box" name="keywords">
-					{this.toggleDropdown(this.state.lastKeyword)}
-				</select>
-				<button type="submit" className="button add-button" >+</button>
-        <button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.deleteInputFields(evt)}><i className="far fa-trash-alt"></i></button>
-      </Form>
+			<div className="box">
+				<Form action="" method="POST" onSubmit={this.onButtonSubmit} >
+					<div className="field is-grouped is-grouped-multiline">
+						<div className="field is-grouped is-grouped-multiline">
+							<div className="field-label is-normal">
+								<label className="label">SELECT</label>
+							</div>
+							<div className="control">
+								<Input name="select" type="text" className="input" onChange={(e) => this.props.onChange(e, "select")} validations={[required]}/>
+							</div>
+						</div>
+						<div className="field is-grouped is-grouped-multiline">
+							<div className="field-label is-normal">
+								<label className="label">FROM</label>
+							</div>
+							<div className="control">
+								<Input name="from" type="text" className="input" onChange={(e) => this.props.onChange(e, "from")} validations={[required, spaces]} />
+							</div>
+						</div>
+						{printFields}
+						<div className="field is-grouped is-grouped-multiline">
+							<div className="control">
+								<div className="select">
+									<select name="keywords">
+										{this.toggleDropdown(this.state.lastKeyword)}
+									</select>
+								</div>	
+								<button type="submit" className="button is-normal is-dark" >+</button>
+								<button type="button" className="button is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.deleteInputFields(evt)}><i className="far fa-trash-alt"></i></button>
+							</div>
+						</div>
+					</div>
+				</Form>
+			</div>
     )
   }
 }

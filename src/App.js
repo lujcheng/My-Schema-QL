@@ -451,6 +451,7 @@ class App extends Component {
     const tabID = tableID;
     const tables = this.state.tables;
     tables[newTableName] = tables[oldTableName];
+    delete tables[oldTableName];
     this.setState({
       tables: tables
     })
@@ -512,14 +513,16 @@ class App extends Component {
   render() {
     return (
       <div className="hero is-fullheight">
-        <section className="section">
-          <div className="level">
-            <div className="level-left">
-              <h1 className="title level-item">SCHEMA</h1>
-            </div>
-            <NewTable renderNewTable={this.renderNewTable} />
+        <section className="navbar">
+          <div className="navbar-brand">
+            <h1 className="title is-1">SCHEMA</h1>
           </div>
         </section>
+
+        <section className="hero-body">
+          <NewTable renderNewTable={this.renderNewTable} />
+        </section>
+
        <section className="section">
           <Query onChange={this.onChange} />
         </section>
@@ -527,6 +530,7 @@ class App extends Component {
         <section className="section">
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow}/>
         </section>
+
         <section className="section">
         </section>
       </div>
