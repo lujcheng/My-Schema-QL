@@ -5,6 +5,7 @@ import MyCanvas from './Canvas.jsx';
 import Query from './query.jsx';
 import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
+import LinkButton from './linkButton.jsx'
 
 const socketURL = 'http://localhost:8080';
 
@@ -12,6 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props) 
     this.state = {
+      queryString: null,
       socket: null,
       joinmatch: false,
       colMatch: false,
@@ -171,12 +173,11 @@ class App extends Component {
       })
     })
 
-    socket.on('set-client-color', (contents) => {
+    socket.on('set-query-string', (contents) => {
       this.setState({
-      clientColor: contents
+      queryString: contents
       })
     })
-    console.log("state== ",this.state.clientColor)
   }
 
   checkTableMatches = () => {
@@ -450,7 +451,7 @@ class App extends Component {
       })
       .then(() => {
         const data = Object.assign({}, this.state)
-        console.log("socket ", this.state.socket)
+        console.log("queryArray", this.state.queryString)
         delete data['socket']
         this.state.socket.emit('input-update', data)
       })
@@ -530,7 +531,6 @@ class App extends Component {
     }, 30);
   }
 
-
   renderNewTable = (tableObj) => {
     debugger
     const tableName = tableObj.tableName;
@@ -579,6 +579,12 @@ class App extends Component {
       this.state.socket.emit('create-table', data);
     }, 30);
   }
+
+  renderLink = (e) => {
+    e.preventDefault()
+    return socketURL
+  }
+
   render() {
     return (
       <div className="hero is-fullheight">
@@ -588,18 +594,20 @@ class App extends Component {
           </div>
           <div className="navbar-end">
             <nav className="breadcrumb is-right is-large" aria-label="breadcrumbs">
+              <LinkButton socketURL={socketURL}/>
               <ul>
-                <li><button className="button is-white is-large">GET LINK</button></li>
                 <li><button className="button is-white is-large">TUTORIAL</button></li>
               </ul>
+              <div>{this.renderLink}</div>
             </nav>
           </div>
         </section>
 
 
        <section className="section">
-          <Query onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query}/>
+          <Query onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket}/>
         </section>
+        <p>{this.state.queryString}</p>
 
         <div className="container">
           <NewTable renderNewTable={this.renderNewTable} />
