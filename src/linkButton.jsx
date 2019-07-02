@@ -9,7 +9,7 @@ class LinkButton extends Component {
   render() {
     return (
       <div>
-        <button className="button is-white is-large" onClick={this.renderLink()}>GET LINK</button>
+        <button className="button is-white is-large" >GET LINK</button>
       </div>
    )
   }

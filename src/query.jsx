@@ -6,7 +6,8 @@ import Input from 'react-validation/build/input';
 const keyWordToAllowedKeyWords = {
 	'SELECT': ['FROM'],
 	'WHERE': ['JOIN','ORDER BY','GROUP BY', 'HAVING', 'AND' ],
-	'JOIN': ['WHERE', 'JOIN', 'ORDER BY', 'GROUP BY', 'HAVING'],
+	'JOIN': ['ON'],
+	'ON': ['WHERE', 'JOIN', 'ORDER BY', 'GROUP BY', 'HAVING'],
 	'ORDER BY': ['JOIN', 'GROUP BY', 'HAVING'],
 	'AND': ['ORDER BY', 'GROUP BY', 'HAVING', 'AND'],
 	'HAVING': ['WHERE', 'ORDER BY', 'GROUP BY', 'JOIN', 'AND'],
@@ -30,16 +31,8 @@ class Query extends Component {
 			queryArray: []
 		}
 		this.toggleDropdown = this.toggleDropdown.bind(this)
-	}
-
-	printQuery = () => {
-		let lastKeyword = this.state.lastKeyword
-		let queryArr = [];
-		queryArr.push(lastKeyword)
-		queryArr.push(this.props.query[lastKeyword.toLowerCase()]);
-		let queryString = queryArr;
-		this.setState({queryArray: [...this.state.queryArray, queryString]})
-		// return <p>{this.state.queryArray}</p>
+		this.renderQuery = this. renderQuery.bind(this)
+		this.onButtonSubmit = this.onButtonSubmit.bind(this)
 	}
 	
 	deleteInputFields = (evt) => {
@@ -56,17 +49,34 @@ class Query extends Component {
 			)
 		})
 	}
+
+	printQuery = (callback, e) => {
+		let lastKeyword = this.state.lastKeyword
+		let queryArr = [];
+		let evt = e
+		queryArr.push(lastKeyword)
+		queryArr.push(this.props.query[lastKeyword.toLowerCase()]);
+		this.setState({queryArray: [...this.state.queryArray, queryArr]}, callback)
+	}
 	
 	onButtonSubmit = (evt) => {
 		evt.preventDefault()
-		this.printQuery();
-		setTimeout(() => {
-      let data = this.state.queryArray;
-      this.props.socket.emit('query-string', data);
-    }, 50);
-
+		evt.persist()
+		let lastKeyword = this.state.lastKeyword
+		let queryArr = [];
+		queryArr.push(lastKeyword)
+		queryArr.push(this.props.query[lastKeyword.toLowerCase()]);
+		let target = evt
+		this.setState({queryArray: [...this.state.queryArray, queryArr]}, () => this.renderQuery(target))
+	}
+	
+	renderQuery = (evt) => {
+		console.log(evt)
 		const tempArr = this.state.inputFieldArr;
-    const queryType = evt.target.keywords.value;
+		const queryType = evt.target.keywords.value;
+		let data = this.state.queryArray;
+		this.props.socket.emit('query-string', data);
+		console.log("component array ", this.state.queryArray)
     console.log("querytype ", queryType);
 		if (queryType === "JOIN") {
 			tempArr.push(
@@ -79,18 +89,22 @@ class Query extends Component {
 							<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, "join")} validations={[spaces, required]}/>
 						</div>
 					</div>
-					
-					<div className="field is-grouped is-grouped-multiline">
-						<div className="field-label is-normal">
-							<label className="label">ON</label>
-						</div>
-						<div className="control">
-							<Input name="ON" type="text" className="input" onChange={(e) => this.props.onChange(e, "on")} validations={[spaces, required]} />
-						</div>
-        			</div>
 				</>
 			)
-		} 
+		} else if (queryType === "ON") {
+      tempArr.push(
+      <>
+	  	<div className="field is-grouped is-grouped-multiline">	
+		  	<div className="field-label is-normal">
+				<label className="label">ON</label>
+			</div>
+			<div className="control">
+				<Input name="ON" type="text" className="input" onChange={(e) => this.props.onChange(e, "on")} validations={[required]}/>
+			</div>
+		</div>
+      </>
+			)	
+		}
 		else if (queryType === "WHERE") {
       tempArr.push(
       <>
@@ -147,7 +161,7 @@ class Query extends Component {
 		})
 		return (
 			<div className="box">
-				<Form action="" method="POST" onSubmit={this.onButtonSubmit} >
+				<Form action="submit" method="POST" onSubmit={(evt) => this.onButtonSubmit(evt)} >
 					<div className="field is-grouped is-grouped-multiline">
 						<div className="field is-grouped is-grouped-multiline">
 							<div className="field-label is-normal">
