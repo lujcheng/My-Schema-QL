@@ -15,7 +15,7 @@ class App extends Component {
     this.state = {
       queryString: null,
       socket: null,
-      joinmatch: false,
+      joinMatch: false,
       colMatch: false,
       rowMatch: false,
       currentTable: null,
@@ -202,23 +202,26 @@ class App extends Component {
         } 
       })
     }
-      if (currentTables.length > 1 && 'on' in query) {
-        let onStatement = this.state.query.on.split(/[ =]+/).filter((e) => {if(e != "=") {return e}})
-        let join = false
-        if (onStatement.length == 2) {
-          for (let i=0; i< currentTables.length; i++) {
-            if (this.state.tables[currentTables[i]].columns.includes(onStatement[i])) {
-              join = true
-            } else {
-              join = false
-            }
+    let join = false
+    let onStatement
+    if (currentTables.length > 1 && 'on' in query) {
+      onStatement = this.state.query.on.split(/[ =]+/).filter((e) => {if(e != "=") {return e}})
+      if (onStatement.length == 2) {
+        for (let i=0; i< currentTables.length; i++) {
+          if (this.state.tables[currentTables[i]].columns.includes(onStatement[i])) {
+            join = true
+          } else {
+            join = false
           }
         }
-        if (join === true) {
-          this.setState({joinOn: onStatement})
-        } else {
-        this.setState({joinOn: false})
       }
+    } else {
+      join = false
+    }
+    if (join === true) {
+      this.setState({joinOn: onStatement})
+    } else {
+    this.setState({joinOn: false})
     }
     this.setState({currentTable: currentTables})
     // should set the list of tables joined in currentTables
@@ -305,10 +308,10 @@ class App extends Component {
       }
       this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
       this.setState({joinTable: `${tables[0]}_${tables[1]}` })
-      this.setState({joinmatch: true})
+      this.setState({joinMatch: true})
       return `${tables[0]}_${tables[1]}`
     } else {
-      this.setState({joinmatch: false })
+      this.setState({joinMatch: false })
     }
   }
 
@@ -339,6 +342,16 @@ class App extends Component {
         }))
       })
     } 
+    if (this.state.joinOn === false) {
+      if (this.state.joinTable) {
+        let tables = this.state.tables
+        if (this.state.tables[this.state.joinTable]) {
+          delete tables[this.state.joinTable]
+          this.setState({tables: tables})
+          }    
+        }
+      }
+    
   }
 
   where = (tableName, input) => {
