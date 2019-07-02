@@ -58,9 +58,8 @@ class Table extends Component {
   renderTableHeader() {
     let columnHeaders = this.props.table.columns
     return columnHeaders.map((key, col) => {
-      if (this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col)) {
-        return (
-        <th className="colSelected header-row" key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
+      return (
+        <th className={this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col) ? "colSelected" : null} key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
           <input 
             type="text" 
             defaultValue={key.toUpperCase()} 
@@ -69,20 +68,8 @@ class Table extends Component {
             onDoubleClick={this.focus}
             top={`${this.props.y}px`} left={`${this.props.x}px`}
             />
-        </th>)
-      } else {
-        return (
-        <th key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
-          <input 
-            type="text" 
-            defaultValue={key.toUpperCase()} 
-            className="input" 
-            onKeyDown={(evt) => this.onEnterHeader(evt, col)} 
-            onDoubleClick={this.focus}
-             top={`${this.props.y}px`} left={`${this.props.x}px`}
-            />
-        </th>)
-      }
+        </th>
+      )
     })
   }
 
@@ -91,16 +78,14 @@ class Table extends Component {
     return data.map((items, col) => {
       if (this.props.table.selected.rowIndexes != null && this.props.table.selected.rowIndexes.includes(col)) {
       return (
-        <tr key={items + col} className="data-row rowSelected" >
-
+        <tr key={items + col} className="rowSelected" >
           {
             items.map((item, row) => {
-            
               if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
-                return <th key={item + col + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></th>
+                return <td key={item + col + row} className="colSelected cellSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
               } else {
-                return <th key={item + col 
-                + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></th>
+                return <td key={item + col 
+                + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
               }
             })
           }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -109,7 +94,7 @@ class Table extends Component {
 
         } else {
           return ( 
-              <tr key={items + col} className="data-row">
+              <tr key={items + col}>
               {
                 items.map((item, row) => {
                   if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
@@ -130,7 +115,7 @@ class Table extends Component {
     render() {
       return (
         <>
-          <table className="table is-narrow is-borderless">
+          <table className="table is-narrow is-borderless" style={{zIndex: 10}}>
             <thead>
               <tr>
                 <th colSpan={this.props.table.columns.length}>
@@ -138,7 +123,7 @@ class Table extends Component {
                   <button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
                 </th>
               </tr>
-              <tr className="header-row">
+              <tr>
                 {this.renderTableHeader()}
               </tr>
             </thead>

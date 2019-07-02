@@ -1,0 +1,8 @@
+/* highlight selection */
+.colSelected {
+  background-color: red; }
+
+.rowSelected {
+  background-color: #DCDCDC; }
+  .rowSelected .colSelected.cellSelected {
+    background-color: red; }
