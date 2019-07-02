@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import './styles.css';
+import './css/mystyles.css';
+import './styles.css'
 import MyCanvas from './Canvas.jsx';
+import Tutorial from './tutorial.jsx';
 import Query from './query.jsx';
 import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
@@ -490,17 +492,12 @@ class App extends Component {
   }
 
   deleteRow = (col, tableName) => {
-    console.log("COL", col)
     const tabName = tableName;
-    console.log(this.state.tables[tabName].values)
     const rowDelete = this.state.tables[tabName].values.filter((value, index) => {
-      console.log("VALUE", value)
       if (index !== col) {
-        console.log("IN HERE")
         return value
       }
     })
-    console.log("ROW DELETE", rowDelete)
     const tempTables = this.state.tables
     tempTables[tabName].values = rowDelete
     this.setState({

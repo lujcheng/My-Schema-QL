@@ -175,7 +175,9 @@ class Canvas extends Component {
       borderColor: 'black',
       borderStyle: 'solid',
       borderWidth: 3,
+      zIndex: 1
     }
+
 
     const renderSVG = Object.keys(this.props.svg).map(key => {
       if (this.props.svg[key] != null && typeof this.props.svg[key] === 'string') {
@@ -192,20 +194,17 @@ class Canvas extends Component {
     return (
 
       <div className="box container">
-        <div className="field is-grouped is-grouped-multiline">
-          {this.renderPanZoomControls()}
-          <ReactPanZoom
-            zoom={this.state.zoom}
-            pandx={this.state.dx}
-            pandy={this.state.dy}
-            onPan={this.onPan}
-            width='100%'
-            // height= '100vh'
-            >
-              {renderTables}
-              {renderSVG}
-          </ReactPanZoom>
-        </div>
+        {this.renderPanZoomControls()}
+        <ReactPanZoom
+          zoom={this.state.zoom}
+          pandx={this.state.dx}
+          pandy={this.state.dy}
+          onPan={this.onPan}
+          width='100%'
+          >
+            {renderTables}
+            {renderSVG}
+        </ReactPanZoom>
       </div>
     )
   }

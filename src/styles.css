@@ -53,6 +53,7 @@ body {
 
 table {
 	font-family: 'Libre Franklin', sans-serif;
+	border: 0;
 }
 
 
@@ -80,16 +81,6 @@ td input.input {
 	border: 0;
 }
 
-
-/* highlight selection */
-.data-row .colSelected, .header-row .colSelected {
-	background-color: red;
-	border-width: 0.4em;
-}
-.rowSelected {
-	background-color: red;
-	border-width: 0.4em;
-}
 
 input {
 	text-align: center;

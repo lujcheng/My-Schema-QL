@@ -58,9 +58,8 @@ class Table extends Component {
   renderTableHeader() {
     let columnHeaders = this.props.table.columns
     return columnHeaders.map((key, col) => {
-      if (this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col)) {
-        return (
-        <th className="colSelected header-row" key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
+      return (
+        <th className={this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col) ? "colSelected" : null} key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
           <input 
             type="text" 
             defaultValue={key.toUpperCase()} 
@@ -69,20 +68,8 @@ class Table extends Component {
             onDoubleClick={this.focus}
             top={`${this.props.y}px`} left={`${this.props.x}px`}
             />
-        </th>)
-      } else {
-        return (
-        <th key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
-          <input 
-            type="text" 
-            defaultValue={key.toUpperCase()} 
-            className="input" 
-            onKeyDown={(evt) => this.onEnterHeader(evt, col)} 
-            onDoubleClick={this.focus}
-             top={`${this.props.y}px`} left={`${this.props.x}px`}
-            />
-        </th>)
-      }
+        </th>
+      )
     })
   }
 
@@ -107,7 +94,7 @@ class Table extends Component {
           )
         } else {
           return ( 
-              <tr key={items + col} className="data-row">
+              <tr key={items + col}>
               {
                 items.map((item, row) => {
                   if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
@@ -146,7 +133,7 @@ class Table extends Component {
     render() {
       return (
         <>
-          <table className="table is-narrow is-borderless">
+          <table className="table is-narrow is-borderless" style={{zIndex: 10}}>
             <thead>
               <tr>
                 <th colSpan={this.props.table.columns.length}>
@@ -154,7 +141,7 @@ class Table extends Component {
                   <button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
                 </th>
               </tr>
-              <tr className="header-row">
+              <tr>
                 {this.renderTableHeader()}
               </tr>
             </thead>
