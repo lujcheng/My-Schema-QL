@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import './styles.css';
+import './css/mystyles.css';
+import './styles.css'
 import MyCanvas from './Canvas.jsx';
+import Tutorial from './tutorial.jsx';
 import Query from './query.jsx';
 import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
@@ -569,6 +571,7 @@ class App extends Component {
                 <li><button className="button is-white is-large">GET LINK</button></li>
                 <li><button className="button is-white is-large">TUTORIAL</button></li>
               </ul>
+              <Tutorial />
             </nav>
           </div>
         </section>

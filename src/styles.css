@@ -84,11 +84,9 @@ td input.input {
 /* highlight selection */
 .data-row .colSelected, .header-row .colSelected {
 	background-color: red;
-	border-width: 0.4em;
 }
 .rowSelected {
 	background-color: red;
-	border-width: 0.4em;
 }
 
 input {
