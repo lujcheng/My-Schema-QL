@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 
 class LinkButton extends Component {
   
-  renderLink = (e) => {
-    e.preventDefault()
+  renderLink = () => {
     return <div>{this.props.socketURL}</div>
   } 
 
