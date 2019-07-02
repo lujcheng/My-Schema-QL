@@ -7,6 +7,7 @@ import Tutorial from './tutorial.jsx';
 import Query from './query.jsx';
 import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
+import LinkButton from './linkButton.jsx'
 
 const socketURL = 'http://localhost:8080';
 
@@ -14,8 +15,9 @@ class App extends Component {
   constructor(props) {
     super(props) 
     this.state = {
+      queryString: null,
       socket: null,
-      joinmatch: false,
+      joinMatch: false,
       colMatch: false,
       rowMatch: false,
       currentTable: null,
@@ -173,12 +175,11 @@ class App extends Component {
       })
     })
 
-    socket.on('set-client-color', (contents) => {
+    socket.on('set-query-string', (contents) => {
       this.setState({
-      clientColor: contents
+      queryString: contents
       })
     })
-    console.log("state== ",this.state.clientColor)
   }
 
   checkTableMatches = () => {
@@ -202,29 +203,49 @@ class App extends Component {
           currentTables.push(table)
         } 
       })
-      if (currentTables.length > 1) {
-        this.setState({join: true})
-      } else {
-        this.setState({join: false})
-      }
     }
-    console.log(currentTables)
+    let join = false
+    let onStatement
+    if (currentTables.length > 1 && 'on' in query) {
+      onStatement = this.state.query.on.split(/[ =]+/).filter((e) => {if(e != "=") {return e}})
+      if (onStatement.length == 2) {
+        for (let i=0; i< currentTables.length; i++) {
+          if (this.state.tables[currentTables[i]].columns.includes(onStatement[i])) {
+            join = true
+          } else {
+            join = false
+          }
+        }
+      }
+    } else {
+      join = false
+    }
+    if (join === true) {
+      this.setState({joinOn: onStatement})
+    } else {
+    this.setState({joinOn: false})
+    }
     this.setState({currentTable: currentTables})
     // should set the list of tables joined in currentTables
     return currentTables
   }
 
   handleCurrentTable = () => {
-    if (this.state.currentTable.length > 1 && typeof this.state.query.on === 'string') {
-      let currentTables = this.state.currentTable
-      let innerTable = this.state.currentTable[0]
-      let innerOnStatement = this.state.query.on
-      innerOnStatement = innerOnStatement.split(/[=]+/).filter((e) => {if(e != "=") {return e}})
-      for (let i=1; i < currentTables.length; i++) {
-        this.join([innerTable, currentTables[i]], innerOnStatement)
-        innerTable = this.join([innerTable, currentTables[i]], innerOnStatement)
+    console.log("ye boi")
+    if (this.state.currentTable.length > 1 && this.state.joinOn.length > 1) {
+      let currentTable = this.state.currentTable[0]
+      for (let i =1; i < this.state.currentTable.length; i++) {
+        this.join([currentTable, this.state.currentTable[i]], this.state.joinOn)
+        currentTable = this.join([currentTable, this.state.currentTable[i]], this.state.joinOn)
       }
-      console.log("inner table", innerTable)
+      // let currentTables = this.state.currentTable
+      // let innerTable = this.state.currentTable[0]
+      // let innerOnStatement = this.state.query.on
+      // innerOnStatement = innerOnStatement.split(/[=]+/).filter((e) => {if(e != "=") {return e}})
+      // for (let i=1; i < currentTables.length; i++) {
+      //   this.join([innerTable, currentTables[i]], innerOnStatement)
+      //   innerTable = this.join([innerTable, currentTables[i]], innerOnStatement)
+      // }
     } else {
       console.log("table", this.state.currentTable[0])
     }
@@ -282,7 +303,6 @@ class App extends Component {
       joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
       for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
         for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-          console.log(stateTbl[tables[0]].values[i][forKey],stateTbl[tables[1]].values[e][primeKey])
           if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
             joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
           }
@@ -290,10 +310,10 @@ class App extends Component {
       }
       this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
       this.setState({joinTable: `${tables[0]}_${tables[1]}` })
-      this.setState({joinmatch: true})
+      this.setState({joinMatch: true})
       return `${tables[0]}_${tables[1]}`
     } else {
-      this.setState({joinmatch: false })
+      this.setState({joinMatch: false })
     }
   }
 
@@ -324,6 +344,16 @@ class App extends Component {
         }))
       })
     } 
+    if (this.state.joinOn === false) {
+      if (this.state.joinTable) {
+        let tables = this.state.tables
+        if (this.state.tables[this.state.joinTable]) {
+          delete tables[this.state.joinTable]
+          this.setState({tables: tables})
+          }    
+        }
+      }
+    
   }
 
   where = (tableName, input) => {
@@ -338,14 +368,12 @@ class App extends Component {
       '=': (a, b) => {return a == b}
     }
     // determine the column index
-    console.log("query.lenght", query)
     if (query.length >= 3) {
       let colIndex = this.state.tables[tableName].columns.indexOf(query[0])
       // loop through row values at column index
       if (colIndex >= 0) {
         return this.state.tables[tableName].values.map((row, index) => {
           if (Object.keys(operate).includes(query[1]) && operate[query[1]] (row[colIndex], query[2])) {
-            console.log(row[colIndex], query[1], query[2], "index", index)
             return index
           }
         }).filter(el => el != null)
@@ -404,7 +432,15 @@ class App extends Component {
   onChange = (event, args) => {
     const state = () => {
       return new Promise ((resolve, reject) => {
+        // if (this.state.query[args]) {
+        //   let arr = []
+        //   arr.push(this.state.query[args])
+        //   arr.push(event.target.value)
+        //   this.setState(({ query: {...this.state.query, [args]: arr}}, resolve))
+        // } else {
+          console.log("stuff", event.target)
         this.setState({ query: {...this.state.query, [args]: event.target.value}}, resolve)
+        // }
       })
     }
       state()
@@ -412,12 +448,12 @@ class App extends Component {
         this.checkTableMatches()
       })
       .then(() => {
-        if (this.state.join && this.state.currentTable.length > 1) {
+        if (this.state.currentTable.length > 1) {
           this.handleCurrentTable()
         }
       })
       .then(() => {
-        if (this.state.join === true && Object.keys(this.state.tables).includes(this.state.joinTable)) {
+        if (this.state.joinTable && Object.keys(this.state.tables).includes(this.state.joinTable)) {
           this.select(this.state.joinTable)
           this.findRows(this.state.joinTable)
         } else {
@@ -430,7 +466,7 @@ class App extends Component {
       })
       .then(() => {
         const data = Object.assign({}, this.state)
-        console.log("socket ", this.state.socket)
+        console.log("queryArray", this.state.queryString)
         delete data['socket']
         this.state.socket.emit('input-update', data)
       })
@@ -505,8 +541,8 @@ class App extends Component {
     }, 30);
   }
 
-
   renderNewTable = (tableObj) => {
+    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
@@ -553,6 +589,12 @@ class App extends Component {
       this.state.socket.emit('create-table', data);
     }, 30);
   }
+
+  renderLink = (e) => {
+    e.preventDefault()
+    return socketURL
+  }
+
   render() {
     return (
       <div className="hero is-fullheight">
@@ -562,19 +604,20 @@ class App extends Component {
           </div>
           <div className="navbar-end">
             <nav className="breadcrumb is-right is-large" aria-label="breadcrumbs">
+              <LinkButton socketURL={socketURL}/>
               <ul>
-                <li><button className="button is-white is-large">GET LINK</button></li>
                 <li><button className="button is-white is-large">TUTORIAL</button></li>
               </ul>
-              <Tutorial />
+              <div>{this.renderLink}</div>
             </nav>
           </div>
         </section>
 
 
        <section className="section">
-          <Query onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query}/>
+          <Query onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket}/>
         </section>
+        <p>{this.state.queryString}</p>
 
         <div className="container">
           <NewTable renderNewTable={this.renderNewTable} />

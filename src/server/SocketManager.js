@@ -33,13 +33,9 @@ module.exports = function(socket) {
     io.emit('title-change', data)
   })
 
-  socket.on('connection', data => {
-    const color = ["yellow", "blue", "red", "purple", "green", "grey", "orange", "black", "gold"];
-    const clientColor = {
-      clientColor: color[getRandomInt(9)]
-    }
-    console.log("color ", clientColor)
-    io.emit("set-client-color", clientColor)
+  socket.on('query-string', data => {
+    io.emit("set-query-string", data)
+    console.log("data", data);
   })
 }
 
