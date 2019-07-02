@@ -35,13 +35,11 @@ class Query extends Component {
 	printQuery = () => {
 		let lastKeyword = this.state.lastKeyword
 		let queryArr = [];
-		console.log("this.state.queryArray", this.state.queryArray)
 		queryArr.push(lastKeyword)
 		queryArr.push(this.props.query[lastKeyword.toLowerCase()]);
-		console.log("queryArr ", queryArr)
-		let queryString = queryArr.join(",").toUpperCase();
+		let queryString = queryArr;
 		this.setState({queryArray: [...this.state.queryArray, queryString]})
-		return <p>{this.state.queryArray}</p>
+		// return <p>{this.state.queryArray}</p>
 	}
 	
 	deleteInputFields = (evt) => {
@@ -62,6 +60,11 @@ class Query extends Component {
 	onButtonSubmit = (evt) => {
 		evt.preventDefault()
 		this.printQuery();
+		setTimeout(() => {
+      let data = this.state.queryArray;
+      this.props.socket.emit('query-string', data);
+    }, 50);
+
 		const tempArr = this.state.inputFieldArr;
     const queryType = evt.target.keywords.value;
     console.log("querytype ", queryType);
@@ -176,7 +179,7 @@ class Query extends Component {
 						</div>
 					</div>
 				</Form>
-				<p>{this.state.queryArray}</p>
+				{/* <p>{this.state.queryArray}</p> */}
 			</div>
     )
   }
