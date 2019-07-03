@@ -662,7 +662,7 @@ class App extends Component {
 
 
        <section className="section">
-          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket} deleteQueryArray={this.deleteQueryArray}/>
+          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket} deleteQueryArray={this.deleteQueryArray} selectInput={this.state.query.select}/>
         </section>
         <p>{this.printQueryArray()}</p>
 
