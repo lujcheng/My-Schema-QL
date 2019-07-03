@@ -1,28 +1,5 @@
-$highlight: red;
-/* highlight selection */
-// .data-row .colSelected, .header-row .colSelected {
-// 	background-color: red;
-// }
-// .rowSelected {
-// 	background-color: red;
-// }
-
-
-.colSelected {
-    background-color: red;
-}
-
 .rowSelected {
     background-color: #DCDCDC;
-    .colSelected.cellSelected {
+    .colSelected {
         background-color: red;
     }
-}
-
-// .colSelected.cellSelected {
-//     background-color: red;
-// }
-
-// .rowSelected {
-//     background-color: red;
-// }

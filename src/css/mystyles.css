@@ -1,8 +1,15 @@
-/* highlight selection */
-.colSelected {
-  background-color: red; }
-
 .rowSelected {
   background-color: #DCDCDC; }
-  .rowSelected .colSelected.cellSelected {
+  .rowSelected .colSelected {
     background-color: red; }
+
+#tables-container {
+  position: relative;
+  z-index: 1; }
+
+#table {
+  position: relative;
+  z-index: 10; }
+
+body > div:nth-child(9) {
+  z-index: 5; }

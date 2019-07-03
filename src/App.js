@@ -542,7 +542,6 @@ class App extends Component {
   }
 
   renderNewTable = (tableObj) => {
-    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
@@ -589,6 +588,7 @@ class App extends Component {
       this.state.socket.emit('create-table', data);
     }, 30);
   }
+
 
   renderLink = (e) => {
     e.preventDefault()
