@@ -54,6 +54,7 @@
 table {
 	font-family: 'Libre Franklin', sans-serif;
 	border: 0;
+	margin-top: -0.4em;
 }
 
 
@@ -169,8 +170,22 @@ div.box.container {
 #drag-icon {
 	background-color:#363636;
 	color: #DCDCDC;
+	padding: 0.3em;
+	width: 10em;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
 
 .table th {
 	border: 0;
+}
+
+.zoom-control {
+	display: inline-block;
+}
+
+.navbar {
+	margin-top: 2em;
+	margin-left: 2em;
+	margin-right: 2em;
 }

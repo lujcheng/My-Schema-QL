@@ -17,7 +17,9 @@ class Table extends Component {
     let longestWord = 1;
     for (let j = 0; j < cols.length; j++) {
       for (let k = 0; k < vals.length; k ++) {
-        if (vals[k][j].length >= longestWord) {
+        if (!vals[k][j]) {
+          longestWord = 5;
+        } else if (vals[k][j].length >= longestWord) {
           longestWord = vals[k][j].length
         }
       }

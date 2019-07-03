@@ -119,14 +119,15 @@ class Canvas extends Component {
 
   renderPanZoomControls = () => {
     return (
-      <div>
-        <div onClick={this.zoomIn}>
-          <span><i className="icon fas fa-search-plus is-medium"></i></span>
+      <>
+        <div className="zoom-control" onClick={this.zoomIn}>
+          <i className="icon fas fa-search-plus is-medium"></i>
         </div>
-        <div onClick={this.zoomOut}>
-          <span><i className="icon fas fa-search-minus is-medium"></i></span>
+        <br/>
+        <div className="zoom-control" onClick={this.zoomOut}>
+          <i className="icon fas fa-search-minus is-medium"></i>
         </div>
-      </div>
+      </>
     );
   };
   
