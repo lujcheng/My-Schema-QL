@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props) 
     this.state = {
-      queryString: null,
+      queryArray: [],
       socket: null,
       joinMatch: false,
       colMatch: false,
@@ -545,7 +545,6 @@ class App extends Component {
   }
 
   renderNewTable = (tableObj) => {
-    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
@@ -598,6 +597,19 @@ class App extends Component {
     return socketURL
   }
 
+  onButtonSubmit = (evt, lastKeyword, cb) => {
+    evt.preventDefault()
+    evt.persist()
+    let queryArr = [];
+    queryArr.push(lastKeyword)
+    queryArr.push(this.state.query[lastKeyword.toLowerCase()]);
+    let target = evt
+    this.setState({queryArray: [...this.state.queryArray, queryArr]}, () => cb(target))
+     setTimeout(() => {
+      console.log("query ", this.state.queryArray)
+    }, 30);
+  }
+
   render() {
     return (
       <div className="hero is-fullheight">
@@ -611,16 +623,16 @@ class App extends Component {
               <ul>
                 <li><button className="button is-white is-large">TUTORIAL</button></li>
               </ul>
-              <div>{this.renderLink}</div>
+              {/* <div>{this.renderLink}</div> */}
             </nav>
           </div>
         </section>
 
 
        <section className="section">
-          <Query onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket}/>
+          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket}/>
         </section>
-        <p>{this.state.queryString}</p>
+        <p>{this.state.queryArray}</p>
 
         <div className="container">
           <NewTable renderNewTable={this.renderNewTable} />
