@@ -5,7 +5,7 @@ import Input from 'react-validation/build/input';
 
 const keyWordToAllowedKeyWords = {
 	'SELECT': ['FROM'],
-	'WHERE': ['JOIN','ORDER BY','GROUP BY', 'HAVING', 'AND' ],
+	'WHERE': ['ORDER BY','GROUP BY', 'HAVING', 'AND' ],
 	'JOIN': ['ON'],
 	'ON': ['WHERE'],
 	'ORDER BY': ['JOIN', 'GROUP BY', 'HAVING'],
@@ -35,8 +35,10 @@ class Query extends Component {
 	
 	deleteInputFields = (evt) => {
 		evt.preventDefault();
+		console.log('delete ')
 		this.setState({
-      inputFieldArr: []
+      inputFieldArr: [],
+			lastKeyword: 'SELECT'
     })
 	}
 	
@@ -49,11 +51,8 @@ class Query extends Component {
 	}
 	
 	renderQuery = (evt) => {
-		console.log("hi, hi ", evt.target.keywords)
 		const tempArr = this.state.inputFieldArr;
 		const queryType = evt.target.keywords.value;
-		console.log("component array ", this.state.queryArray)
-    console.log("querytype ", queryType);
 		if (queryType === "JOIN") {
 			tempArr.push(
 				<>
@@ -112,13 +111,13 @@ class Query extends Component {
 				<>
 					<div className="field is-grouped is-grouped-multiline">	
 						<div className="field-label is-normal">
-         					 <label className="label">{queryType}</label>
+         			<label className="label">{queryType}</label>
 						</div>
 						<div className="control">
-          					<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
+          		<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
 						</div>
 					</div>
-        		</>
+        </>
 			)
 		}
 		this.setState({
@@ -164,7 +163,7 @@ class Query extends Component {
 									</select>
 								</div>	
 								<button type="submit"  className="button is-normal is-dark">+</button>
-								<button type="button" className="button is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.deleteInputFields(evt)}><i className="far fa-trash-alt"></i></button>
+								<button type="button" className="button is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => {this.deleteInputFields(evt); this.props.deleteQueryArray(evt);}}><i className="far fa-trash-alt"></i></button>
 							</div>
 						</div>
 					</div>

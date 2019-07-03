@@ -487,7 +487,6 @@ class App extends Component {
     setTimeout(() => {
       let data = this.state.tables;
       this.state.socket.emit('table-change', data);
-      console.log("data ", data)
     }, 30);
   }
 
@@ -604,9 +603,22 @@ class App extends Component {
     let target = evt
     this.setState({queryArray: [...this.state.queryArray, queryArr]}, () => cb(target))
      setTimeout(() => {
-      console.log("query ", this.state.queryArray)
     }, 30);
   }
+
+  deleteQueryArray = (evt) => {
+		evt.preventDefault();
+		this.setState({
+      queryArray: [],
+      query: {
+        select: "",
+        from: "",
+        join: "",
+        where: "",
+        on: ""
+      }
+    })
+	}
 
   render() {
     return (
@@ -628,9 +640,9 @@ class App extends Component {
 
 
        <section className="section">
-          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket}/>
+          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket} deleteQueryArray={this.deleteQueryArray}/>
         </section>
-        <p>{this.state.queryArray}</p>
+        <p>{this.state.queryArray.toString().replace(",", " ").toUpperCase()}</p>
 
         <div className="container">
           <NewTable renderNewTable={this.renderNewTable} />
