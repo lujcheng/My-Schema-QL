@@ -9,7 +9,7 @@ import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
 import LinkButton from './linkButton.jsx'
 
-const socketURL = 'http://172.46.3.39:8080/';
+const socketURL = 'localhost:3000';
 
 class App extends Component {
   constructor(props) {
@@ -492,7 +492,6 @@ class App extends Component {
       let data = this.state.tables;
       this.state.socket.emit('table-change', data);
     }, 30);
-    console.log("TABLES", this.state.tables)
   }
 
   deleteRow = (col, tableName) => {
