@@ -372,8 +372,8 @@ class App extends Component {
     // expected output = ["id", ">", "3"]
 
     const operate = {
-      '<': (a, b) => {return a < b},
-      '>': (a, b) => {return a > b},
+      '<': (a, b) => {return a < parseInt(b)},
+      '>': (a, b) => {return a > parseInt(b)},
       '=': (a, b) => {return a == b}
     }
     // determine the column index
