@@ -163,7 +163,7 @@ class Canvas extends Component {
             key={tableKey}
             >
             <div style={{width: "fit-content"}}>
-              <span className="handle" top={`${y}px`} left={`${x}px`}><i id="drag-icon" className="icon fas fa-arrows-alt is-medium"></i></span>
+              <span className="handle is-paddingless" top={`${y}px`} left={`${x}px`}><i id="drag-icon" className="icon fas fa-arrows-alt is-medium"></i></span>
               <Table x={x} y={y} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
 
               </div>

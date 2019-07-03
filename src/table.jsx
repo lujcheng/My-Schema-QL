@@ -28,31 +28,25 @@ class Table extends Component {
 
   
   onEnter = (event, col, row) => {
-    if (event.keyCode == 13 && event.shiftKey == false) {
-      event.preventDefault();
-      let val = event.target.value;
-      let tableName = this.props.tableName;
-      this.props.renderTableChange(tableName, val, col, row);
-    }
+    event.preventDefault();
+    let val = event.target.value;
+    let tableName = this.props.tableName;
+    this.props.renderTableChange(tableName, val, col, row);
   };
 
   onEnterHeader = (event, col) => {
-    if (event.keyCode == 13 && event.shiftKey == false) {
-      event.preventDefault();
-      let val = event.target.value;
-      let tableName = this.props.tableName
-      this.props.changeTableHeader(tableName, val, col);
-    }
+    event.preventDefault();
+    let val = event.target.value;
+    let tableName = this.props.tableName
+    this.props.changeTableHeader(tableName, val, col);
   }
 
   onEnterTitle = (event) => {
-    if (event.keyCode == 13 && event.shiftKey == false) {
-      event.preventDefault();
-      let val = event.target.value;
-      let tableName = this.props.tableName
-      let tableID = this.props.tableID
-      this.props.changeTableTitle(tableName, val, tableID);
-    }
+    event.preventDefault();
+    let val = event.target.value;
+    let tableName = this.props.tableName
+    let tableID = this.props.tableID
+    this.props.changeTableTitle(tableName, val, tableID);
   }
 
   renderTableHeader() {
@@ -62,9 +56,9 @@ class Table extends Component {
         <th className={this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col) ? "colSelected" : null} key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
           <input 
             type="text" 
-            defaultValue={key.toUpperCase()} 
+            defaultValue={key}
             className="input" 
-            onKeyDown={(evt) => this.onEnterHeader(evt, col)}
+            onBlur={(evt) => this.onEnterHeader(evt, col)}
             onDoubleClick={this.focus}
             top={`${this.props.y}px`} left={`${this.props.x}px`}
             />
@@ -83,10 +77,10 @@ class Table extends Component {
             {
               items.map((item, row) => {
                 if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
-                  return <td key={item + col + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                  return <td key={item + col + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onBlur={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                 } else {
                   return <td key={item + col 
-                  + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                  + row}><input type="text" defaultValue={item} className="input" onBlur={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                 }
               })
             }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -99,10 +93,10 @@ class Table extends Component {
                 items.map((item, row) => {
                   if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
                     return <td key={item + col 
-                    + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                    + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onBlur={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                   } else {
                     return <td key={item + col 
-                    + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                    + row}><input type="text" defaultValue={item} className="input" onBlur={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                   }
                 })
               }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -118,10 +112,10 @@ class Table extends Component {
               items.map((item, row) => {
                 if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
                   return <td key={item + col 
-                  + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                  + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onBlur={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                 } else {
                   return <td key={item + col 
-                  + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
+                  + row}><input type="text" defaultValue={item} className="input" onBlur={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                 }
               })
             }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right is-dark is-normal" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -137,7 +131,7 @@ class Table extends Component {
             <thead>
               <tr>
                 <th colSpan={this.props.table.columns.length}>
-                  <input type="text" defaultValue={this.props.tableName} className="input" onKeyDown={(evt) => this.onEnterTitle(evt)} onDoubleClick={this.focus}/>
+                  <input type="text" defaultValue={this.props.tableName} className="input" onBlur={(evt) => this.onEnterTitle(evt)} onDoubleClick={this.focus}/>
                   <button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
                 </th>
               </tr>

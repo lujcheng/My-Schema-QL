@@ -44,10 +44,9 @@ class App extends Component {
             ["6", "Greyjoy Marina", "Pyke"],
             ["7", "Tully's Fish Market", "Riverrun"],
             ["8", "Bank of Lannisport", "Casterly Rock"],
-            ["9", "Tormund Dairy", "North of the Wall"],
-            ["10", "Tyrion's Winery", "King's Landing"],
-            ["11", "Frey's Weddings", "The Twin's"],
-            ["12", "Drogo's Ranch", "Essos"],
+            ["9", "Tyrion's Winery", "King's Landing"],
+            ["10", "Frey's Weddings", "The Twin's"],
+            ["11", "Drogo's Ranch", "Essos"],
           ],
           createdAt: new Date('January 1, 2019 00:01:00'),
           foreignKey: null,
@@ -75,9 +74,9 @@ class App extends Component {
             ["12", "Catelyn Stark", "7"],
             ["13", "Cersei Lannister", "8"],
             ["14", "Jaime Lannister", "8"],
-            ["15", "Tyrion Lannister", "10"],
-            ["16", "Walder Frey", "11"],
-            ["17", "Khal Drogo", "12"]
+            ["15", "Tyrion Lannister", "9"],
+            ["16", "Walder Frey", "10"],
+            ["17", "Khal Drogo", "11"]
           ],
           createdAt: new Date('January 1, 2019 00:02:00'),
           foreignKey: null,
@@ -493,6 +492,7 @@ class App extends Component {
       let data = this.state.tables;
       this.state.socket.emit('table-change', data);
     }, 30);
+    console.log("TABLES", this.state.tables)
   }
 
   deleteRow = (col, tableName) => {
