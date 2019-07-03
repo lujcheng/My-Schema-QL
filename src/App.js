@@ -184,8 +184,9 @@ class App extends Component {
     })
 
     socket.on('set-query-string', (contents) => {
+      console.log("hi", contents)
       this.setState({
-      queryString: contents
+      queryArray: contents
       })
     })
   }
@@ -495,7 +496,6 @@ class App extends Component {
     setTimeout(() => {
       let data = this.state.tables;
       this.state.socket.emit('table-change', data);
-      console.log("data ", data)
     }, 30);
   }
 
@@ -612,8 +612,32 @@ class App extends Component {
     let target = evt
     this.setState({queryArray: [...this.state.queryArray, queryArr]}, () => cb(target))
      setTimeout(() => {
-      console.log("query ", this.state.queryArray)
-    }, 30);
+       let data = this.state.queryArray
+       this.state.socket.emit('query-string', data)
+    }, 200);
+  }
+
+  deleteQueryArray = (evt) => {
+		evt.preventDefault();
+		this.setState({
+      queryArray: [],
+      query: {
+        select: "",
+        from: "",
+        join: "",
+        where: "",
+        on: ""
+      }
+    })
+	}
+
+  printQueryArray = () => {
+    let arr = this.state.queryArray;
+    let string = "";
+    arr.map((el) => {
+      string += ` ${el.toString().replace(",", " ").toUpperCase()} `
+    })
+    return string;
   }
 
   render() {
@@ -624,17 +648,17 @@ class App extends Component {
             <h1 className="title is-1">SCHEMA</h1>
           </div>
           <div className="navbar-end">
-            <LinkButton socketURL={socketURL}/>
-            <button className="button is-white is-large">TUTORIAL</button>
-            {/* <div>{this.renderLink}</div> */}
+            <nav className="breadcrumb is-right is-large" aria-label="breadcrumbs">
+              <LinkButton socketURL={socketURL}/>
+            </nav>
           </div>
         </section>
 
 
        <section className="section">
-          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket}/>
+          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket} deleteQueryArray={this.deleteQueryArray}/>
         </section>
-        <p>{this.state.queryArray}</p>
+        <p>{this.printQueryArray()}</p>
 
         <div className="container">
           <NewTable renderNewTable={this.renderNewTable} />

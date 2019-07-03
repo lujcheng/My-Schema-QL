@@ -24,18 +24,16 @@ module.exports = function(socket) {
   })
 
   socket.on('change-header', data => {
-    console.log("delete ", data)
     io.emit('header-change', data)
   })
 
   socket.on('change-title', data => {
-    console.log("delete ", data)
     io.emit('title-change', data)
   })
 
   socket.on('query-string', data => {
-    io.emit("set-query-string", data)
     console.log("data", data);
+    io.emit("set-query-string", data)
   })
 }
 
