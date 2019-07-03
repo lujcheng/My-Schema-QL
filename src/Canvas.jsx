@@ -121,10 +121,10 @@ class Canvas extends Component {
     return (
       <div>
         <div onClick={this.zoomIn}>
-          <span>+</span>
+          <span><i className="icon fas fa-search-plus is-medium"></i></span>
         </div>
         <div onClick={this.zoomOut}>
-          <span>-</span>
+          <span><i className="icon fas fa-search-minus is-medium"></i></span>
         </div>
       </div>
     );
@@ -163,7 +163,7 @@ class Canvas extends Component {
             key={tableKey}
             >
             <div style={{width: "fit-content"}}>
-              <span className="handle" top={`${y}px`} left={`${x}px`}>Drag</span>
+              <span className="handle" top={`${y}px`} left={`${x}px`}><i className="icon fas fa-arrows-alt is-medium"></i></span>
               <Table x={x} y={y} tableID={index} tableName={tableKey} table={table} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.props.createSVG}/>
 
               </div>
@@ -175,24 +175,18 @@ class Canvas extends Component {
       borderColor: 'black',
       borderStyle: 'solid',
       borderWidth: 3,
-      zIndex: 5
+      zIndex: -1
     }
 
 
     const renderSVG = Object.keys(this.props.svg).map(key => {
       if (this.props.svg[key] != null && typeof this.props.svg[key] === 'string') {
-        console.log(key, this.props.svg[key])
         return (
-          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="center" toAnchor="center" {...style} />
+          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="center" toAnchor="center" {...style}/>
         )
       }
     })
-    
-
-
-
     return (
-
       <div className="box container">
         {this.renderPanZoomControls()}
         <ReactPanZoom

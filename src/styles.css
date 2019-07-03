@@ -2,9 +2,9 @@
 	font-family: 'Libre Franklin', sans-serif;
 }
 
-body {
-	background-color: #FFFFFF;
-}
+/* body {
+	background-color: transparent;
+} */
 
 
 
@@ -131,7 +131,7 @@ div.box.container {
 
 
 input.input {
-	width: 6em;
+	width: 12em;
 }
 
 .table th:not([align]) {
@@ -139,6 +139,10 @@ input.input {
 }
 
 div.select {
+	width: 7em;
+}
+
+select {
 	width: 7em;
 }
 
@@ -152,4 +156,8 @@ section.modal-card-body {
 
 input.input.new-table {
 	background-color: #FFFFFF;
+}
+
+div.box.container {
+	background-color: transparent;
 }
