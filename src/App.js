@@ -9,7 +9,7 @@ import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
 import LinkButton from './linkButton.jsx'
 
-const socketURL = 'http://localhost:8080';
+const socketURL = 'http://172.46.3.39:8080/';
 
 class App extends Component {
   constructor(props) {
@@ -33,14 +33,21 @@ class App extends Component {
       svg: {
       },
       tables: {
-        cars: {
-          
-          columns: ['ID', 'make', 'model', 'year'],
+        stores: {
+          columns: ['ID', 'name', 'location'],
           values: [
-            ['1', 'VW', 'Jetta', '2010'],
-            ["2", 'Ford', 'Fiesta', '2015'],
-            ["3", 'Chevy', 'Blazer', '2000'],
-            ["4", 'Honda', 'Accord', '1978']
+            ["1", "Stark's Winter Accessories", "Winterfell"],
+            ["2", "Bolton's Kennel", "Dreadfort"],
+            ["3", "Tyrell's Flowershop", "Highgarden"],
+            ["4", "Baratheon Blacksmithin", "Storm's End"],
+            ["5", "Targaryen Terrarium", "Dragonstone"],
+            ["6", "Greyjoy Marina", "Pyke"],
+            ["7", "Tully's Fish Market", "Riverrun"],
+            ["8", "Bank of Lannisport", "Casterly Rock"],
+            ["9", "Tormund Dairy", "North of the Wall"],
+            ["10", "Tyrion's Winery", "King's Landing"],
+            ["11", "Frey's Weddings", "The Twin's"],
+            ["12", "Drogo's Ranch", "Essos"],
           ],
           createdAt: new Date('January 1, 2019 00:01:00'),
           foreignKey: null,
@@ -51,13 +58,30 @@ class App extends Component {
           }
         },
           
-        guitars: {
-          columns: ['ID', 'make', 'model', 'year'],
+        employees: {
+          columns: ['ID', 'name', 'store_id'],
           values: [
-            ["1", 'Fender', 'Tele', '2010'],
-            ["2", 'Gibson', 'SG', '2015'],
-            ["3", 'Guild', 'Starfire', '2001'],
-            [ "4", 'Gretsch', 'Jet', '2005']
+            ["1", "Sansa Stark", "1"],
+            ["2", "Arya Stark", "1"],
+            ["3", "Jon Snow", "1"],
+            ["4", "Eddard Stark", "1"],
+            ["5", "Ramsay Bolton", "2"],
+            ["6", "Roose Bolton", "2"],
+            ["7", "Loras Tyrell", "3"],
+            ["8", "Margaery Tyrell", "3"],
+            ["9", "Robert Baratheon", "4"],
+            ["10", "Gendry Baratheon", "4"],
+            ["11", "Daenerys Targaryen", "5"],
+            ["12", "Viserys Targaryen", "5"],
+            ["13", "Yara Greyjoy", "6"],
+            ["14", "Catelyn Stark", "7"],
+            ["15", "Edmund Tully", "7"],
+            ["16", "Cersei Lannister", "8"],
+            ["17", "Jaime Lannister", "8"],
+            ["18", "Tormund Giantsbane", "9"],
+            ["19", "Tyrion Lannister", "10"],
+            ["20", "Walder Frey", "11"],
+            ["21", "Khal Drogo", "12"]
           ],
           createdAt: new Date('January 1, 2019 00:02:00'),
           foreignKey: null,
@@ -66,24 +90,8 @@ class App extends Component {
             columnIndexes: null,
             rowIndexes: null
           }
-        },
-
-        dogs: {
-          columns: ['ID', 'name', 'breed', 'age'],
-          values: [
-            ["1", 'Enfys', 'Husky', '12'],
-            ["2", 'Enfys', 'Pitbull', '15'],
-            ["3", 'Charlie', 'poodle', '21'],
-            [ "4", 'Maple', 'Golden Doodle', '56']
-          ],
-          createdAt: new Date('January 1, 2019 00:03:00'),
-          foreignKey: null,
-          xY: null,
-          selected: {
-            columnIndexes: null,
-            rowIndexes: null
-          }
         }
+
     }
   }
     this.onChange = this.onChange.bind(this)
@@ -616,13 +624,9 @@ class App extends Component {
             <h1 className="title is-1">SCHEMA</h1>
           </div>
           <div className="navbar-end">
-            <nav className="breadcrumb is-right is-large" aria-label="breadcrumbs">
-              <LinkButton socketURL={socketURL}/>
-              <ul>
-                <li><button className="button is-white is-large">TUTORIAL</button></li>
-              </ul>
-              {/* <div>{this.renderLink}</div> */}
-            </nav>
+            <LinkButton socketURL={socketURL}/>
+            <button className="button is-white is-large">TUTORIAL</button>
+            {/* <div>{this.renderLink}</div> */}
           </div>
         </section>
 
