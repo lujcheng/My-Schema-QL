@@ -170,3 +170,7 @@ div.box.container {
 	background-color:#363636;
 	color: #DCDCDC;
 }
+
+.table th {
+	border: 0;
+}

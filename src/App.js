@@ -39,8 +39,8 @@ class App extends Component {
             ["1", "Stark's Winter Accessories", "Winterfell"],
             ["2", "Bolton's Kennel", "Dreadfort"],
             ["3", "Tyrell's Flowershop", "Highgarden"],
-            ["4", "Baratheon Blacksmithin", "Storm's End"],
-            ["5", "Targaryen Terrarium", "Dragonstone"],
+            ["4", "Baratheon Blacksmithing", "Storm's End"],
+            ["5", "Targaryen Reptiles", "Dragonstone"],
             ["6", "Greyjoy Marina", "Pyke"],
             ["7", "Tully's Fish Market", "Riverrun"],
             ["8", "Bank of Lannisport", "Casterly Rock"],
@@ -643,9 +643,7 @@ class App extends Component {
             <h1 className="title is-1">SCHEMA</h1>
           </div>
           <div className="navbar-end">
-            <nav className="breadcrumb is-right is-large" aria-label="breadcrumbs">
               <LinkButton socketURL={socketURL}/>
-            </nav>
           </div>
         </section>
 
