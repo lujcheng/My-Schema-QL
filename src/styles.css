@@ -2,9 +2,9 @@
 	font-family: 'Libre Franklin', sans-serif;
 }
 
-body {
+/* body {
 	background-color: transparent;
-}
+} */
 
 
 
@@ -139,6 +139,10 @@ input.input {
 }
 
 div.select {
+	width: 7em;
+}
+
+select {
 	width: 7em;
 }
 

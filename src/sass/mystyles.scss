@@ -1,6 +1,9 @@
 .rowSelected {
     background-color: #DCDCDC;
     .colSelected {
-        background-color: red;
+        background-color: #363636;
+        .input {
+            color: #DCDCDC;
+        }
     }
 }
