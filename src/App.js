@@ -303,7 +303,7 @@ class App extends Component {
       let stateTbl = this.state.tables
       let joinColumns = []
       let joinValues = []
-      if (stateTbl[tables[0]].columns.includes(keys[0]) && stateTbl[tables[1]].columns.includes(keys[1])) {
+      if (stateTbl[tables[0]].columns.includes(keys[0]) && stateTbl[tables[1]].columns.includes(keys[1]))   {
         let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
         let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
         joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
@@ -325,6 +325,22 @@ class App extends Component {
   }
 
   checkMatch = () => {
+    let currentTable
+    if (this.state.currentTable && this.state.joinOn && this.state.joinTable) {
+      currentTable = this.state.joinTable
+    } else if (this.state.currentTable) {
+      currentTable = this.state.currentTable[0]
+    }
+    if (currentTable) {
+      Object.keys(this.state.tables).forEach((table) => {
+        if (table != currentTable) {
+          let tables = this.state.tables
+          tables[table].selected = {columnIndexes: null, rowIndexes: null}
+          this.setState({tables: tables})
+        }
+      })
+    }
+
     if (this.state.colMatch === false) {
       Object.keys(this.state.tables).forEach((table) => {
         this.setState(prevState => ({
