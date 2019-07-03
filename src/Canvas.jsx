@@ -175,7 +175,7 @@ class Canvas extends Component {
       borderColor: 'black',
       borderStyle: 'solid',
       borderWidth: 3,
-      zIndex: 5
+      zIndex: -1
     }
 
 
@@ -183,16 +183,11 @@ class Canvas extends Component {
       if (this.props.svg[key] != null && typeof this.props.svg[key] === 'string') {
         console.log(key, this.props.svg[key])
         return (
-          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="center" toAnchor="center" {...style} />
+          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="center" toAnchor="center" {...style} className="hello"/>
         )
       }
     })
-    
-
-
-
     return (
-
       <div className="box container">
         {this.renderPanZoomControls()}
         <ReactPanZoom

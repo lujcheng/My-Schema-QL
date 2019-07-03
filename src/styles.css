@@ -3,7 +3,7 @@
 }
 
 body {
-	background-color: #FFFFFF;
+	background-color: transparent;
 }
 
 
@@ -152,4 +152,8 @@ section.modal-card-body {
 
 input.input.new-table {
 	background-color: #FFFFFF;
+}
+
+div.box.container {
+	background-color: transparent;
 }
