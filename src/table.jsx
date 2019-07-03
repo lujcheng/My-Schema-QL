@@ -133,7 +133,7 @@ class Table extends Component {
     render() {
       return (
         <>
-          <table className="table is-narrow">
+          <table className="table is-narrow is-borderless">
             <thead>
               <tr>
                 <th colSpan={this.props.table.columns.length}>
