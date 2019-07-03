@@ -79,14 +79,14 @@ class Table extends Component {
       return data.map((items, col) => {
         if (this.props.table.selected.rowIndexes != null && this.props.table.selected.rowIndexes.includes(col)) {
           return (
-            <tr key={items + col} className="data-row rowSelected" >
+            <tr key={items + col} className="rowSelected" >
             {
               items.map((item, row) => {
                 if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
-                  return <th key={item + col + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></th>
+                  return <td key={item + col + row} className="colSelected" ><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                 } else {
-                  return <th key={item + col 
-                  + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></th>
+                  return <td key={item + col 
+                  + row}><input type="text" defaultValue={item} className="input" onKeyDown={(evt) => this.onEnter(evt, col, row)} onDoubleClick={this.focus}/></td>
                 }
               })
             }<td className={this.state.deleteToggle ? "delete-button" : null}><button type="button" className="button is-marginless is-paddingless is-pulled-right" onClick={(evt) => this.onDelete(evt, col)}><i className="far fa-trash-alt"></i></button></td>
@@ -113,7 +113,7 @@ class Table extends Component {
     } else {
       return data.map((items, col) => {
         return ( 
-            <tr key={items + col} className="data-row rowSelected">
+            <tr key={items + col} className="rowSelected">
             {
               items.map((item, row) => {
                 if (this.props.table.selected.columnIndexes != null && this.props.table.selected.columnIndexes.includes(row)) {
@@ -133,7 +133,7 @@ class Table extends Component {
     render() {
       return (
         <>
-          <table className="table is-narrow is-borderless" style={{zIndex: 10}}>
+          <table className="table is-narrow is-borderless">
             <thead>
               <tr>
                 <th colSpan={this.props.table.columns.length}>

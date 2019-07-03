@@ -175,7 +175,7 @@ class Canvas extends Component {
       borderColor: 'black',
       borderStyle: 'solid',
       borderWidth: 3,
-      zIndex: 1
+      zIndex: 5
     }
 
 

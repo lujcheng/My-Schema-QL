@@ -589,6 +589,7 @@ class App extends Component {
     }, 30);
   }
 
+
   renderLink = (e) => {
     e.preventDefault()
     return socketURL
