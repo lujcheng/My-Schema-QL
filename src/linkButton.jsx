@@ -28,7 +28,7 @@ class LinkButton extends Component {
           <button className="button is-white is-large" onClick={e => this.handleClick(e)}>GET LINK</button>
         </div>
         <div style={{opacity: this.state.opacity}}>
-          {this.props.socketURL}
+          <p>{this.props.socketURL}</p>
         </div>
         <div>
           <li><button className="button is-white is-large">TUTORIAL</button></li>

@@ -176,8 +176,9 @@ class App extends Component {
     })
 
     socket.on('set-query-string', (contents) => {
+      console.log("hi", contents)
       this.setState({
-      queryString: contents
+      queryArray: contents
       })
     })
   }
@@ -603,7 +604,9 @@ class App extends Component {
     let target = evt
     this.setState({queryArray: [...this.state.queryArray, queryArr]}, () => cb(target))
      setTimeout(() => {
-    }, 30);
+       let data = this.state.queryArray
+       this.state.socket.emit('query-string', data)
+    }, 200);
   }
 
   deleteQueryArray = (evt) => {
