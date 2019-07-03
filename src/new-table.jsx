@@ -53,19 +53,19 @@ class NewTable extends Component {
 								<table className="table is-striped is-narrow is-bordered">
 									<tbody>
 										<tr>
-											<td className="header-row"><p>Table name:</p></td>
+											<td className="header-row"><h4 className="title is-4">Table name:</h4></td>
 											<td className="data-row"><input type="text" value={this.state.newTable.tableName} onChange={this.handleChange.bind(this, "tableName")} className="input new-table"/></td>
 										</tr>
 										<tr>
-											<td className="header-row"><p>Columns:</p></td>
+											<td className="header-row"><h4 className="title is-4">Columns:</h4></td>
 											<td className="data-row"><input type="number" value={this.state.newTable.cols} onChange={this.handleChange.bind(this, "cols")} placeholder="#" className="input new-table"/></td>
 										</tr>
 										<tr>
-											<td className="header-row"><p>Rows:</p></td>
+											<td className="header-row"><h4 className="title is-4">Rows:</h4></td>
 											<td className="data-row"><input type="number" value={this.state.newTable.rows} onChange={this.handleChange.bind(this, "rows")} placeholder="#" className="input new-table"/></td>
 										</tr>
 										<tr>
-											<td colSpan="2"><button type="submit" className="button is-paddingless is-pulled-right is-dark is-normal">Create</button></td>
+											<td colSpan="2"><button type="submit" className="button is-dark is-normal">Create</button></td>
 										</tr>
 									</tbody>
 								</table>

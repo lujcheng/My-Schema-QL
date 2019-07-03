@@ -2,9 +2,9 @@
 	font-family: 'Libre Franklin', sans-serif;
 }
 
-body {
-	background-color: #FFFFFF;
-}
+/* body {
+	background-color: transparent;
+} */
 
 
 
@@ -142,6 +142,10 @@ div.select {
 	width: 7em;
 }
 
+select {
+	width: 7em;
+}
+
 main.box {
 	z-index: 2;
 }
@@ -152,4 +156,8 @@ section.modal-card-body {
 
 input.input.new-table {
 	background-color: #FFFFFF;
+}
+
+div.box.container {
+	background-color: transparent;
 }
