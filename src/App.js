@@ -9,7 +9,7 @@ import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
 import LinkButton from './linkButton.jsx'
 
-const socketURL = 'http://172.46.3.39:8080/';
+const socketURL = 'http://localhost:3000';
 
 class App extends Component {
   constructor(props) {
@@ -349,7 +349,7 @@ class App extends Component {
         }))
       })
     } 
-    if (this.state.joinOn === false) {
+    if (!this.state.joinOn) {
       if (this.state.joinTable) {
         let tables = this.state.tables
         if (this.state.tables[this.state.joinTable]) {
@@ -357,6 +357,7 @@ class App extends Component {
           this.setState({tables: tables})
           }    
         }
+        this.setState({joinTable: null})
       }
     
   }
@@ -437,12 +438,6 @@ class App extends Component {
   onChange = (event, args) => {
     const state = () => {
       return new Promise ((resolve, reject) => {
-        // if (this.state.query[args]) {
-        //   let arr = []
-        //   arr.push(this.state.query[args])
-        //   arr.push(event.target.value)
-        //   this.setState(({ query: {...this.state.query, [args]: arr}}, resolve))
-        // } else {
           console.log("stuff", event.target)
         this.setState({ query: {...this.state.query, [args]: event.target.value}}, resolve)
         // }
@@ -546,6 +541,7 @@ class App extends Component {
   }
 
   renderNewTable = (tableObj) => {
+    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
@@ -614,19 +610,33 @@ class App extends Component {
   }
 
   deleteQueryArray = (evt) => {
-		evt.preventDefault();
-		this.setState({
-      queryArray: [],
-      query: {
-        select: "",
-        from: "",
-        join: "",
-        where: "",
-        on: ""
-      }
+    evt.preventDefault();
+    const prom = () => {
+      return new Promise ((resolve, reject) => {
+        this.setState({
+          joinOn: false,
+          joinMatch: false,
+          colMatch: false,
+          rowMatch: false,
+          currentTable: null,
+          queryArray: [],
+          query: {
+            select: "",
+            from: "",
+            join: "",
+            where: "",
+            on: ""
+          }
+        }, resolve)
+      })
+    }
+    prom()
+    .then(() => {
+      console.log("yep")
+      this.checkMatch()
     })
-	}
-
+  }
+  
   printQueryArray = () => {
     let arr = this.state.queryArray;
     let string = "";
