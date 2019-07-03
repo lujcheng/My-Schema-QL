@@ -303,20 +303,22 @@ class App extends Component {
       let stateTbl = this.state.tables
       let joinColumns = []
       let joinValues = []
-      let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
-      let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
-      joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
-      for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
-        for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-          if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
-            joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
+      if (stateTbl[tables[0]].columns.includes(keys[0]) && stateTbl[tables[1]].columns.includes(keys[1])) {
+        let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
+        let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
+        joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
+        for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
+          for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
+            if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
+              joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
+            }
           }
         }
+        this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
+        this.setState({joinTable: `${tables[0]}_${tables[1]}` })
+        this.setState({joinMatch: true})
+        return `${tables[0]}_${tables[1]}`
       }
-      this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
-      this.setState({joinTable: `${tables[0]}_${tables[1]}` })
-      this.setState({joinMatch: true})
-      return `${tables[0]}_${tables[1]}`
     } else {
       this.setState({joinMatch: false })
     }
