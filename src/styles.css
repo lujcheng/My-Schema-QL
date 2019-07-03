@@ -131,7 +131,7 @@ div.box.container {
 
 
 input.input {
-	width: 12em;
+	width: 15em;
 }
 
 .table th:not([align]) {
@@ -160,4 +160,9 @@ input.input.new-table {
 
 div.box.container {
 	background-color: transparent;
+}
+
+#drag-icon {
+	background-color:#363636;
+	color: #DCDCDC;
 }
