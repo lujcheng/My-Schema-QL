@@ -620,6 +620,15 @@ class App extends Component {
     })
 	}
 
+  printQueryArray = () => {
+    let arr = this.state.queryArray;
+    let string = "";
+    arr.map((el) => {
+      string += ` ${el.toString().replace(",", " ").toUpperCase()} `
+    })
+    return string;
+  }
+
   render() {
     return (
       <div className="hero is-fullheight">
@@ -630,10 +639,6 @@ class App extends Component {
           <div className="navbar-end">
             <nav className="breadcrumb is-right is-large" aria-label="breadcrumbs">
               <LinkButton socketURL={socketURL}/>
-              <ul>
-                <li><button className="button is-white is-large">TUTORIAL</button></li>
-              </ul>
-              {/* <div>{this.renderLink}</div> */}
             </nav>
           </div>
         </section>
@@ -642,7 +647,7 @@ class App extends Component {
        <section className="section">
           <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket} deleteQueryArray={this.deleteQueryArray}/>
         </section>
-        <p>{this.state.queryArray.toString().replace(",", " ").toUpperCase()}</p>
+        <p>{this.printQueryArray()}</p>
 
         <div className="container">
           <NewTable renderNewTable={this.renderNewTable} />

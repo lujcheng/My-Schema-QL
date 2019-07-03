@@ -35,7 +35,6 @@ class Query extends Component {
 	
 	deleteInputFields = (evt) => {
 		evt.preventDefault();
-		console.log('delete ')
 		this.setState({
       inputFieldArr: [],
 			lastKeyword: 'SELECT'
@@ -136,7 +135,7 @@ class Query extends Component {
 		})
 		return (
 			<div className="box">
-				<Form action="" method="POST" onSubmit={e => this.props.onButtonSubmit(e, this.state.lastKeyword, this.renderQuery)} >
+				<Form id="query-form" action="" method="POST" onSubmit={e => this.props.onButtonSubmit(e, this.state.lastKeyword, this.renderQuery)} >
 					<div className="field is-grouped is-grouped-multiline">
 						<div className="field is-grouped is-grouped-multiline">
 							<div className="field-label is-normal">
