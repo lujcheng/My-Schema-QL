@@ -9,7 +9,7 @@ import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
 import LinkButton from './linkButton.jsx'
 
-const socketURL = 'http://172.46.3.39:8080/';
+const socketURL = 'http://localhost:3000';
 
 class App extends Component {
   constructor(props) {
@@ -119,9 +119,7 @@ class App extends Component {
         this.setState({svg: svg})
         match = true
       } else {
-        console.log(svg)
         Object.keys(svg).map(keys => {
-          console.log(keys)
           if(svg[keys] === null) {
             svg[keys] = newClass 
             this.setState({svg: svg})
@@ -138,7 +136,6 @@ class App extends Component {
         this.setState({svg: svg})
       }
     }
-    console.log(this.state.svg)
   }
 
   componentDidMount() {
@@ -236,7 +233,6 @@ class App extends Component {
   }
 
   handleCurrentTable = () => {
-    console.log("ye boi")
     if (this.state.currentTable.length > 1 && this.state.joinOn.length > 1) {
       let currentTable = this.state.currentTable[0]
       for (let i =1; i < this.state.currentTable.length; i++) {
@@ -251,9 +247,7 @@ class App extends Component {
       //   this.join([innerTable, currentTables[i]], innerOnStatement)
       //   innerTable = this.join([innerTable, currentTables[i]], innerOnStatement)
       // }
-    } else {
-      console.log("table", this.state.currentTable[0])
-    }
+    } 
   }
 
   findRows = (table) => {
@@ -303,26 +297,44 @@ class App extends Component {
       let stateTbl = this.state.tables
       let joinColumns = []
       let joinValues = []
-      let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
-      let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
-      joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
-      for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
-        for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
-          if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
-            joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
+      if (stateTbl[tables[0]].columns.includes(keys[0]) && stateTbl[tables[1]].columns.includes(keys[1]))   {
+        let forKey = stateTbl[tables[0]].columns.indexOf(keys[0])
+        let primeKey = stateTbl[tables[1]].columns.indexOf(keys[1])
+        joinColumns = stateTbl[tables[0]].columns.concat(stateTbl[tables[1]].columns)
+        for (let i=0; i < stateTbl[tables[0]].values.length; i++) {
+          for (let e=0; e< stateTbl[tables[1]].values.length; e++) {
+            if(stateTbl[tables[0]].values[i][forKey] === stateTbl[tables[1]].values[e][primeKey] ) {
+              joinValues[i] = stateTbl[tables[0]].values[i].concat(stateTbl[tables[1]].values[e])
+            }
           }
         }
+        this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
+        this.setState({joinTable: `${tables[0]}_${tables[1]}` })
+        this.setState({joinMatch: true})
+        return `${tables[0]}_${tables[1]}`
       }
-      this.createTable(`${tables[0]}_${tables[1]}`, joinColumns, joinValues)
-      this.setState({joinTable: `${tables[0]}_${tables[1]}` })
-      this.setState({joinMatch: true})
-      return `${tables[0]}_${tables[1]}`
     } else {
       this.setState({joinMatch: false })
     }
   }
 
   checkMatch = () => {
+    let currentTable
+    if (this.state.currentTable && this.state.joinOn && this.state.joinTable) {
+      currentTable = this.state.joinTable
+    } else if (this.state.currentTable) {
+      currentTable = this.state.currentTable[0]
+    }
+    if (currentTable) {
+      Object.keys(this.state.tables).forEach((table) => {
+        if (table != currentTable) {
+          let tables = this.state.tables
+          tables[table].selected = {columnIndexes: null, rowIndexes: null}
+          this.setState({tables: tables})
+        }
+      })
+    }
+
     if (this.state.colMatch === false) {
       Object.keys(this.state.tables).forEach((table) => {
         this.setState(prevState => ({
@@ -349,7 +361,7 @@ class App extends Component {
         }))
       })
     } 
-    if (this.state.joinOn === false) {
+    if (!this.state.joinOn) {
       if (this.state.joinTable) {
         let tables = this.state.tables
         if (this.state.tables[this.state.joinTable]) {
@@ -357,6 +369,7 @@ class App extends Component {
           this.setState({tables: tables})
           }    
         }
+        this.setState({joinTable: null})
       }
     
   }
@@ -417,7 +430,6 @@ class App extends Component {
     } else {
       this.setState({colMatch: false})
     }
-    console.log("query.from?!?!?", columnIndexes)
     if (columnIndexes && Object.keys(this.state.tables).includes(table)) {
       this.setState(prevState => ({
         ...prevState, tables: {
@@ -430,20 +442,12 @@ class App extends Component {
       }))
     } 
   }
-    // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
-    // console.log(this.state.query.tables)
+
   
   
   onChange = (event, args) => {
     const state = () => {
       return new Promise ((resolve, reject) => {
-        // if (this.state.query[args]) {
-        //   let arr = []
-        //   arr.push(this.state.query[args])
-        //   arr.push(event.target.value)
-        //   this.setState(({ query: {...this.state.query, [args]: arr}}, resolve))
-        // } else {
-          console.log("stuff", event.target)
         this.setState({ query: {...this.state.query, [args]: event.target.value}}, resolve)
         // }
       })
@@ -614,19 +618,32 @@ class App extends Component {
   }
 
   deleteQueryArray = (evt) => {
-		evt.preventDefault();
-		this.setState({
-      queryArray: [],
-      query: {
-        select: "",
-        from: "",
-        join: "",
-        where: "",
-        on: ""
-      }
+    evt.preventDefault();
+    const prom = () => {
+      return new Promise ((resolve, reject) => {
+        this.setState({
+          joinOn: false,
+          joinMatch: false,
+          colMatch: false,
+          rowMatch: false,
+          currentTable: null,
+          queryArray: [],
+          query: {
+            select: "",
+            from: "",
+            join: "",
+            where: "",
+            on: ""
+          }
+        }, resolve)
+      })
+    }
+    prom()
+    .then(() => {
+      this.checkMatch()
     })
-	}
-
+  }
+  
   printQueryArray = () => {
     let arr = this.state.queryArray;
     let string = "";
@@ -652,7 +669,7 @@ class App extends Component {
 
 
        <section className="section">
-          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket} deleteQueryArray={this.deleteQueryArray}/>
+          <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket} deleteQueryArray={this.deleteQueryArray} selectInput={this.state.query.select}/>
         </section>
         <p>{this.printQueryArray()}</p>
 
