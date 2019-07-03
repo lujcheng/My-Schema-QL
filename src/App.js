@@ -108,9 +108,13 @@ class App extends Component {
     if(e.altKey) {
       let classNames = e.target.className.split(' ')
       if(classNames.includes(newClass)) {
-        e.target.className = classNames.filter(n => n !== newClass).join(' ')
+        e.target.className = classNames.filter(n => {
+          if (n !== newClass && n != "svg") {
+            return n
+          }
+        }).join(' ')
       } else {
-        e.target.className += ` ${tableName}${e.target.value}`
+        e.target.className += ` ${tableName}${e.target.value} svg`
       }
       let svg = this.state.svg
       let match = false

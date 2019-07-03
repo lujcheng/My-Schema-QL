@@ -182,7 +182,7 @@ class Canvas extends Component {
     const renderSVG = Object.keys(this.props.svg).map(key => {
       if (this.props.svg[key] != null && typeof this.props.svg[key] === 'string') {
         return (
-          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="center" toAnchor="center" {...style}/>
+          <SteppedLineTo from={key} to={this.props.svg[key]} fromAnchor="center" toAnchor="center" orientation="h" {...style}/>
         )
       }
     })

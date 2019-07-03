@@ -59,8 +59,9 @@ class Table extends Component {
     let columnHeaders = this.props.table.columns
     return columnHeaders.map((key, col) => {
       return (
-        <th className={this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col) ? "colSelected" : null} key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}>
+        <th className={this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col) ? "colSelected" : null} key={key + col} >
           <input 
+            onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}
             type="text" 
             defaultValue={key.toUpperCase()} 
             className="input" 
