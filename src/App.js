@@ -119,9 +119,7 @@ class App extends Component {
         this.setState({svg: svg})
         match = true
       } else {
-        console.log(svg)
         Object.keys(svg).map(keys => {
-          console.log(keys)
           if(svg[keys] === null) {
             svg[keys] = newClass 
             this.setState({svg: svg})
@@ -138,7 +136,6 @@ class App extends Component {
         this.setState({svg: svg})
       }
     }
-    console.log(this.state.svg)
   }
 
   componentDidMount() {
@@ -236,7 +233,6 @@ class App extends Component {
   }
 
   handleCurrentTable = () => {
-    console.log("ye boi")
     if (this.state.currentTable.length > 1 && this.state.joinOn.length > 1) {
       let currentTable = this.state.currentTable[0]
       for (let i =1; i < this.state.currentTable.length; i++) {
@@ -251,9 +247,7 @@ class App extends Component {
       //   this.join([innerTable, currentTables[i]], innerOnStatement)
       //   innerTable = this.join([innerTable, currentTables[i]], innerOnStatement)
       // }
-    } else {
-      console.log("table", this.state.currentTable[0])
-    }
+    } 
   }
 
   findRows = (table) => {
@@ -436,7 +430,6 @@ class App extends Component {
     } else {
       this.setState({colMatch: false})
     }
-    console.log("query.from?!?!?", columnIndexes)
     if (columnIndexes && Object.keys(this.state.tables).includes(table)) {
       this.setState(prevState => ({
         ...prevState, tables: {
@@ -449,14 +442,12 @@ class App extends Component {
       }))
     } 
   }
-    // let query = columns.filter((values, index, column) => column.indexOf(values) === input)
-    // console.log(this.state.query.tables)
+
   
   
   onChange = (event, args) => {
     const state = () => {
       return new Promise ((resolve, reject) => {
-          console.log("stuff", event.target)
         this.setState({ query: {...this.state.query, [args]: event.target.value}}, resolve)
         // }
       })
@@ -559,7 +550,6 @@ class App extends Component {
   }
 
   renderNewTable = (tableObj) => {
-    debugger
     const tableName = tableObj.tableName;
     const cols = tableObj.cols;
     const rows = tableObj.rows;
@@ -650,7 +640,6 @@ class App extends Component {
     }
     prom()
     .then(() => {
-      console.log("yep")
       this.checkMatch()
     })
   }
