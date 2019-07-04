@@ -79,6 +79,7 @@ class Table extends Component {
       return (
         <th className={this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col) ? "colSelected" : null} key={key + col} style={{width: `${colWidth[col]}em`}} >
           <input 
+            id="table-header"
             onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}
             type="text" 
             defaultValue={key}
@@ -160,7 +161,7 @@ class Table extends Component {
             <thead>
               <tr>
                 <th colSpan={this.props.table.columns.length}>
-                  <input type="text" defaultValue={this.props.tableName} className="input" onBlur={(evt) => this.onEnterTitle(evt)} onDoubleClick={this.focus}/>
+                  <input id="table-title" type="text" defaultValue={this.props.tableName} className="input" onBlur={(evt) => this.onEnterTitle(evt)} onDoubleClick={this.focus}/>
                   <button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-edit"></i></button>
                 </th>
               </tr>
