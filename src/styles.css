@@ -201,3 +201,11 @@ div.box.container {
 	padding-bottom: 0;
 	padding-top: 0.7em;
 }
+
+#table-title {
+	font-size: 1.5em;
+}
+
+#table-header {
+	font-size: 1.2em;
+}
