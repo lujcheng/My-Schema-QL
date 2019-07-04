@@ -37,7 +37,7 @@ class NewTable extends Component {
 
 	render() {
 		return (
-			<div>
+			<>
 				<button type="button" className="button is-pulled-right is-dark is-normal" onClick={this.handleClick}><i className="fas fa-table"></i>Create Table</button>
 				{
 					this.state.visible &&
@@ -76,7 +76,7 @@ class NewTable extends Component {
 					</div>
 				</div>
 				}
-			</div>
+			</>
 		)
 	}
 }

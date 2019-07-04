@@ -675,20 +675,20 @@ class App extends Component {
           <div className="navbar-brand">
             <h1 className="title is-1">SCHEMA</h1>
           </div>
-          <div className="navbar-end">
+          {/* <div className="navbar-end">
               <LinkButton socketURL={socketURL}/>
-          </div>
+          </div> */}
         </section>
 
 
        <section className="section">
           <Query onButtonSubmit={this.onButtonSubmit} onChange={this.onChange} clientColor={this.state.clientColor} query={this.state.query} socket={this.state.socket} deleteQueryArray={this.deleteQueryArray} selectInput={this.state.query.select}/>
+        <div className="box">{this.printQueryArray()}</div>
         </section>
-        <p>{this.printQueryArray()}</p>
 
-        <div className="container">
+        {/* <div className="container">
           <NewTable renderNewTable={this.renderNewTable} />
-        </div>
+        </div> */}
 
         <section className="section">
           <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg}/>
