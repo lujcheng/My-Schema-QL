@@ -9,7 +9,7 @@ import NewTable from './new-table.jsx'
 import io from 'socket.io-client';
 import LinkButton from './linkButton.jsx'
 
-const socketURL = 'http://localhost:3000';
+const socketURL = 'http://172.46.3.39:8080';
 
 class App extends Component {
   constructor(props) {
@@ -691,7 +691,7 @@ class App extends Component {
         </div> */}
 
         <section className="section">
-          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg} renderNewTable={this.renderNewTable}/>
         </section>
 
         <section className="section">

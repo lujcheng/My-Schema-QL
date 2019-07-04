@@ -1,11 +1,10 @@
-* {
+/* * {
 	font-family: 'Libre Franklin', sans-serif;
-}
+} */
 
 /* body {
 	background-color: transparent;
 } */
-
 
 
 .error-message {
@@ -52,7 +51,7 @@
 
 
 table {
-	font-family: 'Libre Franklin', sans-serif;
+	/* font-family: 'Libre Franklin', sans-serif; */
 	border: 0;
 	margin-top: -0.4em;
 }
@@ -89,7 +88,7 @@ td input.input {
 
 input {
 	text-align: center;
-	font-family: 'Libre Franklin', sans-serif;
+	/* font-family: 'Libre Franklin', sans-serif; */
 }
 
 .edit-row-col {
