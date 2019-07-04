@@ -134,7 +134,7 @@ input {
 	margin-left: 0.2rem;
 }
 
-div.box.container {
+div.box {
 	overflow: hidden;
 }
 
@@ -196,4 +196,9 @@ div.box.container {
 
 .box {
 	background-color: transparent;
+}
+
+#query-section {
+	padding-bottom: 0;
+	padding-top: 0.7em;
 }
