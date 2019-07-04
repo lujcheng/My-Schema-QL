@@ -73,6 +73,10 @@ th input.input {
 	border: 0;
 }
 
+th input.svg {
+	background-color: #472121;
+}
+
 tbody tr td {
 	background-color: #DCDCDC;
 }

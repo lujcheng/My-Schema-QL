@@ -77,8 +77,9 @@ class Table extends Component {
     return columnHeaders.map((key, col) => {
       let colWidth = this.getWidth()
       return (
-        <th className={this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col) ? "colSelected" : null} key={key + col} onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}style={{width: `${colWidth[col]}em`}} >
+        <th className={this.props.table.selected.columnIndexes && this.props.table.selected.columnIndexes.includes(col) ? "colSelected" : null} key={key + col} style={{width: `${colWidth[col]}em`}} >
           <input 
+            onClick={(e) => {this.props.createSVG(e, this.props.tableName)}}
             type="text" 
             defaultValue={key}
             className="input" 

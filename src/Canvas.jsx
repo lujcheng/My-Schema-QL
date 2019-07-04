@@ -200,6 +200,7 @@ class Canvas extends Component {
             to={this.props.svg[key]} 
             fromAnchor="center" 
             toAnchor="center" 
+            orientation="h"
             {...style}
           />
         )

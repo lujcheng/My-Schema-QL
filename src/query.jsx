@@ -142,7 +142,7 @@ class Query extends Component {
 								<label className="label">SELECT</label>
 							</div>
 							<div className="control">
-								<Input name="select" type="text" className="input" onChange={(e) => this.props.onChange(e, "select")} validations={[required]}/>
+								<Input value={this.props.selectInput} name="select" type="text" className="input" onChange={(e) => this.props.onChange(e, "select")} validations={[required]}/>
 							</div>
 						</div>
 						{/* <div className="field is-grouped is-grouped-multiline">
