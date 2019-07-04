@@ -383,7 +383,7 @@ class App extends Component {
     // query = "id > 3"
     let query = input.split(/[ ,]+/).filter(el => el != "")
     // expected output = ["id", ">", "3"]
-
+    
     const operate = {
       '<': (a, b) => {return a < parseInt(b)},
       '>': (a, b) => {return a > parseInt(b)},
@@ -392,10 +392,16 @@ class App extends Component {
     // determine the column index
     if (query.length >= 3) {
       let colIndex = this.state.tables[tableName].columns.indexOf(query[0])
+      let input = query[2]
+      if (query.length > 3) {
+        for (let i=3; i < query.length; i++) {
+          input += ` ${query[i]}`
+        }
+      }
       // loop through row values at column index
       if (colIndex >= 0) {
         return this.state.tables[tableName].values.map((row, index) => {
-          if (Object.keys(operate).includes(query[1]) && operate[query[1]] (row[colIndex], query[2])) {
+          if (Object.keys(operate).includes(query[1]) && operate[query[1]] (row[colIndex], input)) {
             return index
           }
         }).filter(el => el != null)
