@@ -209,7 +209,7 @@ class Canvas extends Component {
     return (
       <div className="box">
         {this.renderPanZoomControls()}
-        <NewTable renderNewTable={this.renderNewTable} />
+        <NewTable renderNewTable={this.props.renderNewTable} />
         <ReactPanZoom
           zoom={this.state.zoom}
           pandx={this.state.dx}
