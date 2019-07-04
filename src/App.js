@@ -657,7 +657,13 @@ class App extends Component {
     let arr = this.state.queryArray;
     let string = "";
     arr.map((el) => {
-      string += ` ${el.toString().replace(",", " ").toUpperCase()} `
+      el.map((e, index) => {
+        if(index === 0) {
+          string += ` ${el[0].toString().replace(",", " ").toUpperCase()} `
+        } else {
+          string += ` ${el[1].toString().replace(",", " ")} `
+        }
+      })
     })
     return string;
   }
