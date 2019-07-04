@@ -3,6 +3,7 @@ import Table from "./table.jsx"
 import Draggable from 'react-draggable';
 import LineTo, { SteppedLineTo } from 'react-lineto';
 import ReactPanZoom from "@ajainarayanan/react-pan-zoom";
+import NewTable from './new-table.jsx'
 
 
 class Canvas extends Component {
@@ -120,12 +121,11 @@ class Canvas extends Component {
   renderPanZoomControls = () => {
     return (
       <>
-        <div className="zoom-control" onClick={this.zoomIn}>
-          <i className="icon fas fa-search-plus is-medium"></i>
-        </div>
-        <br/>
         <div className="zoom-control" onClick={this.zoomOut}>
           <i className="icon fas fa-search-minus is-medium"></i>
+        </div>
+        <div className="zoom-control" onClick={this.zoomIn}>
+          <i className="icon fas fa-search-plus is-medium"></i>
         </div>
       </>
     );
@@ -207,8 +207,9 @@ class Canvas extends Component {
       }
     })
     return (
-      <div className="box container">
+      <div className="box">
         {this.renderPanZoomControls()}
+        <NewTable renderNewTable={this.renderNewTable} />
         <ReactPanZoom
           zoom={this.state.zoom}
           pandx={this.state.dx}
