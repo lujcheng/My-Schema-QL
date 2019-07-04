@@ -39,15 +39,14 @@ class App extends Component {
             ["1", "Stark's Winter Accessories", "Winterfell"],
             ["2", "Bolton's Kennel", "Dreadfort"],
             ["3", "Tyrell's Flowershop", "Highgarden"],
-            ["4", "Baratheon Blacksmithin", "Storm's End"],
-            ["5", "Targaryen Terrarium", "Dragonstone"],
+            ["4", "Baratheon Blacksmithing", "Storm's End"],
+            ["5", "Targaryen Reptiles", "Dragonstone"],
             ["6", "Greyjoy Marina", "Pyke"],
             ["7", "Tully's Fish Market", "Riverrun"],
             ["8", "Bank of Lannisport", "Casterly Rock"],
-            ["9", "Tormund Dairy", "North of the Wall"],
-            ["10", "Tyrion's Winery", "King's Landing"],
-            ["11", "Frey's Weddings", "The Twin's"],
-            ["12", "Drogo's Ranch", "Essos"],
+            ["9", "Tyrion's Winery", "King's Landing"],
+            ["10", "Frey's Weddings", "The Twin's"],
+            ["11", "Drogo's Ranch", "Essos"],
           ],
           createdAt: new Date('January 1, 2019 00:01:00'),
           foreignKey: null,
@@ -75,9 +74,9 @@ class App extends Component {
             ["12", "Catelyn Stark", "7"],
             ["13", "Cersei Lannister", "8"],
             ["14", "Jaime Lannister", "8"],
-            ["15", "Tyrion Lannister", "10"],
-            ["16", "Walder Frey", "11"],
-            ["17", "Khal Drogo", "12"]
+            ["15", "Tyrion Lannister", "9"],
+            ["16", "Walder Frey", "10"],
+            ["17", "Khal Drogo", "11"]
           ],
           createdAt: new Date('January 1, 2019 00:02:00'),
           foreignKey: null,
@@ -665,9 +664,7 @@ class App extends Component {
             <h1 className="title is-1">SCHEMA</h1>
           </div>
           <div className="navbar-end">
-            <nav className="breadcrumb is-right is-large" aria-label="breadcrumbs">
               <LinkButton socketURL={socketURL}/>
-            </nav>
           </div>
         </section>
 

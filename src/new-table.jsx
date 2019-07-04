@@ -71,7 +71,7 @@ class NewTable extends Component {
 								</table>
 							</form>
 						</section>
-						<footer class="modal-card-foot">
+						<footer className="modal-card-foot">
 						</footer>
 					</div>
 				</div>

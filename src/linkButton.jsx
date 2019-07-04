@@ -25,13 +25,13 @@ class LinkButton extends Component {
     return (
       <>
         <div>
-          <button className="button is-white is-large" onClick={e => this.handleClick(e)}>GET LINK</button>
+          <button className="button is-white is-large" onClick={e => this.handleClick(e)}><h4 className="title is-4">GET LINK</h4></button>
         </div>
         <div style={{opacity: this.state.opacity}}>
-          <p>{this.props.socketURL}</p>
+          <h6 className="title is-6">{this.props.socketURL}</h6>
         </div>
         <div>
-          <li><button className="button is-white is-large">TUTORIAL</button></li>
+          <button className="button is-white is-large"><h4 className="title is-4">TUTORIAL</h4></button>
         </div>
       </>
    )
