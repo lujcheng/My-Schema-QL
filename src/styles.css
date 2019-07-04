@@ -193,3 +193,7 @@ div.box.container {
 	margin-left: 2em;
 	margin-right: 2em;
 }
+
+.box {
+	background-color: transparent;
+}
