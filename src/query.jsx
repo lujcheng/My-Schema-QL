@@ -5,13 +5,13 @@ import Input from 'react-validation/build/input';
 
 const keyWordToAllowedKeyWords = {
 	'SELECT': ['FROM'],
-	'WHERE': ['ORDER BY','GROUP BY', 'HAVING', 'AND' ],
+	'WHERE': [],
 	'JOIN': ['ON'],
 	'ON': ['WHERE'],
 	'ORDER BY': ['JOIN', 'GROUP BY', 'HAVING'],
 	'AND': ['ORDER BY', 'GROUP BY', 'HAVING', 'AND'],
 	'HAVING': ['WHERE', 'ORDER BY', 'GROUP BY', 'JOIN', 'AND'],
-  'FROM': ['WHERE', 'JOIN', 'ORDER BY', 'GROUP BY', 'HAVING' ],
+  'FROM': ['WHERE', 'JOIN'],
   'GROUP BY': ['WHERE', 'JOIN', 'HAVING']
 }
 
@@ -42,11 +42,13 @@ class Query extends Component {
 	}
 	
 	toggleDropdown = (lastKeyword) => {
-		return keyWordToAllowedKeyWords[lastKeyword].map((keyword) => {
-			return (
-				<option className="dropdown-value" key={keyword} value={keyword}>{keyword}</option>
-			)
-		})
+		if (lastKeyword) {
+			return keyWordToAllowedKeyWords[lastKeyword].map((keyword) => {
+				return (
+					<option className="dropdown-value" key={keyword} value={keyword}>{keyword}</option>
+				)
+			})
+		}
 	}
 	
 	renderQuery = (evt) => {
@@ -105,20 +107,21 @@ class Query extends Component {
 		</div>
       </>
 			)	
-		}	else {
-			tempArr.push(
-				<>
-					<div className="field is-grouped is-grouped-multiline">	
-						<div className="field-label is-normal">
-         			<label className="label">{queryType}</label>
-						</div>
-						<div className="control">
-          		<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
-						</div>
-					</div>
-        </>
-			)
-		}
+		}	
+		// else {
+		// 	tempArr.push(
+		// 		<>
+		// 			<div className="field is-grouped is-grouped-multiline">	
+		// 				<div className="field-label is-normal">
+    //      			<label className="label">{queryType}</label>
+		// 				</div>
+		// 				<div className="control">
+    //       		<Input name="JOIN" type="text" className="input" onChange={(e) => this.props.onChange(e, queryType)} validations={[spaces]}/>
+		// 				</div>
+		// 			</div>
+    //     </>
+		// 	)
+		// }
 		this.setState({
 			inputFieldArr: tempArr,
 			lastKeyword: queryType
