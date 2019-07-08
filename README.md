@@ -3,6 +3,8 @@
 This is a single page app use to create Entity-Relationship-Diagrams and write SQL queries 
 
 <img src="./public/query.gif" />
+
+alt-click to create arrows
 <img src="./public/svgerd.gif" />
 
 ### `npm run react`
