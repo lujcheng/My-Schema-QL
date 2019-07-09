@@ -99,8 +99,15 @@ class App extends Component {
     this.checkTableMatches = this.checkTableMatches.bind(this)
     this.findRows = this.findRows.bind(this)
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
+    this.dropTables = this.dropTables.bind(this)
   }
 
+    dropTables = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      this.setState({tables: {}})
+    }
+    
     createSVG = (e, tableName)=> {
     e.stopPropagation()
     let newClass = `${tableName}${e.target.value}`
@@ -691,7 +698,7 @@ class App extends Component {
         </div> */}
 
         <section className="section">
-          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg} renderNewTable={this.renderNewTable}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg} renderNewTable={this.renderNewTable} dropTables={this.dropTables}/>
         </section>
 
         <section className="section">
