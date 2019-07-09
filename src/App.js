@@ -695,7 +695,7 @@ class App extends Component {
         </div> */}
 
         <section className="section">
-          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg} renderNewTable={this.renderNewTable}/>
+          <MyCanvas tables={this.state.tables} renderTableChange={this.renderTableChange} changeTableHeader={this.changeTableHeader} changeTableTitle={this.changeTableTitle} deleteRow={this.deleteRow} createSVG={this.createSVG} svg={this.state.svg} renderNewTable={this.renderNewTable} dropTables={this.dropTables}/>
         </section>
 
         <section className="section">
