@@ -1,6 +1,6 @@
 ## mySchemaQL
-<a href="https://myschemaql.netlify.com"> Demo </a>
-This is a single page app use to create Entity-Relationship-Diagrams and write SQL queries 
+<a href="https://myschemaql.netlify.com"> Demo </a> <br>
+This is a single page app use to create Entity-Relationship-Diagrams, where data takes the form of tables. You can write SQL queries on this data and receive immediate feedback on the results of your query.
 
 <img src="./public/query.gif" />
 
