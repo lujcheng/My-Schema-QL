@@ -4,6 +4,7 @@ import Draggable from 'react-draggable';
 import LineTo, { SteppedLineTo } from 'react-lineto';
 import ReactPanZoom from "@ajainarayanan/react-pan-zoom";
 import NewTable from './new-table.jsx'
+import DropTables from './dropTables.jsx';
 
 
 class Canvas extends Component {
@@ -219,6 +220,7 @@ class Canvas extends Component {
           >
             {renderTables}
             {renderSVG}
+            <DropTables dropTables={this.props.dropTables} test={this.props.tables.employees}/>
         </ReactPanZoom>
       </div>
     )

@@ -99,10 +99,13 @@ class App extends Component {
     this.checkTableMatches = this.checkTableMatches.bind(this)
     this.findRows = this.findRows.bind(this)
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
+    this.dropTables = this.dropTables.bind(this)
   }
 
-    dropTables = () => {
-      this.setState({tables: {})
+    dropTables = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      this.setState({tables: {}})
     }
     
     createSVG = (e, tableName)=> {
