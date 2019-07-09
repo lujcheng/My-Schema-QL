@@ -101,6 +101,10 @@ class App extends Component {
     this.handleCurrentTable = this.handleCurrentTable.bind(this)
   }
 
+    dropTables = () => {
+      this.setState({tables: {})
+    }
+    
     createSVG = (e, tableName)=> {
     e.stopPropagation()
     let newClass = `${tableName}${e.target.value}`
